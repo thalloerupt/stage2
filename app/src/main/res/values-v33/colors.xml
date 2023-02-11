@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface">@color/material_dynamic_neutral99</color>
+    <color name="onSurface">@color/material_dynamic_neutral_variant90</color>
+    <color name="onSecondaryContainer">@color/material_dynamic_secondary80</color>
+    <color name="textDayNight">@color/black</color>
+    <color name="components">@color/material_dynamic_primary40</color>
+
+</resources>

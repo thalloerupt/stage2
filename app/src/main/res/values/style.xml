@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="My.SideSheet.Modal" parent="Widget.Material3.SideSheet.Modal">
+        <item name="backgroundTint">@color/surface</item>
+        <item name="android:elevation" >@dimen/m3_side_sheet_modal_elevation</item>
+        <item name="shapeAppearance">@style/Shape.Material3.Corner.None</item>
+
+    </style>
+
+    <style name="Shape.Material3.Corner.None" parent="ShapeAppearance.Material3.Corner.None">
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeBottomLeft">24dp</item>
+
+    </style>
+</resources>

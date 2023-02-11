@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Stage" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/surface</item>
+
+    </style>
+
+    <style name="Theme.Stage.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Stage.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Stage.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="200">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/divider3"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/constraintLayout4"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim3"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/backButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/forwardButtonL"
+            motion:layout_constraintStart_toEndOf="@+id/backButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/backButtonL"
+            motion:layout_constraintTop_toTopOf="@+id/backButtonL" />
+        <Constraint
+            android:id="@+id/reloadButtonL"
+            motion:layout_constraintStart_toEndOf="@+id/forwardButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/forwardButtonL"
+            motion:layout_constraintTop_toTopOf="@+id/forwardButtonL" />
+        <Constraint
+            android:id="@+id/addButton"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/recyclerView2"
+            android:layout_marginEnd="32dp"
+            motion:layout_constraintTop_toTopOf="@+id/recyclerView2" />
+        <Constraint
+            android:id="@+id/divider"
+            motion:layout_constraintStart_toEndOf="@+id/reloadButtonL"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="12dp"
+            motion:layout_constraintTop_toTopOf="@+id/reloadButtonL"
+            android:layout_marginTop="4dp" />
+        <Constraint
+            android:id="@+id/recyclerView2"
+            motion:layout_constraintEnd_toStartOf="@+id/addButton"
+            motion:layout_constraintStart_toEndOf="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim4"
+            motion:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/reloadButtonL" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/divider3"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/constraintLayout4"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim3"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/backButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/forwardButtonL"
+            motion:layout_constraintStart_toEndOf="@+id/backButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/backButtonL"
+            motion:layout_constraintTop_toTopOf="@+id/backButtonL" />
+        <Constraint
+            android:id="@+id/reloadButtonL"
+            motion:layout_constraintStart_toEndOf="@+id/forwardButtonL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/forwardButtonL"
+            motion:layout_constraintTop_toTopOf="@+id/forwardButtonL"
+            android:rotation="360" />
+        <Constraint
+            android:id="@+id/addButton"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/recyclerView2"
+            android:layout_marginEnd="32dp"
+            motion:layout_constraintTop_toTopOf="@+id/recyclerView2" />
+        <Constraint
+            android:id="@+id/divider"
+            motion:layout_constraintStart_toEndOf="@+id/reloadButtonL"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="12dp"
+            motion:layout_constraintTop_toTopOf="@+id/reloadButtonL"
+            android:layout_marginTop="4dp" />
+        <Constraint
+            android:id="@+id/recyclerView2"
+            motion:layout_constraintEnd_toStartOf="@+id/addButton"
+            motion:layout_constraintStart_toEndOf="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim4"
+            motion:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/reloadButtonL" />
+    </ConstraintSet>
+</MotionScene>

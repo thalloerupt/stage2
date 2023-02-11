@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dim6">512dp</dimen>
+    <dimen name="dim4">64dp</dimen>
+    <dimen name="dim3">56dp</dimen>
+    <dimen name="dim7">216dp</dimen>
+    <dimen name="dim2">24dp</dimen>
+    <dimen name="dim5">128dp</dimen>
+    <dimen name="dim1">32dp</dimen>
+    <dimen name="dim0">16dp</dimen>
+</resources>

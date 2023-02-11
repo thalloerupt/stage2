@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="200"
+        motion:motionInterpolator="linear">
+       <KeyFrameSet>
+       </KeyFrameSet>
+        <OnClick motion:targetId="@id/materialButton3"
+            motion:clickAction="toggle" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/materialButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/qrButton"
+            motion:layout_constraintEnd_toStartOf="@+id/signinButton"
+            motion:layout_constraintStart_toEndOf="@+id/materialButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/materialButton3"
+            android:visibility="gone"
+            motion:layout_constraintTop_toTopOf="@+id/materialButton3" />
+        <Constraint
+            android:id="@+id/signinButton"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="@dimen/dim1"
+            android:layout_height="@dimen/dim1"
+            motion:layout_constraintBottom_toBottomOf="@+id/qrButton"
+            android:visibility="gone"
+            motion:layout_constraintTop_toTopOf="@+id/qrButton" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/qrButton"
+            motion:layout_constraintEnd_toStartOf="@+id/signinButton"
+            motion:layout_constraintStart_toEndOf="@+id/materialButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/materialButton3"
+            android:visibility="visible"
+            motion:layout_constraintTop_toTopOf="@+id/materialButton3"
+            android:layout_marginEnd="4dp" />
+        <Constraint
+            android:id="@+id/materialButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:rotation="180" />
+        <Constraint
+            android:id="@+id/signinButton"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="@dimen/dim2"
+            android:layout_height="@dimen/dim2"
+            motion:layout_constraintBottom_toBottomOf="@+id/qrButton"
+            android:visibility="visible"
+            motion:layout_constraintTop_toTopOf="@+id/qrButton"
+            android:layout_marginEnd="16dp" />
+    </ConstraintSet>
+</MotionScene>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottomsheet">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/dim1"
+        android:layout_height="@dimen/dim1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/extension_puzzle" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="@dimen/dim1"
+        android:layout_height="@dimen/dim1"
+        android:layout_marginEnd="16dp"
+        app:backgroundTint="@color/onSecondaryContainer"
+        app:icon="@drawable/close"
+        app:iconGravity="textStart"
+        app:iconSize="@dimen/dim2"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <org.mozilla.geckoview.GeckoView
+        android:id="@+id/addonsView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dim6"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,160 @@
+
+// Optionally, set any parameters to send to the plugin.
+
+
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+
+}
+// Optionally, set any parameters to send to the plugin.
+
+
+kapt {
+    generateStubs = true
+}
+
+android {
+    namespace 'com.thallo.stage'
+    compileSdk 33
+    buildFeatures {
+        viewBinding = true
+        compose true
+    }
+    defaultConfig {
+        applicationId "com.thallo.stage"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    dataBinding {
+        enabled = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+        pickFirst 'lib/arm64-v8a/libxul.so'
+        pickFirst 'lib/armeabi-v7a/libxul.so'
+        pickFirst 'lib/x86/libxul.so'
+        pickFirst 'lib/x86_64/libxul.so'
+
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'arm64-v8a', 'armeabi-v7a'
+        }
+    }
+}
+
+// Optionally, set any parameters to send to the plugin.
+
+
+configurations {
+    jnaForTest
+}
+
+
+dependencies {
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    jnaForTest "net.java.dev.jna:jna:5.6.0@jar"
+    testImplementation files(configurations.jnaForTest.copyRecursive().files)
+    // testImplementation "org.mozilla.telemetry:glean-forUnitTests:51.4.0"
+    def rxhttp_version = '3.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation "com.github.liujingxing.rxhttp:rxhttp:$rxhttp_version"
+    kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttp_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation platform('androidx.compose:compose-bom:2022.10.00')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material:material:1.1.1'
+    implementation platform('androidx.compose:compose-bom:2022.10.00')
+    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.8.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation "org.mozilla.geckoview:geckoview:109.0.20230112150232"
+    implementation 'androidx.core:core-ktx:+'
+    implementation 'androidx.databinding:databinding-runtime:7.1.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation "org.mozilla.components:feature-qr:109.1.1"
+    implementation "org.mozilla.components:support-base:109.1.1"
+    implementation "org.mozilla.components:service-firefox-accounts:109.1.1"
+    implementation "org.mozilla.components:support-rusthttp:109.1.1"
+    implementation "org.mozilla.components:support-rusthttp:109.1.1"
+    implementation "org.mozilla.components:browser-storage-sync:109.1.1"
+    implementation "org.mozilla.components:lib-fetch-httpurlconnection:109.1.1"
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    def room_version = "2.5.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
+    // To use Kotlin Symbol Processing (KSP)
+
+    // optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // optional - Paging 3 Integration
+    implementation "androidx.room:room-paging:$room_version"
+}
+

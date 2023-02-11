@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="surface">#121113</color>
+    <color name="onSurface">#272628</color>
+    <color name="onSecondaryContainer">#2962FF</color>
+    <color name="textDayNight">@color/white</color>
+
+</resources>
