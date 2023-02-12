@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -187,8 +188,7 @@ class MainActivity : AppCompatActivity() {
         }
         DownloadTaskLiveData.getInstance().observe(this){
             binding.bottomLayout?.let { it1 ->
-            Snackbar.make(
-                it1, "开始下载", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.content.viewPager, "开始下载", Snackbar.LENGTH_SHORT).show()
         };}
 
         if (getSizeName(this)=="large")
@@ -251,6 +251,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    
 
 
 }

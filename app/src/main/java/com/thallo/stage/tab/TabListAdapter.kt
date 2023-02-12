@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.databinding.ItemTablistPhoneBinding
 import com.thallo.stage.session.DelegateLivedata
 import com.thallo.stage.session.SessionDelegate
@@ -19,6 +20,7 @@ class TabListAdapter : ListAdapter<SessionDelegate, TabListAdapter.ItemTestViewH
             binding.user=getItem(adapterPosition)
             binding.wholeTab?.setOnClickListener{
                 DelegateLivedata.getInstance().Value(getItem(adapterPosition))
+                HomeLivedata.getInstance().Value(false)
                 select.onSelect()
             }
             binding.materialButton?.setOnClickListener { RemoveTabLiveData.getInstance().Value(adapterPosition)

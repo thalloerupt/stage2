@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
+import com.thallo.stage.R
 import com.thallo.stage.componets.RoundedCornersTransform
+import java.net.URI
 
 @BindingAdapter(value = ["imageBitmap"], requireAll = false)
     fun loadImage(view: ImageView, bitmap: Bitmap) {
@@ -47,4 +49,13 @@ fun isActiveL(view: ProgressBar, boolean: Boolean) {
         view.visibility= View.VISIBLE
     else view.visibility= View.GONE
 
+}
+
+@BindingAdapter(value = ["iconUri"], requireAll = false)
+fun loadIcon(view: ImageView, url: String?) {
+    if (url == null) return
+    val uri = URI.create(url)
+    val faviconUrl = uri.scheme + "://" + uri.host + "/favicon.ico"
+    Glide.with(view.context).load(faviconUrl).placeholder(R.drawable.globe)
+        .into(view)
 }

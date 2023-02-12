@@ -100,6 +100,7 @@ class SecondFragment : Fragment() {
             AddTabLiveData.getInstance().Value(active)
             binding.geckoview.session?.setActive(false)
             binding.geckoview.releaseSession()
+            GeckoRuntime.getDefault(requireContext()).webExtensionController.setTabActive(it.session, true)
             binding.geckoview.setSession(it.session)
         }
 

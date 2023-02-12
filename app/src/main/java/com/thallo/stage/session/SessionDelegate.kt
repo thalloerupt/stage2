@@ -164,7 +164,6 @@ class SessionDelegate() :BaseObservable(){
                 if (url != null) {
                     u=url
                 }
-                GeckoRuntime.getDefault(mContext).webExtensionController.setTabActive(session, true)
 
                 notifyPropertyChanged(com.thallo.stage.BR.u)
             }
@@ -187,6 +186,10 @@ class SessionDelegate() :BaseObservable(){
     fun close(){
         session.close()
         bitmap.recycle()
+    }
+    fun open(){
+        if(!session.isOpen)
+            session.open(GeckoRuntime.getDefault(mContext))
     }
 
     interface Login{
