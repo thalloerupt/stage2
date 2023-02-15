@@ -2,34 +2,32 @@ package com.thallo.stage.database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
+import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.bookmark.BookmarkDao
 import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryDao
 
-@Database(entities = [Bookmark::class, History::class], version = 1,exportSchema = false)
+@Database(entities = [Bookmark::class, History::class], version = 1, exportSchema = false)
 abstract class StageData : RoomDatabase() {
-    abstract fun getBookmarkDao(): BookmarkDao
-    abstract fun getHistoryDao(): HistoryDao
+    abstract val historyDao: HistoryDao?
+    abstract val bookmarkDao: BookmarkDao?
 
     companion object {
-        @Volatile
         private var INSTANCE: StageData? = null
         @JvmStatic
-        fun getInstance(context: Context): StageData {
-            val tmpInstance = INSTANCE
-            if (tmpInstance != null) {
-                return tmpInstance
+        @Synchronized
+        fun getDatabase(context: Context): StageData? {
+            if (INSTANCE == null) {
+                INSTANCE = databaseBuilder(
+                    context.applicationContext,
+                    StageData::class.java,
+                    "UserDatabase"
+                )
+                    .build()
             }
-            //锁
-            synchronized(this) {
-                val instance =
-                    Room.databaseBuilder(context, StageData::class.java, "userDb").build()
-                INSTANCE = instance
-                return instance
-            }
+            return INSTANCE
         }
     }
 }

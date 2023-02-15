@@ -4,11 +4,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "bookmark")
-data class Bookmark(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "title", typeAffinity = ColumnInfo.TEXT) val title: String?,
-    @ColumnInfo(name = "url", typeAffinity = ColumnInfo.TEXT) val url: String?,
-    @ColumnInfo(name = "category", typeAffinity = ColumnInfo.TEXT) val category: String?,
+@Entity
+class Bookmark(
+    @field:ColumnInfo(name = "url_info") var url: String, @field:ColumnInfo(
+        name = "title_info"
+    ) var title: String, @field:ColumnInfo(name = "file_name") var file: String, @field:ColumnInfo(
+        name = "show_info"
+    ) var show: Boolean
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id = 0
 
-    )
+    @ColumnInfo(name = "mix")
+    var mix: String = url + title
+
+}
