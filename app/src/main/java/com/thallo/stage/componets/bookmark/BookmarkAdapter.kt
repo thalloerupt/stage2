@@ -1,20 +1,21 @@
-package com.thallo.stage.componets
+package com.thallo.stage.componets.bookmark
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.databinding.ItemBookmarkBinding
 import mozilla.components.concept.storage.BookmarkNode
 
-class BookmarkAdapter : ListAdapter<BookmarkNode, BookmarkAdapter.ItemTestViewHolder>(
-    BookmarkListCallback
+class BookmarkAdapter : ListAdapter<Bookmark, BookmarkAdapter.ItemTestViewHolder>(
+BookmarkListCallback
 ) {
     lateinit var select: Select
 
     inner class ItemTestViewHolder(private val binding: ItemBookmarkBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(bean: BookmarkNode, mContext: Context){
+        fun bind(bean: Bookmark, mContext: Context){
 
             binding.textView9.text=bean.title
             binding.textView10.text=bean.url

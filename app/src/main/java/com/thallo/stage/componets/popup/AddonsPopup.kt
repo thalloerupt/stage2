@@ -1,4 +1,4 @@
-package com.thallo.stage.componets
+package com.thallo.stage.componets.popup
 
 import android.content.Context
 import android.content.Intent

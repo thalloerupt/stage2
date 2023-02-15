@@ -7,7 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.thallo.stage.databinding.ItemBookmarkBinding
+import com.thallo.stage.componets.popup.AddonsPopup
 import com.thallo.stage.databinding.ItemMenuAddonsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class MenuAddonsAdapater : ListAdapter<WebExtension, MenuAddonsAdapater.ItemTest
     inner class ItemTestViewHolder(private val binding: ItemMenuAddonsBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(bean: WebExtension, mContext: Context){
             mContext as LifecycleOwner
-            val addonsPopup=AddonsPopup(mContext)
+            val addonsPopup= AddonsPopup(mContext)
             bean.setActionDelegate(object :WebExtension.ActionDelegate{
                 override fun onBrowserAction(
                     extension: WebExtension,

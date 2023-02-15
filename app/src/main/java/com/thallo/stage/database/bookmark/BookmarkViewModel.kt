@@ -12,7 +12,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     }
 
     val allBookmarksLive: LiveData<List<Bookmark?>?>?
-        get() = bookmarkRepository.getAllBookmarkLive()
+        get() = bookmarkRepository.allBookmarkLive
 
     fun findBookmarksWithPattern(pattern: String): LiveData<List<Bookmark?>?>? {
         return bookmarkRepository.findBookmarksWithPattern(pattern)

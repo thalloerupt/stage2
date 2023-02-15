@@ -1,4 +1,4 @@
-package com.thallo.stage.componets
+package com.thallo.stage.componets.popup
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thallo.stage.MainActivity
 import com.thallo.stage.R
+import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.databinding.PopupTabBinding
 import com.thallo.stage.session.GeckoViewModel
 import com.thallo.stage.session.SeRuSettings
