@@ -13,6 +13,7 @@ import com.thallo.stage.componets.bookmark.sync.SyncBookmarkAdapter
 import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.databinding.FragmentBookmarkBinding
 import com.thallo.stage.session.createSession
+import com.thallo.stage.utils.GroupUtils
 
 /**
  * A simple [Fragment] subclass.
@@ -40,8 +41,12 @@ class BookmarkFragment : Fragment() {
         binding.bookmarkRecyclerview.adapter=bookmarkAdapter
         binding.bookmarkRecyclerview.layoutManager = LinearLayoutManager(context)
         bookmarkViewModel.allBookmarksLive?.observe(requireActivity()){
-            bookmarkAdapter.submitList(it)
+            val groupUtils= it?.let { it1 -> GroupUtils(it1) }
+            if (groupUtils != null) {
+                bookmarkAdapter.submitList(groupUtils.groupBookmark())
+            }
         }
+
         bookmarkAdapter.select= object : BookmarkAdapter.Select {
             override fun onSelect(url: String) {
                 createSession(url,requireActivity())

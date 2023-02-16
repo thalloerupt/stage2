@@ -2,6 +2,7 @@ package com.thallo.stage.componets.bookmark.sync
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class SyncBookmarkAdapter : ListAdapter<BookmarkNode, SyncBookmarkAdapter.ItemTe
             binding.textView9.text=bean.title
             binding.textView10.text=bean.url
             binding.bookmarkItem.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }
+
 
         }
 

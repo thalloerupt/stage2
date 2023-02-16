@@ -10,14 +10,127 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="菜单"
-            android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reloadBottonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:icon="@drawable/reload"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookmarkButtonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/bookmarks"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="@+id/reloadBottonFragment"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/reloadBottonFragment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/historyButtonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/hourglass_split"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="@+id/bookmarkButtonFragment"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="@+id/bookmarkButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/modeBottonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/desktop"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="@+id/historyButtonFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/historyButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/settingButtonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                app:icon="@drawable/gear_fill"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reloadBottonFragment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addonsButtonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/extension_puzzle"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="@+id/settingButtonFragment"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/settingButtonFragment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/downloadButtonFragment"
+                style="@style/Widget.Material3.Button.IconButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/download"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toBottomOf="@+id/addonsButtonFragment"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="@+id/addonsButtonFragment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
