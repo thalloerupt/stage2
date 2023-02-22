@@ -18,7 +18,7 @@ class BookmarkPopup {
 
     private val fragments=listOf<Fragment>(BookmarkFragment(), SyncBookmarkFragment())
     constructor(
-        context: MainActivity,
+        context: MainActivity
     ) {
         this.context = context
         bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialog )

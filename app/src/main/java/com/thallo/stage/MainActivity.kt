@@ -1,10 +1,12 @@
 package com.thallo.stage
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
@@ -39,11 +41,15 @@ import com.thallo.stage.tab.DelegateListLiveData
 import com.thallo.stage.tab.RemoveTabLiveData
 import com.thallo.stage.tab.TabListAdapter
 import com.thallo.stage.utils.FullScreen
+import com.thallo.stage.utils.SoftKeyBoardListener
+import com.thallo.stage.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.thallo.stage.utils.StatusUtils
 import com.thallo.stage.utils.getSizeName
 import com.thallo.stage.webextension.WebextensionSession
+import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
+
 /**
  * 2023.1.4创建，1.21除夕
  * 2023.2.11 19:10 正月廿一 记录
@@ -68,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         WebextensionSession(this)
         onBackPressedDispatcher.addCallback(this, onBackPress)
         geckoViewModel = ViewModelProvider(this)[GeckoViewModel::class.java]
-        openUri()
         if (binding.content.drawer!=null) {
             standardSideSheetBehavior = BottomSheetBehavior.from(binding.content.drawer as ConstraintLayout)
             standardSideSheetBehavior.peekHeight=0
@@ -78,6 +83,16 @@ class MainActivity : AppCompatActivity() {
         adapter.select=object :TabListAdapter.Select{ override fun onSelect() {} }
 
         binding.SearchText?.imeOptions = EditorInfo.IME_ACTION_SEARCH
+        binding.SearchText?.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus)
+                binding.bottomMotionLayout?.transitionToEnd()
+            else{
+                binding.bottomMotionLayout?.transitionToStart()
+                binding.SearchText?.setText(binding.user?.u)
+            }
+        }
+        binding.materialButtonClear?.setOnClickListener { binding.SearchText?.setText("") }
+
         binding.SearchText?.setOnKeyListener(View.OnKeyListener { _, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.SearchText!!.text.toString()
@@ -217,6 +232,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createSession(uri: String) {
+        binding.content.viewPager.currentItem=1
+
         val session = GeckoSession()
         val sessionSettings = session.settings
         if (getSizeName(this)=="large")
@@ -227,17 +244,15 @@ class MainActivity : AppCompatActivity() {
         session.open(GeckoRuntime.getDefault(this) )
         session.loadUri(uri)
         geckoViewModel.changeSearch(session)
-        binding.content.viewPager.currentItem=1
 
     }
-    fun openUri(){
-        val intent = intent
-        val uri: Uri? = intent.data
-        if (uri != null) {
-            createSession(uri.toString())
-        }
-    }
 
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+    }
     fun nav(s:String){
         val navController = findNavController(R.id.fragmentContainerView)
         when (s) {
@@ -247,7 +262,27 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    
+
+    override fun onResume() {
+        super.onResume()
+        val uri: Uri? = intent.data
+        if (uri != null) {
+            createSession(uri.toString())
+        }
+        GeckoRuntime.getDefault(this).activityDelegate= GeckoRuntime.ActivityDelegate {
+            Log.d("test",uri.toString())
+            GeckoResult.fromValue(Intent())
+        }
+        SoftKeyBoardListener.setListener(this, object : OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) {
+            }
+
+            override fun keyBoardHide(height: Int) {
+                binding.bottomMotionLayout?.transitionToStart()
+                binding.SearchText?.clearFocus()
+            }
+        })
+    }
 
 
 }

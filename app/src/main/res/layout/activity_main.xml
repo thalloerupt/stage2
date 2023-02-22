@@ -39,11 +39,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.motion.widget.MotionLayout
+                    android:id="@+id/bottomMotionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/surface">
+                    android:background="@color/surface"
+                    app:layoutDescription="@xml/activity_main_xml_constraintlayout5_scene">
 
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:progress="@{user.mProgress}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:trackColor="@color/surface"
+                        app:trackThickness="3dp" />
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/materialButtonHome"
                         style="@style/Widget.Material3.Button.IconButton"
@@ -64,6 +76,17 @@
                         app:layout_constraintBottom_toBottomOf="@+id/SearchText"
                         app:layout_constraintEnd_toStartOf="@+id/materialButtonMenu"
                         app:layout_constraintTop_toTopOf="@+id/SearchText" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/materialButtonClear"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/delete_circle_fill"
+                        app:layout_constraintBottom_toBottomOf="@+id/SearchText"
+                        app:layout_constraintEnd_toStartOf="@+id/materialButtonTab"
+                        app:layout_constraintTop_toTopOf="@+id/SearchText"
+                        tools:visibility="gone" />
 
                     <TextView
                         android:id="@+id/SizeText"
@@ -100,10 +123,10 @@
                         android:inputType="textPersonName"
                         android:text="@{user.u}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/materialButtonTab"
+                        app:layout_constraintEnd_toStartOf="@+id/materialButtonClear"
                         app:layout_constraintStart_toEndOf="@+id/materialButtonHome"
                         app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.motion.widget.MotionLayout>
             </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

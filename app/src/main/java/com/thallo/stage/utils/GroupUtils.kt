@@ -13,7 +13,8 @@ class GroupUtils{
 
     constructor(list: List<Bookmark?>) {
         this.list = list
-        retrieval()
+        if(!list.isNullOrEmpty())
+            retrieval()
 
     }
 

@@ -16,22 +16,12 @@
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/motionLayout"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dim5"
+            android:layout_height="120dp"
             android:background="@color/surface"
             app:layoutDescription="@xml/activity_main_xml_constraintlayout2_scene"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/onSecondaryContainer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout4"
@@ -47,9 +37,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_edittext2"
                     android:ems="10"
                     android:hint="@string/hint"
@@ -58,7 +48,7 @@
                     android:textColor="@color/textDayNight"
                     android:textColorHint="@color/text"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/addonsButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,16 +73,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/menuButton"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/addonsButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/people_circle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

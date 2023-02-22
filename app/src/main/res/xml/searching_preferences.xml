@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_diy"
+        android:title="@string/diySearching" />
+    <ListPreference
+        android:entryValues="@array/searchEngine_entries"
+        app:defaultValue="@string/baidu"
+        app:entries="@array/searchEngine_values"
+        app:key="searchEngine"
+        app:title="@string/searching"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/diyAddress"
+        app:dependency="switch_diy"
+        app:key="edit_diy"
+        app:selectable="true" />
+</PreferenceScreen>

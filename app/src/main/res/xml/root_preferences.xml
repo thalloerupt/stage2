@@ -5,8 +5,12 @@
         app:enableCopying="false"
         app:iconSpaceReserved="false">
 
-        <Preference app:title="@string/searching" />
-        <Preference app:title="@string/extensions" />
+        <Preference
+            app:key="searching"
+            app:title="@string/searching" />
+        <Preference
+            app:key="addons"
+            app:title="@string/extensions" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/advanced"
@@ -42,4 +46,5 @@
             app:key="settingAbout"
             app:title="@string/about_stage" />
     </PreferenceCategory>
+
 </PreferenceScreen>

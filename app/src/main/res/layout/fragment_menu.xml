@@ -75,7 +75,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/bookmarkButtonFragment"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="@+id/bookmarkButton" />
+                app:layout_constraintTop_toTopOf="@+id/bookmarkButtonFragment" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/modeBottonFragment"
@@ -88,7 +88,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/historyButtonFragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/historyButton" />
+                app:layout_constraintTop_toTopOf="@+id/historyButtonFragment" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/settingButtonFragment"

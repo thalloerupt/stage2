@@ -52,6 +52,11 @@ class MenuPopup{
             bottomSheetDialog.dismiss()
 
         }
+        binding.historyButton.setOnClickListener {
+            HistoryPopup(context).show()
+            bottomSheetDialog.dismiss()
+
+        }
         binding.starButton.setOnClickListener {
             if (sessionDelegate!=null){
                 var bookmark=Bookmark(sessionDelegate!!.u, sessionDelegate!!.mTitle,"默认",true)

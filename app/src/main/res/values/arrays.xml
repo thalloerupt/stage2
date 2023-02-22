@@ -9,4 +9,18 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+    <string-array name="searchEngine_entries">
+        <item>@string/baidu</item>
+        <item>@string/google</item>
+        <item>@string/bing</item>
+        <item>@string/sogou</item>
+    </string-array>
+
+    <string-array name="searchEngine_values">
+        <item>百度</item>
+        <item>谷歌</item>
+        <item>必应</item>
+        <item>搜狗</item>
+
+    </string-array>
 </resources>

@@ -13,13 +13,6 @@
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/divider3"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
-        <Constraint
             android:id="@+id/constraintLayout4"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
@@ -78,13 +71,6 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:id="@+id/divider3"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/constraintLayout4"
             motion:layout_constraintEnd_toEndOf="parent"

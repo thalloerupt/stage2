@@ -18,6 +18,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
         }
+        findPreference<Preference>("searching")?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_settingsSearching2)
+            false
+        }
+        findPreference<Preference>("addons")?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_addonsManagerFragment)
+            false
+        }
+
 
 
 

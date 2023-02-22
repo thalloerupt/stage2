@@ -2,14 +2,18 @@ package com.thallo.stage.session
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import com.thallo.stage.*
 import com.thallo.stage.R
+import com.thallo.stage.database.history.History
+import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.download.DownloadTask
 import com.thallo.stage.download.DownloadTaskLiveData
 import com.thallo.stage.utils.UriUtils
@@ -17,6 +21,7 @@ import com.thallo.stage.webextension.WebextensionSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mozilla.components.service.fxa.SyncEngine
 import org.mozilla.geckoview.*
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSession.ProgressDelegate
@@ -51,16 +56,18 @@ class SessionDelegate() :BaseObservable(){
     var canForward:Boolean=false
 
     var downloadTasks=ArrayList<DownloadTask>()
+    lateinit var historyViewModel:HistoryViewModel
 
     constructor(mContext: FragmentActivity, session:GeckoSession) : this() {
         this.mContext = mContext
         this.session = session
         val  geckoViewModel: GeckoViewModel =ViewModelProvider(mContext).get(GeckoViewModel::class.java)
-        val  sessionViewModel: SessionViewModel =ViewModelProvider(mContext).get(SessionViewModel::class.java)
+        historyViewModel=ViewModelProvider(mContext).get(HistoryViewModel::class.java)
         bitmap= mContext.getDrawable(R.drawable.home_outline)?.toBitmap()!!
         DownloadTaskLiveData.getInstance().observe(mContext){
             downloadTasks=it
         }
+
 
         session.contentDelegate = object : GeckoSession.ContentDelegate {
             override fun onExternalResponse(session: GeckoSession, response: WebResponse) {
@@ -92,6 +99,9 @@ class SessionDelegate() :BaseObservable(){
                 if (title != null) {
                     mTitle=title
                 }
+                var history= title?.let { History(u, it,0) }
+                historyViewModel.insertHistories(history)
+
                 notifyPropertyChanged(BR.mTitle)
 
             }
@@ -112,9 +122,19 @@ class SessionDelegate() :BaseObservable(){
         }
 
         session.progressDelegate = object : ProgressDelegate {
+            override fun onSessionStateChange(
+                session: GeckoSession,
+                sessionState: GeckoSession.SessionState
+            ) {
+                super.onSessionStateChange(session, sessionState)
+            }
             override fun onProgressChange(session: GeckoSession, progress: Int) {
                 super.onProgressChange(session, progress)
-                mProgress=progress
+                if (progress!=100)
+                    mProgress=progress
+                else mProgress=0
+
+
                 notifyPropertyChanged(BR.mProgress)
             }
             override fun onPageStart(session: GeckoSession, url: String) {
@@ -137,6 +157,14 @@ class SessionDelegate() :BaseObservable(){
 
 
         session.navigationDelegate = object : NavigationDelegate {
+            override fun onLoadRequest(
+                session: GeckoSession,
+                request: NavigationDelegate.LoadRequest
+            ): GeckoResult<AllowOrDeny>? {
+
+
+                return GeckoResult.fromValue(AllowOrDeny.ALLOW)
+            }
             override fun onLoadError(
                 session: GeckoSession,
                 uri: String?,
@@ -161,6 +189,9 @@ class SessionDelegate() :BaseObservable(){
             ) {
 
                 super.onLocationChange(session, url, perms)
+                if (url != null) {
+                    Log.d("可以？", url)
+                }
                 if (url != null) {
                     u=url
                 }

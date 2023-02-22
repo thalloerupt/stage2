@@ -15,6 +15,16 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsSearching2"
+            app:destination="@id/settingsSearching2"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_settingsFragment_to_addonsManagerFragment"
+            app:destination="@id/addonsManagerFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/downloadFragment"
@@ -30,4 +40,8 @@
         android:name="com.thallo.stage.AboutFragment"
         android:label=" "
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/settingsSearching2"
+        android:name="com.thallo.stage.settings.SettingsSearching"
+        android:label="@string/searching" />
 </navigation>

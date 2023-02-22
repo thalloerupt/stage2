@@ -28,6 +28,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|uiMode|screenSize"
             android:exported="true"
+            android:launchMode="singleTop"
             android:label="@string/app_name"
             android:theme="@style/Theme.Stage.NoActionBar">
             <intent-filter>
