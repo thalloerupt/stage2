@@ -17,11 +17,11 @@
         app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="switch_preference_1"
+            android:key="switch_userscalable"
             android:title="@string/ForceUserScalable" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_1"
+            android:defaultValue="true"
+            android:key="switch_automatic_fontsize"
             android:title="@string/AutomaticFontSize" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -30,14 +30,8 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="switch_preference_1"
+            android:key="switch_https_only"
             android:title="@string/https_only" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_1"
-            android:title="@string/Cookie" />
-        <Preference app:title="@string/tracking_protecting" />
-        <Preference app:title="@string/web_permission" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/about"

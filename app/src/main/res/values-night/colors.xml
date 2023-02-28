@@ -4,6 +4,6 @@
     <color name="onSurface">#272628</color>
     <color name="onSecondaryContainer">@color/purple_700</color>
     <color name="textDayNight">@color/white</color>
-    <color name="components">@color/material_dynamic_primary80</color>
+    <color name="components">@color/purple_500</color>
 
 </resources>

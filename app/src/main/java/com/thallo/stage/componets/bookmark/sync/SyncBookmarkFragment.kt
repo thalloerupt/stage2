@@ -90,16 +90,8 @@ class SyncBookmarkFragment : Fragment()  {
     fun createSession(uri: String) {
         val session = GeckoSession()
         val sessionSettings = session.settings
-        if (context?.let { getSizeName(it) } =="large")
-            SeRuSettings(sessionSettings, GeckoRuntime.getDefault(requireContext()).settings, true)
-        else {
-            context?.let { GeckoRuntime.getDefault(it).settings }?.let {
-                SeRuSettings(
-                    sessionSettings,
-                    it, false
-                )
-            }
-        }
+        SeRuSettings(sessionSettings, requireActivity())
+
         context?.let { GeckoRuntime.getDefault(it) }?.let { session.open(it) }
         session.loadUri(uri)
         geckoViewModel.changeSearch(session)

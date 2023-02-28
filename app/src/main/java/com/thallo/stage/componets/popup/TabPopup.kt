@@ -53,11 +53,8 @@ class TabPopup {
     fun createSession(uri: String) {
         val session = GeckoSession()
         val sessionSettings = session.settings
-        if (getSizeName(context)=="large")
-            SeRuSettings(sessionSettings, GeckoRuntime.getDefault(context).settings,true)
-        else {
-            SeRuSettings(sessionSettings, GeckoRuntime.getDefault(context).settings,false)
-        }
+        SeRuSettings(sessionSettings, context)
+
         session.open(GeckoRuntime.getDefault(context) )
         session.loadUri(uri)
         geckoViewModel.changeSearch(session)

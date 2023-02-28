@@ -32,7 +32,7 @@
         android:label="@string/download" />
     <fragment
         android:id="@+id/addonsManagerFragment"
-        android:name="com.thallo.stage.addonsManagerFragment"
+        android:name="com.thallo.stage.AddonsManagerFragment"
         android:label="@string/addons"
         tools:layout="@layout/fragment_addons_manager" />
     <fragment

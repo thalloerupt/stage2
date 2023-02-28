@@ -2,7 +2,9 @@ package com.thallo.stage.componets.popup
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.view.LayoutInflater
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,11 +42,8 @@ class AddonsPopup {
         session.open(GeckoRuntime.getDefault(context))
         context as LifecycleOwner
         context.lifecycleScope.launch {
-            binding.imageView5.setImageBitmap(withContext(Dispatchers.IO) {
-                extension.metaData.icon?.getBitmap(
-                    72
-                )?.poll()
-            })
+            extension.metaData.icon.getBitmap(72).accept { binding.imageView5.setImageBitmap(it) }
+
             binding.textView.text=extension.metaData.name
         }
         binding.addonsView.setSession(session)

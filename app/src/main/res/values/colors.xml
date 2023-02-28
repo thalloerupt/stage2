@@ -9,9 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text">#7b7b7b</color>
     <color name="theme">#FFBB86FC</color>
-    <color name="surface">#121113</color>
-    <color name="onSurface">#272628</color>
-    <color name="onSecondaryContainer">@color/purple_200</color>
+    <color name="surface">@color/white</color>
+    <color name="onSurface">#f9f9f9</color>
+    <color name="onSecondaryContainer">#82B1FF</color>
     <color name="textDayNight">@color/black</color>
     <color name="components">@color/purple_500</color>
 </resources>

@@ -11,18 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.thallo.stage.componets.HomeLivedata
+import com.thallo.stage.broswer.Qr
 import com.thallo.stage.databinding.FragmentFirstBinding
 import com.thallo.stage.fxa.Fxa
 import com.thallo.stage.session.*
-import com.thallo.stage.utils.getSizeName
 import kotlinx.coroutines.launch
 import mozilla.components.concept.sync.Profile
 import mozilla.components.service.fxa.FxaAuthData
 import mozilla.components.service.fxa.manager.FxaAccountManager
 import mozilla.components.service.fxa.toAuthType
-import org.mozilla.geckoview.GeckoRuntime
-import org.mozilla.geckoview.GeckoSession
 import java.util.*
 
 /**
@@ -38,7 +35,6 @@ class FirstFragment : Fragment() {
     lateinit var geckoViewModel: GeckoViewModel
     private lateinit var fxaAccountManager: FxaAccountManager
     private  var fxa=Fxa()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,8 +58,9 @@ class FirstFragment : Fragment() {
                 } }
 
             }
-
         }
+
+
         binding.signinButton?.setOnClickListener {
             lifecycleScope.launch {
                 fxaAccountManager.beginAuthentication()?.let {
@@ -72,6 +69,10 @@ class FirstFragment : Fragment() {
                 }
             }
         }
+        binding.qrButton?.setOnClickListener {
+            Qr().show(requireActivity() as MainActivity)
+        }
+
 
         binding.HomeSearchText?.setOnKeyListener(View.OnKeyListener { view, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
@@ -123,11 +124,17 @@ class FirstFragment : Fragment() {
         }
 
 
+
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val REQUEST_CODE_CAMERA_PERMISSIONS = 1
     }
 
 }

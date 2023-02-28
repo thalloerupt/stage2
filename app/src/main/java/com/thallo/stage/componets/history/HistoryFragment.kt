@@ -20,8 +20,7 @@ class HistoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        historyViewModel= ViewModelProvider(this).get(HistoryViewModel::class.java)
-
+        historyViewModel= ViewModelProvider(this)[HistoryViewModel::class.java]
     }
 
     override fun onCreateView(

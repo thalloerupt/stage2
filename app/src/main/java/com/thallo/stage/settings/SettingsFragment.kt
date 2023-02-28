@@ -26,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findNavController().navigate(R.id.action_settingsFragment_to_addonsManagerFragment)
             false
         }
-
+        preferenceScreen.onPreferenceClickListener = Preference.OnPreferenceClickListener { true }
 
 
 

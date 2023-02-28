@@ -32,10 +32,7 @@ import com.thallo.stage.databinding.ActivityMainBinding
 import com.thallo.stage.download.DownloadTaskLiveData
 import com.thallo.stage.menu.AddonsPopupFragment
 import com.thallo.stage.menu.MenuFragment
-import com.thallo.stage.session.DelegateLivedata
-import com.thallo.stage.session.GeckoViewModel
-import com.thallo.stage.session.SeRuSettings
-import com.thallo.stage.session.SessionDelegate
+import com.thallo.stage.session.*
 import com.thallo.stage.tab.AddTabLiveData
 import com.thallo.stage.tab.DelegateListLiveData
 import com.thallo.stage.tab.RemoveTabLiveData
@@ -44,6 +41,7 @@ import com.thallo.stage.utils.FullScreen
 import com.thallo.stage.utils.SoftKeyBoardListener
 import com.thallo.stage.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.thallo.stage.utils.StatusUtils
+import com.thallo.stage.broswer.SearchEngine
 import com.thallo.stage.utils.getSizeName
 import com.thallo.stage.webextension.WebextensionSession
 import org.mozilla.geckoview.GeckoResult
@@ -83,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         adapter.select=object :TabListAdapter.Select{ override fun onSelect() {} }
 
         binding.SearchText?.imeOptions = EditorInfo.IME_ACTION_SEARCH
-        binding.SearchText?.setOnFocusChangeListener { v, hasFocus ->
+        binding.SearchText?.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus)
                 binding.bottomMotionLayout?.transitionToEnd()
             else{
@@ -100,33 +98,33 @@ class MainActivity : AppCompatActivity() {
                     if(binding.content.viewPager.currentItem==1)
                         binding.user?.session?.loadUri(value)
                     else
-                        createSession(value)
+                        createSession(value,this)
 
                 } else {
                     if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri("https://www.baidu.com/s?wd=$value")
+                        binding.user?.session?.loadUri("${SearchEngine(this)}$value")
                     else
-                        createSession("https://www.baidu.com/s?wd=$value")
+                        createSession("${SearchEngine(this)}$value",this)
                 }
                 binding.content.viewPager.currentItem=1
 
             }
             false
         })
-        binding.urlText?.setOnKeyListener(View.OnKeyListener { view, i, keyEvent ->
+        binding.urlText?.setOnKeyListener(View.OnKeyListener { _, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.urlText!!.text.toString()
                 if (Patterns.WEB_URL.matcher(value).matches() || URLUtil.isValidUrl(value)) {
                     if(binding.content.viewPager.currentItem==1)
                         binding.user?.session?.loadUri(value)
                     else
-                        createSession(value)
+                        createSession(value,this)
 
                 } else {
                     if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri("https://www.baidu.com/s?wd=$value")
+                        binding.user?.session?.loadUri("${SearchEngine(this)}$value")
                     else
-                        createSession("https://www.baidu.com/s?wd=$value")
+                        createSession("${SearchEngine(this)}$value",this)
                 }
 
             }
@@ -204,10 +202,15 @@ class MainActivity : AppCompatActivity() {
 
         if (getSizeName(this)=="large")
             FullScreen(this)
-        else {
-            //FullScreen(this)
-        }
 
+        val uri: Uri? = intent?.data
+        if (uri != null) {
+            createSession(uri.toString(),this)
+        }
+        GeckoRuntime.getDefault(this).activityDelegate= GeckoRuntime.ActivityDelegate {
+            Log.d("test",uri.toString())
+            GeckoResult.fromValue(Intent())
+        }
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -231,28 +234,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun createSession(uri: String) {
-        binding.content.viewPager.currentItem=1
-
-        val session = GeckoSession()
-        val sessionSettings = session.settings
-        if (getSizeName(this)=="large")
-            SeRuSettings(sessionSettings,GeckoRuntime.getDefault(this).settings,true)
-        else {
-            SeRuSettings(sessionSettings,GeckoRuntime.getDefault(this).settings,false)
-        }
-        session.open(GeckoRuntime.getDefault(this) )
-        session.loadUri(uri)
-        geckoViewModel.changeSearch(session)
-
-    }
 
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
 
-    }
+
     fun nav(s:String){
         val navController = findNavController(R.id.fragmentContainerView)
         when (s) {
@@ -263,16 +248,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        val uri: Uri? = intent.data
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val uri: Uri? = intent?.data
         if (uri != null) {
-            createSession(uri.toString())
+            createSession(uri.toString(),this)
         }
         GeckoRuntime.getDefault(this).activityDelegate= GeckoRuntime.ActivityDelegate {
             Log.d("test",uri.toString())
             GeckoResult.fromValue(Intent())
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
         SoftKeyBoardListener.setListener(this, object : OnSoftKeyBoardChangeListener {
             override fun keyBoardShow(height: Int) {
             }

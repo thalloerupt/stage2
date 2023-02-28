@@ -16,7 +16,6 @@ class HistoryAdapter : ListAdapter<History, HistoryAdapter.ItemTestViewHolder>(H
 
     inner class ItemTestViewHolder(private val binding: ItemBookmarkBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(bean: History, mContext: Context){
-
             binding.textView9.text=bean.title
             binding.textView10.text=bean.url
             binding.bookmarkItem.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }

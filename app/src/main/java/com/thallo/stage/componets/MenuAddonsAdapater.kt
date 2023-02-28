@@ -32,7 +32,7 @@ class MenuAddonsAdapater : ListAdapter<WebExtension, MenuAddonsAdapater.ItemTest
                     mContext.lifecycleScope.launch {
                         binding.addonsIcon.setImageBitmap(withContext(Dispatchers.IO) {
                             action.icon?.getBitmap(
-                                64
+                                72
                             )?.poll()
                         })
                     }

@@ -13,11 +13,12 @@
         app:title="@string/searching"
         app:useSimpleSummaryProvider="true" />
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue=""
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/diyAddress"
         app:dependency="switch_diy"
         app:key="edit_diy"
-        app:selectable="true" />
+        app:selectable="true"
+        app:summary="@string/edit_diy_warnning" />
 </PreferenceScreen>

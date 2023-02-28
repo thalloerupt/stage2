@@ -1,5 +1,6 @@
 package com.thallo.stage.session
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
@@ -8,10 +9,10 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import com.thallo.stage.*
 import com.thallo.stage.R
+import com.thallo.stage.componets.popup.IntentPopup
 import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.download.DownloadTask
@@ -21,7 +22,6 @@ import com.thallo.stage.webextension.WebextensionSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import mozilla.components.service.fxa.SyncEngine
 import org.mozilla.geckoview.*
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSession.ProgressDelegate
@@ -57,18 +57,20 @@ class SessionDelegate() :BaseObservable(){
 
     var downloadTasks=ArrayList<DownloadTask>()
     lateinit var historyViewModel:HistoryViewModel
+    lateinit var intentPopup:IntentPopup
 
     constructor(mContext: FragmentActivity, session:GeckoSession) : this() {
         this.mContext = mContext
         this.session = session
         val  geckoViewModel: GeckoViewModel =ViewModelProvider(mContext).get(GeckoViewModel::class.java)
         historyViewModel=ViewModelProvider(mContext).get(HistoryViewModel::class.java)
-        bitmap= mContext.getDrawable(R.drawable.home_outline)?.toBitmap()!!
+        bitmap= mContext.getDrawable(R.drawable.logo72)?.toBitmap()!!
+        intentPopup =IntentPopup(mContext)
+
+
         DownloadTaskLiveData.getInstance().observe(mContext){
             downloadTasks=it
         }
-
-
         session.contentDelegate = object : GeckoSession.ContentDelegate {
             override fun onExternalResponse(session: GeckoSession, response: WebResponse) {
                 var uri=response.uri
@@ -161,7 +163,19 @@ class SessionDelegate() :BaseObservable(){
                 session: GeckoSession,
                 request: NavigationDelegate.LoadRequest
             ): GeckoResult<AllowOrDeny>? {
-
+                val uri = Uri.parse(request.uri)
+                if (uri.scheme != null) {
+                    if (!uri.scheme!!.contains("https") && !uri.scheme!!.contains("http") && !uri.scheme!!.contains(
+                            "about"
+                        )
+                    ) {
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        if (intent.resolveActivity(mContext.packageManager) != null) {
+                            intentPopup.show(intent)
+                            Log.d("scheme1", uri.scheme!!)
+                        }
+                    }
+                }
 
                 return GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }

@@ -9,23 +9,16 @@ import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
 
 fun createSession(uri: String?,activity: Activity) {
+    HomeLivedata.getInstance().Value(false)
     val session = GeckoSession()
     val sessionSettings = session.settings
     val geckoViewModel= activity?.let { ViewModelProvider(it as ViewModelStoreOwner)[GeckoViewModel::class.java] }!!
+    SeRuSettings(sessionSettings, activity)
 
-    if (activity?.let { getSizeName(it) } =="large")
-        SeRuSettings(sessionSettings, GeckoRuntime.getDefault(activity).settings,true)
-    else {
-        activity?.let { GeckoRuntime.getDefault(it).settings }?.let {
-            SeRuSettings(sessionSettings,
-                it,false)
-        }
-    }
     activity?.let { GeckoRuntime.getDefault(it) }?.let { session.open(it) }
     if (uri != null) {
         session.loadUri(uri)
     }
     geckoViewModel.changeSearch(session)
-    HomeLivedata.getInstance().Value(false)
 
 }
