@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.thallo.stage.R
 import com.thallo.stage.componets.RoundedCornersTransform
@@ -58,4 +59,15 @@ fun loadIcon(view: ImageView, url: String?) {
     val faviconUrl = uri.scheme + "://" + uri.host + "/favicon.ico"
     Glide.with(view.context).load(faviconUrl).placeholder(R.drawable.globe)
         .into(view)
+}
+@BindingAdapter(value = ["stateIcon"], requireAll = false)
+fun stateIcon(view: MaterialButton, state: Int?) {
+    if (state == null) return
+    when(state){
+        0->view.icon=view.context.getDrawable(R.drawable.play_circle)
+        1->view.icon=view.context.getDrawable(R.drawable.pause_circle)
+        2->view.icon=view.context.getDrawable(R.drawable.pause_circle)
+
+    }
+
 }

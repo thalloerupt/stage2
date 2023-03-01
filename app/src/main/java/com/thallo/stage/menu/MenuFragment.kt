@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kongzue.dialogx.dialogs.PopNotification
+import com.kongzue.dialogx.interfaces.OnBindView
 import com.thallo.stage.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +33,13 @@ class MenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        PopNotification.build()
+            .setCustomView(object : OnBindView<PopNotification?>(com.thallo.stage.R.layout.item_tablist_phone) {
+                override fun onBind(dialog: PopNotification?, v: View) {
+                    //v.findViewById(...)
+                }
+            })
+            .show()
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }

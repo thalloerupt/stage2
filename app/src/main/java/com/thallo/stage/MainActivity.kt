@@ -12,6 +12,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.webkit.URLUtil
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +25,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.kongzue.dialogx.dialogs.PopNotification
+import com.kongzue.dialogx.dialogs.PopTip
+import com.kongzue.dialogx.interfaces.OnBindView
+import com.kongzue.dialogxmaterialyou.style.MaterialYouStyle
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.popup.MenuPopup
@@ -196,9 +203,19 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerView2?.smoothScrollToPosition(it)
         }
         DownloadTaskLiveData.getInstance().observe(this){
-            binding.bottomLayout?.let { it1 ->
-            Snackbar.make(binding.content.viewPager, "开始下载", Snackbar.LENGTH_SHORT).show()
-        };}
+            PopTip.build()
+                .setCustomView(object : OnBindView<PopTip?>(com.thallo.stage.R.layout.pop_mytip) {
+                    override fun onBind(dialog: PopTip?, v: View) {
+                        v.findViewById<TextView>(R.id.textView17).text = "正在下载"
+                        v.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
+                            var intent=Intent(this@MainActivity, HolderActivity::class.java)
+                            intent.putExtra("Page","DOWNLOAD")
+                            startActivity(intent)
+                        }
+                    }
+                })
+                .show()
+        }
 
         if (getSizeName(this)=="large")
             FullScreen(this)

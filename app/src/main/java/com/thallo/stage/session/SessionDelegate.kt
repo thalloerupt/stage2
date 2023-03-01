@@ -79,13 +79,14 @@ class SessionDelegate() :BaseObservable(){
                 }
                 else{
                 mContext.lifecycleScope.launch {
-                    var downloadTask:DownloadTask = DownloadTask(mContext,uri,withContext(Dispatchers.IO){
+                    var downloadTask = DownloadTask(mContext,uri,withContext(Dispatchers.IO){
                             UriUtils().getFileName(uri)
                         })
                     downloadTask.open()
                     downloadTasks.add(downloadTask)
                     DownloadTaskLiveData.getInstance().Value(downloadTasks) }
                 }
+                Log.d("ExternalResponse","OK")
 
 
             }
@@ -176,7 +177,6 @@ class SessionDelegate() :BaseObservable(){
                         }
                     }
                 }
-
                 return GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
             override fun onLoadError(
@@ -220,6 +220,12 @@ class SessionDelegate() :BaseObservable(){
                 geckoViewModel.changeSearch(newSession)
                 return GeckoResult.fromValue(newSession)
             }
+        }
+
+        session.promptDelegate= object : GeckoSession.PromptDelegate {
+
+
+
         }
 
 

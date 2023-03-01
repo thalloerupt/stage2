@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Stage"
         tools:targetApi="31">
+
         <activity
             android:name=".HolderActivity"
             android:exported="false"
@@ -64,7 +65,16 @@
                 <data android:mimeType="application/xhtml+xml"/>
             </intent-filter>
         </activity>
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.thallo.stage.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"
+                />
+        </provider>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

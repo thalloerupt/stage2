@@ -135,5 +135,6 @@
     <string name="description">描述:</string>
     <string name="pair_instructions_message">识别二维码</string>
     <string name="intent_message">网页希望打开本地应用</string>
+    <string name="details">详情</string>
 
 </resources>

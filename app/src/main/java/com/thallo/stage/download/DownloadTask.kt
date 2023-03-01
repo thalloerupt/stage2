@@ -1,19 +1,29 @@
 package com.thallo.stage.download
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
+import android.os.Build
+import android.util.Log
+import android.view.View
+import androidx.core.content.FileProvider
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.kongzue.dialogx.dialogs.PopNotification
+import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener
 import com.thallo.stage.BR
-import com.thallo.stage.utils.UriUtils
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import rxhttp.RxHttpPlugins
 import rxhttp.toDownloadFlow
 import rxhttp.wrapper.param.RxHttp
+import com.kongzue.dialogx.dialogs.PopTip
+import com.kongzue.dialogxmaterialyou.style.MaterialYouStyle
+import com.thallo.stage.R
+import java.io.File
+
 
 class DownloadTask : BaseObservable {
     @get:Bindable
@@ -32,7 +42,8 @@ class DownloadTask : BaseObservable {
     private var mContext:Context
     var uri:String
     private  var downloadFactory:Android10DownloadFactory
-    private var filename:String
+    var filename:String
+
     constructor(mContext: Context, uri: String,filename:String)  {
         this.mContext = mContext
         this.uri = uri
@@ -55,6 +66,9 @@ class DownloadTask : BaseObservable {
                     notifyChange()
                 }.catch {
                 }.collect {
+                    open(mContext,it)
+                    state=2
+                    notifyPropertyChanged(BR.state)
                 }
 
         }
@@ -66,5 +80,17 @@ class DownloadTask : BaseObservable {
         RxHttpPlugins.cancelAll(uri)
         state=0
         notifyPropertyChanged(BR.state)
+    }
+    fun open(context: Context, uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            intent.setDataAndType(uri, "application/vnd.android.package-archive")
+        } else {
+            intent.setDataAndType(uri, "application/vnd.android.package-archive")
+        }
+        context.startActivity(intent)
+
     }
 }
