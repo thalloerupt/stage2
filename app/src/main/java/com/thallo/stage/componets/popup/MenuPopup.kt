@@ -10,6 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thallo.stage.HolderActivity
 import com.thallo.stage.MainActivity
 import com.thallo.stage.R
+import com.thallo.stage.componets.BookmarkDialog
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.MenuAddonsAdapater
 import com.thallo.stage.database.bookmark.Bookmark
@@ -37,7 +38,12 @@ class MenuPopup{
         binding = PopupMenuBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(binding.root)
         DelegateLivedata.getInstance().observe(context){sessionDelegate=it}
-        HomeLivedata.getInstance().observe(context){isHome=it}
+        HomeLivedata.getInstance().observe(context){
+            isHome=it
+            if (it)
+                binding.constraintLayout5.visibility=View.GONE
+            else binding.constraintLayout5.visibility=View.VISIBLE
+        }
         binding.downloadButton.setOnClickListener {
             var intent=Intent(context, HolderActivity::class.java)
             intent.putExtra("Page","DOWNLOAD")
@@ -70,8 +76,7 @@ class MenuPopup{
         }
         binding.starButton.setOnClickListener {
             if (sessionDelegate!=null){
-                var bookmark=Bookmark(sessionDelegate!!.u, sessionDelegate!!.mTitle,"默认",true)
-                bookmarkViewModel.insertBookmarks(bookmark)
+                BookmarkDialog(context, sessionDelegate!!.mTitle, sessionDelegate!!.u).show()
             }
         }
         binding.reloadBotton.setOnClickListener {

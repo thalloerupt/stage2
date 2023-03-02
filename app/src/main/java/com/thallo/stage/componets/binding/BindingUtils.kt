@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.thallo.stage.R
-import com.thallo.stage.componets.RoundedCornersTransform
+import com.thallo.stage.utils.RoundedCornersTransform
 import java.net.URI
 
 @BindingAdapter(value = ["imageBitmap"], requireAll = false)
@@ -66,7 +66,7 @@ fun stateIcon(view: MaterialButton, state: Int?) {
     when(state){
         0->view.icon=view.context.getDrawable(R.drawable.play_circle)
         1->view.icon=view.context.getDrawable(R.drawable.pause_circle)
-        2->view.icon=view.context.getDrawable(R.drawable.pause_circle)
+        2->view.icon=view.context.getDrawable(R.drawable.play_circle)
 
     }
 

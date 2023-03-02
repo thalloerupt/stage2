@@ -8,11 +8,14 @@ import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.bookmark.BookmarkDao
 import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryDao
+import com.thallo.stage.database.shortcut.Shortcut
+import com.thallo.stage.database.shortcut.ShortcutDao
 
-@Database(entities = [Bookmark::class, History::class], version = 1, exportSchema = false)
+@Database(entities = [Bookmark::class, History::class,Shortcut::class], version = 1, exportSchema = false)
 abstract class StageData : RoomDatabase() {
     abstract val historyDao: HistoryDao?
     abstract val bookmarkDao: BookmarkDao?
+    abstract val shortcutDao: ShortcutDao?
 
     companion object {
         private var INSTANCE: StageData? = null

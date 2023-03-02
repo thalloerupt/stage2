@@ -37,12 +37,13 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:maxLines="1"
+                    android:ellipsize="middle"
                     android:text="@{task.title}"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@+id/downloadButton2"
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:singleLine="true" />
 
                 <ProgressBar
                     android:id="@+id/downloadProgress"

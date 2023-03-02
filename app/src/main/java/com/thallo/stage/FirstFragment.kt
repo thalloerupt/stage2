@@ -10,11 +10,17 @@ import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thallo.stage.broswer.Qr
+import com.thallo.stage.componets.bookmark.BookmarkAdapter
+import com.thallo.stage.componets.bookmark.shortcut.ShortcutAdapter
+import com.thallo.stage.database.shortcut.ShortcutViewModel
 import com.thallo.stage.databinding.FragmentFirstBinding
 import com.thallo.stage.fxa.Fxa
 import com.thallo.stage.session.*
+import com.thallo.stage.utils.GroupUtils
 import kotlinx.coroutines.launch
 import mozilla.components.concept.sync.Profile
 import mozilla.components.service.fxa.FxaAuthData
@@ -35,6 +41,7 @@ class FirstFragment : Fragment() {
     lateinit var geckoViewModel: GeckoViewModel
     private lateinit var fxaAccountManager: FxaAccountManager
     private  var fxa=Fxa()
+    lateinit var shortcutViewModel: ShortcutViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +55,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         geckoViewModel = activity?.let { ViewModelProvider(it)[GeckoViewModel::class.java] }!!
+        shortcutViewModel=ViewModelProvider(requireActivity())[ShortcutViewModel::class.java]
         fxaAccountManager= context?.let { fxa.init(it) }!!
         fxa.profileUpdated= object : Fxa.ProfileUpdated {
             override fun onProfileUpdated(profile: Profile) {
@@ -124,7 +132,19 @@ class FirstFragment : Fragment() {
         }
 
 
+        var shortcutAdapter= ShortcutAdapter()
+        binding.shortcutsRecyclerView?.adapter =shortcutAdapter
+        binding.shortcutsRecyclerView?.layoutManager = GridLayoutManager(context, 4)
+        shortcutViewModel.allShortcutsLive?.observe(requireActivity()){
+            shortcutAdapter.submitList(it)
+        }
 
+        shortcutAdapter.select= object : ShortcutAdapter.Select {
+            override fun onSelect(url: String) {
+                createSession(url,requireActivity())
+            }
+
+        }
 
     }
 

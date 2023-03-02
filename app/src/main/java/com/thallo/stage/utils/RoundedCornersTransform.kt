@@ -1,4 +1,4 @@
-package com.thallo.stage.componets
+package com.thallo.stage.utils
 
 import android.content.Context
 import android.graphics.*

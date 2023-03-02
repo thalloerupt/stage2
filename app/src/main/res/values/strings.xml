@@ -14,7 +14,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_holder">HolderActivity</string>
-
+    <string name="dia_bookmark_radio">添加到首页</string>
+    <string name="dia_bookmark_url">地址：</string>
+    <string name="dia_bookmark_title">名称：</string>
+    <string name="dia_add_bookmark_title">添加书签</string>
+    <string name="confirm">确定</string>
+    <string name="cancle">取消</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

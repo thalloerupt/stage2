@@ -1,28 +1,20 @@
 package com.thallo.stage.download
 
+import android.content.ClipData
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.util.Log
-import android.view.View
-import androidx.core.content.FileProvider
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import com.kongzue.dialogx.dialogs.PopNotification
-import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener
 import com.thallo.stage.BR
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import rxhttp.RxHttpPlugins
 import rxhttp.toDownloadFlow
 import rxhttp.wrapper.param.RxHttp
-import com.kongzue.dialogx.dialogs.PopTip
-import com.kongzue.dialogxmaterialyou.style.MaterialYouStyle
-import com.thallo.stage.R
-import java.io.File
 
 
 class DownloadTask : BaseObservable {
@@ -34,7 +26,7 @@ class DownloadTask : BaseObservable {
     var totalSize: Long = 0
     @get:Bindable
     var progress: Int = 0
-    @get:Bindable
+    @Bindable
     var state:Int = 0
     @get:Bindable
     var text:String=""
@@ -67,8 +59,6 @@ class DownloadTask : BaseObservable {
                 }.catch {
                 }.collect {
                     open(mContext,it)
-                    state=2
-                    notifyPropertyChanged(BR.state)
                 }
 
         }
@@ -82,14 +72,13 @@ class DownloadTask : BaseObservable {
         notifyPropertyChanged(BR.state)
     }
     fun open(context: Context, uri: Uri) {
+        state=2
+        notifyPropertyChanged(BR.state)
+        val resolver: ContentResolver = context.contentResolver
         val intent = Intent(Intent.ACTION_VIEW)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            intent.setDataAndType(uri, "application/vnd.android.package-archive")
-        } else {
-            intent.setDataAndType(uri, "application/vnd.android.package-archive")
-        }
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        intent.setDataAndType(uri,resolver.getType(uri));
         context.startActivity(intent)
 
     }

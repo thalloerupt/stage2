@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         binding.content.viewPager.adapter= CollectionAdapter(this,fragments)
         binding.content.viewPager.isUserInputEnabled=false
         binding.materialButtonMenu?.setOnClickListener { MenuPopup(this).show() }
-        binding.materialButtonHome?.setOnClickListener { binding.content.viewPager.setCurrentItem(0,true) }
+        binding.materialButtonHome?.setOnClickListener { HomeLivedata.getInstance().Value(true) }
         binding.materialButtonTab?.setOnClickListener { TabPopup(this).show() }
         binding.addButton?.setOnClickListener { HomeLivedata.getInstance().Value(true) }
         binding.content.popupCloseButton?.setOnClickListener { standardSideSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED }
