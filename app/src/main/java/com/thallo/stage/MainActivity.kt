@@ -12,7 +12,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.webkit.URLUtil
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
@@ -26,11 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
-import com.kongzue.dialogx.dialogs.PopNotification
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.interfaces.OnBindView
-import com.kongzue.dialogxmaterialyou.style.MaterialYouStyle
+import com.thallo.stage.broswer.SearchEngine
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.popup.MenuPopup
@@ -48,12 +45,10 @@ import com.thallo.stage.utils.FullScreen
 import com.thallo.stage.utils.SoftKeyBoardListener
 import com.thallo.stage.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.thallo.stage.utils.StatusUtils
-import com.thallo.stage.broswer.SearchEngine
 import com.thallo.stage.utils.getSizeName
 import com.thallo.stage.webextension.WebextensionSession
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
-import org.mozilla.geckoview.GeckoSession
 
 /**
  * 2023.1.4创建，1.21除夕
@@ -70,12 +65,14 @@ class MainActivity : AppCompatActivity() {
     var sessionDelegates=ArrayList<SessionDelegate>()
     private val adapter= TabListAdapter()
     lateinit var standardSideSheetBehavior:BottomSheetBehavior<ConstraintLayout>
+    var isHome:Boolean = false
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        StatusUtils().init(this)
+        StatusUtils.init(this)
         WebextensionSession(this)
         onBackPressedDispatcher.addCallback(this, onBackPress)
         geckoViewModel = ViewModelProvider(this)[GeckoViewModel::class.java]
@@ -93,7 +90,8 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomMotionLayout?.transitionToEnd()
             else{
                 binding.bottomMotionLayout?.transitionToStart()
-                binding.SearchText?.setText(binding.user?.u)
+                if (!isHome)
+                    binding.SearchText?.setText(binding.user?.u)
             }
         }
         binding.materialButtonClear?.setOnClickListener { binding.SearchText?.setText("") }
@@ -194,6 +192,7 @@ class MainActivity : AppCompatActivity() {
             sessionDelegates=it
         }
         HomeLivedata.getInstance().observe(this){
+            isHome=it
             if (it){
                 binding.content.viewPager.currentItem=0
                 binding.urlText?.setText("")
@@ -295,6 +294,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
 
 }

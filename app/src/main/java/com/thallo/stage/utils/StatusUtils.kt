@@ -3,15 +3,18 @@ package com.thallo.stage.utils
 import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 
 
-class StatusUtils {
+object StatusUtils {
     fun init(context: Activity){
 
-        val window: Window = context.getWindow()
+        val window: Window = context.window
+        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         //window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         //  | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -28,6 +31,15 @@ class StatusUtils {
             window.decorView.systemUiVisibility = uiOption or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
 
+    }
+    fun hideStatusBar(context: Activity) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            context.window
+                .setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+                )
+        }
     }
     fun isDarkMode(context: Activity): Boolean {
         val mode: Int =

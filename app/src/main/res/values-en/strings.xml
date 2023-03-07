@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">stage</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hint">Search or enter address</string>
+    <string name="add_tab">Open new tab</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_holder">HolderActivity</string>
+    <string name="dia_bookmark_radio">Add to Home page</string>
+    <string name="dia_bookmark_url">Address:</string>
+    <string name="dia_bookmark_title">Name:</string>
+    <string name="dia_add_bookmark_title">Add Bookmark</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="copy">Copy</string>
+    <string name="reload">Reload</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="history">History</string>
+    <string name="desktop">Desktop site</string>
+    <string name="forward">Forward</string>
+    <string name="result_qr">Result</string>
+
+    <string name="dialog_shortcut_title">Sure to remove it from the home page?</string>
+    <string name="dialog_bookmark_title">Sure to delete bookmarks?</string>
+    <string name="dialog_history_title">Sure to delete history?</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="searching">Search</string>
+    <string name="common">Routine</string>
+    <string name="extensions">Add-ons</string>
+    <string name="advanced">Advanced</string>
+    <string name="AutomaticFontSize">Adaptive font size</string>
+    <string name="ForceUserScalable">Force gesture scaling</string>
+    <string name="private_safety">Privacy &amp; Security</string>
+    <string name="https_only">Https-Only</string>
+    <string name="Cookie">Reduce Cookie banners</string>
+    <string name="tracking_protecting">Enhanced tracking protection</string>
+    <string name="web_permission">Website Permissions</string>
+    <string name="about">About</string>
+    <string name="about_stage">About stage</string>
+    <!-- webextension permission-->
+    <string name="per_tabs">tabs</string>
+    <string name="per_bookmarks">bookmarks</string>
+    <string name="per_browserSettings">browserSettings</string>
+    <string name="per_browsingData">browsingData</string>
+    <string name="per_downloads">downloads</string>
+    <string name="per_downloadsopen">downloads.open</string>
+    <string name="per_find">find</string>
+    <string name="per_geolocation">geolocation</string>
+    <string name="per_history">history</string>
+    <string name="per_management">management</string>
+    <string name="per_nativeMessaging">nativeMessaging</string>
+    <string name="per_notifications">notifications</string>
+    <string name="per_pkcs11">pkcs11</string>
+    <string name="per_privacy">privacy</string>
+    <string name="per_proxy">proxy</string>
+    <string name="per_sessions">sessions</string>
+    <string name="per_topSites">topSites</string>
+    <string name="per_webNavigation">webNavigation</string>
+    <string name="per_clipboardWrite">clipboardWrite</string>
+    <string name="per_clipboardRead">clipboardRead</string>
+    <string name="per_bookmarks_cn">bookmarks</string>
+    <string name="per_browserSettings_cn">browserSettings</string>
+    <string name="per_browsingData_cn">browsingData</string>
+    <string name="per_downloads_cn">downloads</string>
+    <string name="per_downloadsopen_cn">downloads.open</string>
+    <string name="per_find_cn">find</string>
+    <string name="per_geolocation_cn">geolocation</string>
+    <string name="per_history_cn">history</string>
+    <string name="per_management_cn">management</string>
+    <string name="per_nativeMessaging_cn">nativeMessaging</string>
+    <string name="per_notifications_cn">notifications</string>
+    <string name="per_pkcs11_cn">pkcs11</string>
+    <string name="per_privacy_cn">privacy</string>
+    <string name="per_proxy_cn">proxy</string>
+    <string name="per_sessions_cn">sessions</string>
+    <string name="per_tabs_cn">topSites</string>
+    <string name="per_topSites_cn">topSites</string>
+    <string name="per_webNavigation_cn">webNavigation</string>
+    <string name="per_clipboardWrite_cn">clipboardWrite</string>
+    <string name="per_clipboardRead_cn">clipboardRead</string>
+    <string name="settins">Settings</string>
+    <string name="download">Download</string>
+    <string name="addons">Add-ons</string>
+    <string name="baidu">https://www.baidu.com/s?wd=</string>
+    <string name="google">https://www.google.com/search?q=</string>
+    <string name="bing">https://www.bing.com/search?q=</string>
+    <string name="sogou">https://www.sogou.com/web?query=</string>
+    <string name="diySearching">Custom search engines</string>
+    <string name="diyAddress">Customize the search address</string>
+    <string name="edit_diy_warnning">Make sure you enter it correctly</string>
+    <string name="addons_menu_add">Get the add-ons from addons.mozilla.org</string>
+    <string name="author">Author:</string>
+    <string name="version">Version:</string>
+    <string name="description">Description:</string>
+    <string name="pair_instructions_message">Recognize the QR code</string>
+    <string name="intent_message">The website wants to open a native application</string>
+    <string name="details">Details</string>
+
+</resources>

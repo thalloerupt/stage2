@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thallo.stage.R
 import com.thallo.stage.componets.bookmark.BookmarkAdapter
+import com.thallo.stage.componets.bookmark.shortcut.ShortcutAdapter
+import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryViewModel
+import com.thallo.stage.database.shortcut.Shortcut
 import com.thallo.stage.databinding.FragmentHistoryBinding
 import com.thallo.stage.session.createSession
 import com.thallo.stage.utils.GroupUtils
@@ -41,6 +44,13 @@ class HistoryFragment : Fragment() {
             override fun onSelect(url: String) {
                 createSession(url,requireActivity())
             }
+
+        }
+        historyAdapter.longClick= object : HistoryAdapter.LongClick {
+            override fun onLongClick(bean: History) {
+                historyViewModel.deleteHistories(bean)
+            }
+
 
         }
 

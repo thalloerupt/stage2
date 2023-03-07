@@ -1,6 +1,7 @@
 package com.thallo.stage.componets.popup
 
 import android.content.Intent
+
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import com.thallo.stage.databinding.PopupMenuBinding
 import com.thallo.stage.session.DelegateLivedata
 import com.thallo.stage.session.SessionDelegate
 import org.mozilla.geckoview.GeckoRuntime
+import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.WebExtension
 
 class MenuPopup{
@@ -27,7 +29,7 @@ class MenuPopup{
     var binding: PopupMenuBinding
     private var bookmarkViewModel: BookmarkViewModel
     private  var sessionDelegate: SessionDelegate? =null
-    var isHome:Boolean = false
+    var isHome:Boolean = true
 
     constructor(
         context: MainActivity,
@@ -40,9 +42,12 @@ class MenuPopup{
         DelegateLivedata.getInstance().observe(context){sessionDelegate=it}
         HomeLivedata.getInstance().observe(context){
             isHome=it
-            if (it)
+            if (it){
                 binding.constraintLayout5.visibility=View.GONE
-            else binding.constraintLayout5.visibility=View.VISIBLE
+            }
+            else {
+                binding.constraintLayout5.visibility=View.VISIBLE
+            }
         }
         binding.downloadButton.setOnClickListener {
             var intent=Intent(context, HolderActivity::class.java)
@@ -58,7 +63,7 @@ class MenuPopup{
 
         }
         binding.addonsButton.setOnClickListener {
-            var intent=Intent(context, HolderActivity::class.java)
+            var intent= Intent(context, HolderActivity::class.java)
             intent.putExtra("Page","ADDONS")
             context.startActivity(intent)
             bottomSheetDialog.dismiss()
@@ -91,6 +96,23 @@ class MenuPopup{
             bottomSheetDialog.dismiss()
 
         }
+        binding.modeBotton.setOnClickListener {
+
+
+            if (!isHome) {
+                if (sessionDelegate?.session?.settings?.userAgentMode == GeckoSessionSettings.USER_AGENT_MODE_DESKTOP) {
+                    sessionDelegate!!.session.settings.userAgentMode =
+                        GeckoSessionSettings.USER_AGENT_MODE_MOBILE
+                    sessionDelegate!!.session.reload()
+                } else {
+                    sessionDelegate!!.session.settings.userAgentMode =
+                        GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
+                    sessionDelegate!!.session.reload()
+                }
+            }
+            bottomSheetDialog.dismiss()
+
+        }
 
         var adapter= MenuAddonsAdapater()
         binding.menuAddonsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
@@ -98,7 +120,8 @@ class MenuPopup{
         GeckoRuntime.getDefault(context).webExtensionController.list().accept {
 
             if (it != null) {
-                if (it.size!=0)
+
+                if (it.size!=0&&!isHome)
                     binding.constraintLayout2.visibility=View.VISIBLE
                 else
                     binding.constraintLayout2.visibility=View.GONE

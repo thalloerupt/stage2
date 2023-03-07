@@ -7,6 +7,7 @@
         <variable
             name="user"
             type="com.thallo.stage.session.SessionDelegate" />
+        <import type="android.view.View"/>
 
     </data>
 
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:orientation="horizontal"
+                android:visibility="@{user.isFull?View.GONE:View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -56,6 +58,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:trackColor="@color/surface"
                         app:trackThickness="3dp" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/materialButtonHome"
                         style="@style/Widget.Material3.Button.IconButton"

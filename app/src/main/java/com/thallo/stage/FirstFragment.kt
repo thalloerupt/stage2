@@ -1,5 +1,7 @@
 package com.thallo.stage
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Patterns
 import android.view.KeyEvent
@@ -11,16 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thallo.stage.broswer.Qr
-import com.thallo.stage.componets.bookmark.BookmarkAdapter
 import com.thallo.stage.componets.bookmark.shortcut.ShortcutAdapter
+import com.thallo.stage.database.shortcut.Shortcut
 import com.thallo.stage.database.shortcut.ShortcutViewModel
 import com.thallo.stage.databinding.FragmentFirstBinding
 import com.thallo.stage.fxa.Fxa
 import com.thallo.stage.session.*
-import com.thallo.stage.utils.GroupUtils
 import kotlinx.coroutines.launch
 import mozilla.components.concept.sync.Profile
 import mozilla.components.service.fxa.FxaAuthData
@@ -78,7 +78,11 @@ class FirstFragment : Fragment() {
             }
         }
         binding.qrButton?.setOnClickListener {
-            Qr().show(requireActivity() as MainActivity)
+            if (requireActivity().checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                Qr().show(requireActivity() as MainActivity)
+            }
+            else requireActivity().requestPermissions(arrayOf(Manifest.permission.CAMERA), 1)
+
         }
 
 
@@ -143,6 +147,13 @@ class FirstFragment : Fragment() {
             override fun onSelect(url: String) {
                 createSession(url,requireActivity())
             }
+
+        }
+        shortcutAdapter.longClick= object : ShortcutAdapter.LongClick {
+            override fun onLongClick(bean: Shortcut) {
+                shortcutViewModel.deleteShortcuts(bean)
+            }
+
 
         }
 

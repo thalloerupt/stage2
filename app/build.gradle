@@ -26,9 +26,9 @@ android {
     }
     defaultConfig {
         applicationId "com.thallo.stage"
-        minSdk 21
+        minSdk 23
         targetSdk 33
-        versionCode 1
+        versionCode 100
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -39,11 +39,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -77,6 +76,7 @@ android {
             include 'x86', 'arm64-v8a', 'armeabi-v7a'
         }
     }
+
 }
 
 // Optionally, set any parameters to send to the plugin.
@@ -100,6 +100,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.5.1'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
+    implementation "androidx.activity:activity-ktx:1.2.4"
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
@@ -136,6 +137,10 @@ dependencies {
     def dialogx_version = "0.0.46"
     implementation "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
     implementation "com.github.kongzue.DialogX:DialogXMaterialYou:${dialogx_version}"
+
+    implementation  'com.umeng.umsdk:common:9.4.7'// 必选
+    implementation  'com.umeng.umsdk:asms:1.4.0'// 必选
+
     def room_version = "2.5.0"
 
     implementation "androidx.room:room-runtime:$room_version"

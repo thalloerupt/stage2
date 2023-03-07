@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.thallo.stage.R
 import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.shortcut.Shortcut
@@ -18,6 +20,7 @@ class ShortcutAdapter : ListAdapter<Shortcut, ShortcutAdapter.ItemTestViewHolder
 ShortcutListCallback
 ) {
     lateinit var select: Select
+    lateinit var longClick: LongClick
 
     inner class ItemTestViewHolder(private val binding: ItemShortcutBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(bean: Shortcut, mContext: Context){
@@ -30,7 +33,12 @@ ShortcutListCallback
                 .placeholder(R.drawable.logo72)
                 .circleCrop()
                 .into(binding.imageView10)
-            binding.materialCardView6.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }
+            binding.materialCardView8.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }
+            binding.materialCardView8.setOnLongClickListener {
+                dialog(mContext,bean)
+                false
+            }
+
 
         }
 
@@ -46,6 +54,18 @@ ShortcutListCallback
 
     interface Select{
         fun onSelect(url: String)
+    }
+    interface LongClick{
+        fun onLongClick(bean: Shortcut)
+    }
+    private fun dialog(context: Context,bean: Shortcut){
+        MaterialAlertDialogBuilder(context)
+            .setTitle(context.getString(R.string.dialog_shortcut_title))
+            .setNegativeButton(context.getString(R.string.cancel)) { _, _ -> }
+            .setPositiveButton(context.getString(R.string.confirm)) { dialog, which ->
+                longClick.onLongClick(bean)
+            }
+            .show()
     }
 
 }

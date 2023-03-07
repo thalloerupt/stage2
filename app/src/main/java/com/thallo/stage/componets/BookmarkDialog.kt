@@ -46,7 +46,7 @@ class BookmarkDialog(
                     shortcutViewModel.insertShortcuts(shortcut)
                 bookmarkViewModel.insertBookmarks(bookmark)
             })
-        setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancle),
+        setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel),
             DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })
     }
 

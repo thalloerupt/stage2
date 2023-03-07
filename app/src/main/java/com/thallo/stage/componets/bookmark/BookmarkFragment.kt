@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.thallo.stage.R
 import com.thallo.stage.componets.bookmark.sync.SyncBookmarkAdapter
+import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.databinding.FragmentBookmarkBinding
 import com.thallo.stage.session.createSession
@@ -53,6 +54,14 @@ class BookmarkFragment : Fragment() {
             }
 
         }
+        bookmarkAdapter.longClick= object : BookmarkAdapter.LongClick {
+            override fun onLongClick(bean: Bookmark) {
+                bookmarkViewModel.deleteBookmarks(bean)
+            }
+
+
+        }
+
         return binding.root
     }
 

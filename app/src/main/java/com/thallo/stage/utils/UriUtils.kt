@@ -10,7 +10,7 @@ import java.net.URL
 import java.net.URLDecoder
 
 
-class UriUtils {
+object UriUtils {
     fun isUriContentScheme(@NonNull uri: Uri): Boolean {
         return uri.scheme == ContentResolver.SCHEME_CONTENT
     }

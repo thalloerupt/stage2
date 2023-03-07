@@ -1,34 +1,28 @@
 package com.thallo.stage
 
-import android.graphics.Bitmap
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.databinding.FragmentSecondBinding
-import com.thallo.stage.fxa.Fxa
-import com.thallo.stage.session.DelegateLivedata
-import com.thallo.stage.session.GeckoViewModel
-import com.thallo.stage.session.SessionDelegate
-import com.thallo.stage.session.SessionViewModel
+import com.thallo.stage.session.*
 import com.thallo.stage.tab.AddTabLiveData
 import com.thallo.stage.tab.DelegateListLiveData
 import com.thallo.stage.tab.RemoveTabLiveData
+import com.thallo.stage.utils.filePicker.FilePicker
+import com.thallo.stage.utils.filePicker.PickUtils
 import kotlinx.coroutines.launch
-import mozilla.components.service.fxa.FxaAuthData
-import mozilla.components.service.fxa.manager.FxaAccountManager
-import mozilla.components.service.fxa.toAuthType
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
-import org.mozilla.geckoview.GeckoSessionSettings
 
 /**
  * 2023.1.4创建，1.21除夕
@@ -41,12 +35,13 @@ class SecondFragment : Fragment() {
     lateinit var session: GeckoSession
     lateinit var geckoViewModel: GeckoViewModel
     lateinit var delegate: ArrayList<SessionDelegate>
+    lateinit var uri: Uri
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     var active:Int=-1
-
+    lateinit var filePicker: FilePicker
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,10 +53,21 @@ class SecondFragment : Fragment() {
 
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        var getContent = registerForActivityResult(ActivityResultContracts.OpenDocument()
+        ) {
+            filePicker.putUri(Uri.parse("file://" + it?.let { it1 ->
+                PickUtils.getPath(requireContext(), it1)
+            }))
+        }
+
+        filePicker=FilePicker(getContent,requireActivity())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         delegate = ArrayList<SessionDelegate>()
-        //createSession("https://www.baidu.com/")
         lifecycleScope.launch {
             geckoViewModel.data.collect { value: GeckoSession ->
                 openSession(value)
@@ -106,6 +112,8 @@ class SecondFragment : Fragment() {
 
 
 
+
+
     }
 
 
@@ -114,7 +122,7 @@ class SecondFragment : Fragment() {
 
     fun openSession(session: GeckoSession) {
         binding.geckoview.releaseSession()
-        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session) }
+        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session,filePicker) }
         if (sessionDelegate != null) {
             sessionDelegate.setpic = object : SessionDelegate.Setpic {
                 override fun onSetPic() {
@@ -128,17 +136,34 @@ class SecondFragment : Fragment() {
                 }
 
             }
+
         }
         if (delegate.size==0)
             sessionDelegate?.let { delegate.add(it) }
         else
             sessionDelegate?.let { delegate.add(active+1, it) }
-
         sessionDelegate?.let {DelegateLivedata.getInstance().Value(it) }
         DelegateListLiveData.getInstance().Value(delegate)
         binding.geckoview.setSession(session)
-
     }
-
+    fun getPath(context: Context, uri: Uri): String? {
+        if ("content".equals(uri.scheme, ignoreCase = true)) {
+            val projection = arrayOf("_data")
+            var cursor: Cursor? = null
+            try {
+                cursor = context.contentResolver.query(uri, projection, null, null, null)
+                val column_index: Int? = cursor?.getColumnIndexOrThrow("_data")
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        return column_index?.let { cursor.getString(it) }
+                    }
+                }
+            } catch (e: Exception) {
+            }
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            return uri.path
+        }
+        return null
+    }
 
 }

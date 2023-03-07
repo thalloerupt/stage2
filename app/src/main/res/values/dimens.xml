@@ -8,4 +8,6 @@
     <dimen name="dim5">128dp</dimen>
     <dimen name="dim1">32dp</dimen>
     <dimen name="dim0">16dp</dimen>
+    <dimen name="dim8">48dp</dimen>
+    <dimen name="dim4dp">4dp</dimen>
 </resources>

@@ -1,8 +1,14 @@
 package com.thallo.stage.utils
 
+import android.annotation.SuppressLint
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Rect
 import android.text.TextPaint
+import android.widget.Toast
+
+
+
 
 
 /**
@@ -49,4 +55,17 @@ object Utils {
     fun listIsEmpty(list: List<String?>?): Boolean {
         return list == null || list.size == 0
     }
+
+    @SuppressLint("ServiceCast")
+    fun copyToClipboard(context: Context, content: String?) {
+        // 从 API11 开始 android 推荐使用 android.content.ClipboardManager
+        // 为了兼容低版本我们这里使用旧版的 android.text.ClipboardManager，虽然提示 deprecated，但不影响使用。
+        val cm: ClipboardManager =
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // 将文本内容放到系统剪贴板里。
+        cm.setText(content)
+        Toast.makeText(context, "已复制到剪切板", Toast.LENGTH_SHORT).show()
+    }
+
+
 }
