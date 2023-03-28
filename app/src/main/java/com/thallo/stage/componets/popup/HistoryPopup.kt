@@ -8,9 +8,9 @@ import com.thallo.stage.MainActivity
 import com.thallo.stage.R
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
-import com.thallo.stage.componets.bookmark.BookmarkFragment
-import com.thallo.stage.componets.bookmark.sync.SyncBookmarkFragment
-import com.thallo.stage.componets.history.HistoryFragment
+import com.thallo.stage.broswer.bookmark.BookmarkFragment
+import com.thallo.stage.broswer.bookmark.sync.SyncBookmarkFragment
+import com.thallo.stage.broswer.history.HistoryFragment
 import com.thallo.stage.databinding.PopupBookmarkBinding
 import com.thallo.stage.databinding.PopupHistoryBinding
 

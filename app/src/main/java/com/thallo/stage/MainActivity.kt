@@ -1,16 +1,21 @@
 package com.thallo.stage
 
+
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -21,21 +26,27 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.sidesheet.SideSheetBehavior
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.thallo.stage.broswer.SearchEngine
+import com.thallo.stage.broswer.dialog.SearchDialog
+import com.thallo.stage.broswer.home.TipsAdapter
+import com.thallo.stage.componets.BookmarkDialog
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.popup.MenuPopup
 import com.thallo.stage.componets.popup.TabPopup
+import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.databinding.ActivityMainBinding
 import com.thallo.stage.download.DownloadTaskLiveData
-import com.thallo.stage.menu.AddonsPopupFragment
-import com.thallo.stage.menu.MenuFragment
 import com.thallo.stage.session.*
 import com.thallo.stage.tab.AddTabLiveData
 import com.thallo.stage.tab.DelegateListLiveData
@@ -50,6 +61,7 @@ import com.thallo.stage.webextension.WebextensionSession
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 
+
 /**
  * 2023.1.4创建，1.21除夕
  * 2023.2.11 19:10 正月廿一 记录
@@ -60,77 +72,133 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     var fragments = listOf<Fragment>(FirstFragment(),SecondFragment())
-    var menuFragments = listOf<Fragment>(AddonsPopupFragment(),MenuFragment())
     private lateinit var geckoViewModel: GeckoViewModel
     var sessionDelegates=ArrayList<SessionDelegate>()
     private val adapter= TabListAdapter()
-    lateinit var standardSideSheetBehavior:BottomSheetBehavior<ConstraintLayout>
-    var isHome:Boolean = false
+    var bottomSheetBehavior:BottomSheetBehavior<ConstraintLayout>?=null
+    lateinit var sideSheetBehavior: SideSheetBehavior<ConstraintLayout>
+    var isHome:Boolean = true
+    lateinit var historyViewModel: HistoryViewModel
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
         setContentView(binding.root)
         StatusUtils.init(this)
         WebextensionSession(this)
+
         onBackPressedDispatcher.addCallback(this, onBackPress)
         geckoViewModel = ViewModelProvider(this)[GeckoViewModel::class.java]
+        historyViewModel = ViewModelProvider(this)[HistoryViewModel::class.java]
         if (binding.content.drawer!=null) {
-            standardSideSheetBehavior = BottomSheetBehavior.from(binding.content.drawer as ConstraintLayout)
-            standardSideSheetBehavior.peekHeight=0
-            standardSideSheetBehavior.isDraggable=false
+            bottomSheetBehavior =
+                BottomSheetBehavior.from(binding.content.drawer as ConstraintLayout)
+            bottomSheetBehavior!!.peekHeight = 0
+            bottomSheetBehavior!!.isDraggable = false
         }
 
         adapter.select=object :TabListAdapter.Select{ override fun onSelect() {} }
 
         binding.SearchText?.imeOptions = EditorInfo.IME_ACTION_SEARCH
+
+
+        binding.materialButton13?.setOnClickListener {
+            var searchDialog=SearchDialog(this)
+            searchDialog.setOnDismissListener {
+                when(SearchEngine(this)){
+                    getString(com.thallo.stage.R.string.baidu) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Baidu))
+                    getString(com.thallo.stage.R.string.google) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Google))
+                    getString(com.thallo.stage.R.string.bing) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Bing))
+                    getString(com.thallo.stage.R.string.sogou) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Sougou))
+                }
+                if (prefs.getBoolean("switch_diy",false))
+                    binding.materialButton13?.text = getString(R.string.EngineTips,getString(R.string.diySearching))
+            }
+            searchDialog.show()
+
+        }
         binding.SearchText?.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus)
+            if(hasFocus){
                 binding.bottomMotionLayout?.transitionToEnd()
+                binding.constraintLayout10?.visibility =View.VISIBLE
+                when(SearchEngine(this)){
+                    getString(com.thallo.stage.R.string.baidu) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Baidu))
+                    getString(com.thallo.stage.R.string.google) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Google))
+                    getString(com.thallo.stage.R.string.bing) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Bing))
+                    getString(com.thallo.stage.R.string.sogou) -> binding.materialButton13?.text =
+                        getString(R.string.EngineTips,getString(R.string.Sougou))
+                }
+                if (prefs.getBoolean("switch_diy",false))
+                    binding.materialButton13?.text = getString(R.string.EngineTips,getString(R.string.diySearching))
+            }
+
             else{
                 binding.bottomMotionLayout?.transitionToStart()
+                binding.constraintLayout10?.visibility =View.GONE
                 if (!isHome)
                     binding.SearchText?.setText(binding.user?.u)
             }
         }
         binding.materialButtonClear?.setOnClickListener { binding.SearchText?.setText("") }
+        var tipsAdapter= TipsAdapter()
+        binding.recyclerView4?.adapter =tipsAdapter
+        binding.recyclerView4?.layoutManager = LinearLayoutManager(this)
+        tipsAdapter.select = object : TipsAdapter.Select {
+            override fun onSelect(url: String) {
+                searching(url)
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                // 隐藏软键盘
+                imm.hideSoftInputFromWindow(
+                    window.decorView.windowToken,
+                    0
+                )
+
+            }
+
+        }
+        binding.SearchText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var s1=s.toString().trim()
+                if (s1!=""){
+                    historyViewModel.findHistoriesWithMix(s1)?.observe(this@MainActivity){
+                        tipsAdapter.submitList(it)
+                    }
+                }
+
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
         binding.SearchText?.setOnKeyListener(View.OnKeyListener { _, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.SearchText!!.text.toString()
-                if (Patterns.WEB_URL.matcher(value).matches() || URLUtil.isValidUrl(value)) {
-                    if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri(value)
-                    else
-                        createSession(value,this)
-
-                } else {
-                    if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri("${SearchEngine(this)}$value")
-                    else
-                        createSession("${SearchEngine(this)}$value",this)
-                }
-                binding.content.viewPager.currentItem=1
-
+                searching(value)
             }
             false
         })
         binding.urlText?.setOnKeyListener(View.OnKeyListener { _, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.urlText!!.text.toString()
-                if (Patterns.WEB_URL.matcher(value).matches() || URLUtil.isValidUrl(value)) {
-                    if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri(value)
-                    else
-                        createSession(value,this)
-
-                } else {
-                    if(binding.content.viewPager.currentItem==1)
-                        binding.user?.session?.loadUri("${SearchEngine(this)}$value")
-                    else
-                        createSession("${SearchEngine(this)}$value",this)
-                }
+                searching(value)
 
             }
             false
@@ -143,7 +211,7 @@ class MainActivity : AppCompatActivity() {
         binding.materialButtonHome?.setOnClickListener { HomeLivedata.getInstance().Value(true) }
         binding.materialButtonTab?.setOnClickListener { TabPopup(this).show() }
         binding.addButton?.setOnClickListener { HomeLivedata.getInstance().Value(true) }
-        binding.content.popupCloseButton?.setOnClickListener { standardSideSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED }
+        binding.content.popupCloseButton?.setOnClickListener { bottomSheetBehavior?.state=BottomSheetBehavior.STATE_COLLAPSED }
         if (binding.content.viewPager.currentItem==1) {
 
             binding.reloadButtonL?.isClickable=false
@@ -164,12 +232,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.menuButton?.setOnClickListener {
-            nav("MENU")
-            standardSideSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            openMenu()
         }
         binding.addonsButton?.setOnClickListener {
-            nav("ADDONS")
-            standardSideSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            if(!isHome)
+                BookmarkDialog(this, binding.user!!.mTitle, binding.user!!.u).show()
         }
         binding.content.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -196,7 +263,10 @@ class MainActivity : AppCompatActivity() {
             if (it){
                 binding.content.viewPager.currentItem=0
                 binding.urlText?.setText("")
-            }else binding.content.viewPager.currentItem=1
+            }else {
+                binding.content.viewPager.currentItem=1
+                bottomSheetBehavior?.state  =BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
         AddTabLiveData.getInstance().observe(this){
             binding.recyclerView2?.smoothScrollToPosition(it)
@@ -223,10 +293,9 @@ class MainActivity : AppCompatActivity() {
         if (uri != null) {
             createSession(uri.toString(),this)
         }
-        GeckoRuntime.getDefault(this).activityDelegate= GeckoRuntime.ActivityDelegate {
-            Log.d("test",uri.toString())
-            GeckoResult.fromValue(Intent())
-        }
+
+
+
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -250,19 +319,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun openMenu() {
+        bottomSheetBehavior?.state  = BottomSheetBehavior.STATE_EXPANDED
+        var navController = findNavController(R.id.fragmentContainerView3)
+        binding.content.navigationrail?.setupWithNavController(navController)
+        binding.content.appbar?.setupWithNavController(
+            navController,
+            AppBarConfiguration(navController.graph)
+        )
+        if (isHome)
+            binding.content.navigationrail?.headerView?.findViewById<FloatingActionButton>(R.id.floatingActionButton)?.visibility=View.GONE
+        else
+            binding.content.navigationrail?.headerView?.findViewById<FloatingActionButton>(R.id.floatingActionButton)?.visibility=View.VISIBLE
 
+        binding.content.navigationrail?.headerView?.findViewById<FloatingActionButton>(R.id.floatingActionButton)
+            ?.setOnClickListener {
+                navController.navigate(R.id.addonsPopupFragment2)
+            }
 
-
-
-    fun nav(s:String){
-        val navController = findNavController(R.id.fragmentContainerView)
-        when (s) {
-            "ADDONS" -> navController.navigate(R.id.addonsPopupFragment)
-            "MENU" -> navController.navigate(R.id.menuFragment)
-
-        }
 
     }
+
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -281,7 +359,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onResume() {
         super.onResume()
         SoftKeyBoardListener.setListener(this, object : OnSoftKeyBoardChangeListener {
@@ -289,11 +366,30 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun keyBoardHide(height: Int) {
+                binding.constraintLayout10?.visibility =View.GONE
+
                 binding.bottomMotionLayout?.transitionToStart()
                 binding.SearchText?.clearFocus()
             }
         })
     }
+
+    fun searching(value:String){
+        if (Patterns.WEB_URL.matcher(value).matches() || URLUtil.isValidUrl(value)) {
+            if(binding.content.viewPager.currentItem==1)
+                binding.user?.session?.loadUri(value)
+            else
+                createSession(value,this)
+
+        } else {
+            if(binding.content.viewPager.currentItem==1)
+                binding.user?.session?.loadUri("${SearchEngine(this)}$value")
+            else
+                createSession("${SearchEngine(this)}$value",this)
+        }
+    }
+
+
 
 
 

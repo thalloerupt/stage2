@@ -98,3 +98,9 @@
 # Keep Android Lifecycle methods
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1596302
 -keep class androidx.lifecycle.** { *; }
+
+
+  -keep class cn.jiguang.** { *; }
+      -keep class android.support.** { *; }
+      -keep class androidx.** { *; }
+      -keep class com.google.android.** { *; }

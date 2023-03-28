@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph4"
+    app:startDestination="@id/settings">
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.thallo.stage.settings.SettingsFragment"
+        android:label="@string/settins">
+        <action
+            android:id="@+id/action_settingsFragment2_to_downloadFragment2"
+            app:destination="@id/download"
+            app:popUpTo="@id/settings" />
+        <action
+            android:id="@+id/action_settingsFragment_to_addonsManagerFragment"
+            app:destination="@id/addons"
+            app:popUpTo="@id/settings" />
+        <action
+            android:id="@+id/action_settingsFragment2_to_bookmarkFragment2"
+            app:destination="@id/bookmark"
+            app:popUpTo="@id/settings" />
+        <action
+            android:id="@+id/action_settingsFragment2_to_historyFragment2"
+            app:destination="@id/history"
+            app:popUpTo="@id/settings" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsSearching2"
+            app:destination="@id/settingsSearching3" />
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment2" />
+        <action
+            android:id="@+id/action_settings_to_addonsPopupFragment2"
+            app:destination="@id/addonsPopupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/download"
+        android:name="com.thallo.stage.download.DownloadFragment"
+        android:label="@string/download" />
+    <fragment
+        android:id="@+id/addons"
+        android:name="com.thallo.stage.AddonsManagerFragment"
+        android:label="@string/addons"
+        tools:layout="@layout/fragment_addons_manager" />
+    <fragment
+        android:id="@+id/bookmark"
+        android:name="com.thallo.stage.broswer.bookmark.BookmarkFragment"
+        android:label="@string/bookmark"
+        tools:layout="@layout/fragment_bookmark" />
+    <fragment
+        android:id="@+id/history"
+        android:name="com.thallo.stage.broswer.history.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/settingsSearching3"
+        android:name="com.thallo.stage.settings.SettingsSearching"
+        android:label="@string/searching" />
+    <fragment
+        android:id="@+id/aboutFragment2"
+        android:name="com.thallo.stage.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/addonsPopupFragment2"
+        android:name="com.thallo.stage.menu.AddonsPopupFragment"
+        tools:layout="@layout/fragment_addons" />
+</navigation>

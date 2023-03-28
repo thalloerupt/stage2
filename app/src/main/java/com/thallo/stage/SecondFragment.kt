@@ -1,6 +1,8 @@
 package com.thallo.stage
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -8,7 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +25,7 @@ import com.thallo.stage.tab.RemoveTabLiveData
 import com.thallo.stage.utils.filePicker.FilePicker
 import com.thallo.stage.utils.filePicker.PickUtils
 import kotlinx.coroutines.launch
+import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
 
@@ -96,6 +101,9 @@ class SecondFragment : Fragment() {
 
 
 
+
+
+
         DelegateLivedata.getInstance().observe(viewLifecycleOwner){
             for (i in delegate){
                 if (it != i)
@@ -114,15 +122,13 @@ class SecondFragment : Fragment() {
 
 
 
+
+
     }
-
-
-
-
 
     fun openSession(session: GeckoSession) {
         binding.geckoview.releaseSession()
-        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session,filePicker) }
+        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session,filePicker,false) }
         if (sessionDelegate != null) {
             sessionDelegate.setpic = object : SessionDelegate.Setpic {
                 override fun onSetPic() {
@@ -146,24 +152,6 @@ class SecondFragment : Fragment() {
         DelegateListLiveData.getInstance().Value(delegate)
         binding.geckoview.setSession(session)
     }
-    fun getPath(context: Context, uri: Uri): String? {
-        if ("content".equals(uri.scheme, ignoreCase = true)) {
-            val projection = arrayOf("_data")
-            var cursor: Cursor? = null
-            try {
-                cursor = context.contentResolver.query(uri, projection, null, null, null)
-                val column_index: Int? = cursor?.getColumnIndexOrThrow("_data")
-                if (cursor != null) {
-                    if (cursor.moveToFirst()) {
-                        return column_index?.let { cursor.getString(it) }
-                    }
-                }
-            } catch (e: Exception) {
-            }
-        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-            return uri.path
-        }
-        return null
-    }
+
 
 }

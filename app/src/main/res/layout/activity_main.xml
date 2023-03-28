@@ -26,111 +26,180 @@
                 layout="@layout/content_main"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/bottomLayout"
+                app:layout_constraintBottom_toTopOf="@+id/bottomMotionLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ScrollView
-                android:id="@+id/bottomLayout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout10"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:orientation="horizontal"
-                android:visibility="@{user.isFull?View.GONE:View.VISIBLE}"
+                android:layout_height="0dp"
+                android:background="@color/surface"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/textView29"
+                    app:layout_constraintStart_toStartOf="@+id/textView29"
+                    app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="历史•建议"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView29">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/materialButton13"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="在百度上搜索"
+                        app:icon="@drawable/arrow_down"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/bottomMotionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim4"
+                android:background="@color/surface"
+                app:layoutDescription="@xml/activity_main_xml_constraintlayout5_scene"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <androidx.constraintlayout.motion.widget.MotionLayout
-                    android:id="@+id/bottomMotionLayout"
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progress"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/surface"
-                    app:layoutDescription="@xml/activity_main_xml_constraintlayout5_scene">
+                    android:layout_height="wrap_content"
+                    android:progress="@{user.mProgress}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="@color/surface"
+                    app:trackThickness="3dp"
+                    tools:visibility="gone" />
 
-                    <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:id="@+id/progress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:progress="@{user.mProgress}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackColor="@color/surface"
-                        app:trackThickness="3dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/materialButtonHome"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:icon="@drawable/house_door_fill"
+                    app:layout_constraintBottom_toBottomOf="@+id/SearchText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SearchText"
+                    tools:visibility="gone" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButtonHome"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:icon="@drawable/house_door_fill"
-                        app:layout_constraintBottom_toBottomOf="@+id/SearchText"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/SearchText" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/materialButtonTab"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/square"
+                    app:layout_constraintBottom_toBottomOf="@+id/SearchText"
+                    app:layout_constraintEnd_toStartOf="@+id/materialButtonMenu"
+                    app:layout_constraintTop_toTopOf="@+id/SearchText"
+                    tools:visibility="gone" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButtonTab"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:icon="@drawable/square"
-                        app:layout_constraintBottom_toBottomOf="@+id/SearchText"
-                        app:layout_constraintEnd_toStartOf="@+id/materialButtonMenu"
-                        app:layout_constraintTop_toTopOf="@+id/SearchText" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/materialButtonClear"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/delete_circle_fill"
+                    app:layout_constraintBottom_toBottomOf="@+id/SearchText"
+                    app:layout_constraintEnd_toStartOf="@+id/materialButtonTab"
+                    app:layout_constraintTop_toTopOf="@+id/SearchText"
+                    tools:visibility="gone" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButtonClear"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:icon="@drawable/delete_circle_fill"
-                        app:layout_constraintBottom_toBottomOf="@+id/SearchText"
-                        app:layout_constraintEnd_toStartOf="@+id/materialButtonTab"
-                        app:layout_constraintTop_toTopOf="@+id/SearchText"
-                        tools:visibility="gone" />
+                <TextView
+                    android:id="@+id/SizeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/surface"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialButtonTab"
+                    app:layout_constraintEnd_toEndOf="@+id/materialButtonTab"
+                    app:layout_constraintStart_toStartOf="@+id/materialButtonTab"
+                    app:layout_constraintTop_toTopOf="@+id/materialButtonTab" />
 
-                    <TextView
-                        android:id="@+id/SizeText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/surface"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/materialButtonTab"
-                        app:layout_constraintEnd_toEndOf="@+id/materialButtonTab"
-                        app:layout_constraintStart_toStartOf="@+id/materialButtonTab"
-                        app:layout_constraintTop_toTopOf="@+id/materialButtonTab" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/materialButtonMenu"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:icon="@drawable/ellipsis_vertical_outline"
+                    app:layout_constraintBottom_toBottomOf="@+id/SearchText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SearchText" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButtonMenu"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        app:icon="@drawable/ellipsis_vertical_outline"
-                        app:layout_constraintBottom_toBottomOf="@+id/SearchText"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/SearchText" />
+                <EditText
+                    android:id="@+id/SearchText"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_edittext"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:hint="@string/hint"
+                    android:inputType="textPersonName"
+                    android:text="@{user.u}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/materialButtonClear"
+                    app:layout_constraintStart_toEndOf="@+id/materialButtonHome"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
-                        android:id="@+id/SearchText"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_marginTop="11dp"
-                        android:layout_marginBottom="11dp"
-                        android:background="@drawable/bg_edittext"
-                        android:ems="10"
-                        android:hint="@string/hint"
-                        android:inputType="textPersonName"
-                        android:text="@{user.u}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/materialButtonClear"
-                        app:layout_constraintStart_toEndOf="@+id/materialButtonHome"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.motion.widget.MotionLayout>
-            </ScrollView>
+            </androidx.constraintlayout.motion.widget.MotionLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

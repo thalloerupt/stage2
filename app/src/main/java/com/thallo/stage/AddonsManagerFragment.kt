@@ -63,7 +63,7 @@ class AddonsManagerFragment : Fragment() {
         binding.textView18.text = metadata.creatorName
         binding.textView19.text = metadata.version
         binding.textView20.text = metadata.description
-        SheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+        SheetBehavior.state=BottomSheetBehavior.STATE_HALF_EXPANDED
         if (metadata.optionsPageUrl!=null)
             binding.button3.visibility=View.VISIBLE
         else

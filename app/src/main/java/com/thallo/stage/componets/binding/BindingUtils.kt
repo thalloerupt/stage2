@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -36,7 +37,6 @@ import java.net.URI
 @BindingAdapter(value = ["active"], requireAll = false)
 fun isActive(view: MaterialCardView, boolean: Boolean) {
     if (boolean == null) return
-    //默认裁剪四个圆角，不需要设置圆角，对应参数设为false
     if (boolean)
         view.visibility= View.VISIBLE
     else view.visibility= View.GONE
@@ -45,7 +45,6 @@ fun isActive(view: MaterialCardView, boolean: Boolean) {
 @BindingAdapter(value = ["activeL"], requireAll = false)
 fun isActiveL(view: ProgressBar, boolean: Boolean) {
     if (boolean == null) return
-    //默认裁剪四个圆角，不需要设置圆角，对应参数设为false
     if (boolean)
         view.visibility= View.VISIBLE
     else view.visibility= View.GONE
@@ -70,4 +69,17 @@ fun stateIcon(view: MaterialButton, state: Int?) {
 
     }
 
+}
+@BindingAdapter(value = ["secureIcon"], requireAll = false)
+fun secureIcon(view: MaterialButton, isSecure: Boolean?) {
+    if (isSecure == null) return
+    if (isSecure) view.icon=view.context.getDrawable(R.drawable.shield_fill)
+    else view.icon=view.context.getDrawable(R.drawable.shield_slash_fill)
+}
+
+@BindingAdapter(value = ["secureText"], requireAll = false)
+fun secureButtonText(view: MaterialButton, isSecure: Boolean?) {
+    if (isSecure == null) return
+    if (isSecure) view.text=view.context.getString(R.string.connection_secure)
+    else view.text=view.context.getText(R.string.connection_not_secure)
 }

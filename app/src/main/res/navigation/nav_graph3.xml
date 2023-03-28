@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.thallo.stage.componets.history.HistoryFragment"
+        android:name="com.thallo.stage.broswer.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
 </navigation>

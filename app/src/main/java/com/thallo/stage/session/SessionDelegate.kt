@@ -6,18 +6,23 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
+import com.kongzue.dialogx.dialogs.PopTip
+import com.kongzue.dialogx.interfaces.OnBindView
 import com.thallo.stage.BR
 import com.thallo.stage.R
-import com.thallo.stage.broswer.AlertDialog
-import com.thallo.stage.broswer.ConfirmDialog
-import com.thallo.stage.broswer.JsChoiceDialog
-import com.thallo.stage.broswer.TextDialog
+import com.thallo.stage.broswer.dialog.AlertDialog
+import com.thallo.stage.broswer.dialog.ButtonDialog
+import com.thallo.stage.broswer.dialog.ConfirmDialog
+import com.thallo.stage.broswer.dialog.JsChoiceDialog
+import com.thallo.stage.broswer.dialog.TextDialog
 import com.thallo.stage.componets.popup.IntentPopup
 import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryViewModel
@@ -59,6 +64,8 @@ class SessionDelegate() :BaseObservable(){
             notifyPropertyChanged(BR.active)
         }
     @get:Bindable
+    var privacy:Boolean=false
+    @get:Bindable
     var mProgress:Int=0
     @get:Bindable
     var canBack:Boolean=false
@@ -66,16 +73,23 @@ class SessionDelegate() :BaseObservable(){
     var canForward:Boolean=false
     @get:Bindable
     var isFull:Boolean=false
+    @get:Bindable
+    var isSecure:Boolean=false
+    @get:Bindable
+    var secureHost:String=""
 
     var downloadTasks=ArrayList<DownloadTask>()
     lateinit var historyViewModel:HistoryViewModel
     lateinit var intentPopup:IntentPopup
     var uri: Uri? =null
     lateinit var filePicker: FilePicker
-    constructor(mContext: FragmentActivity, session:GeckoSession, filePicker: FilePicker) : this() {
+    constructor(mContext: FragmentActivity, session:GeckoSession, filePicker: FilePicker ,privacy:Boolean) : this() {
         this.mContext = mContext
         this.session = session
         this.filePicker=filePicker
+        this.privacy = privacy
+        notifyPropertyChanged(BR.privacy)
+
         val  geckoViewModel: GeckoViewModel =ViewModelProvider(mContext).get(GeckoViewModel::class.java)
         historyViewModel=ViewModelProvider(mContext).get(HistoryViewModel::class.java)
         bitmap= mContext.getDrawable(R.drawable.logo72)?.toBitmap()!!
@@ -105,7 +119,7 @@ class SessionDelegate() :BaseObservable(){
 
             }
             override fun onPaintStatusReset(session: GeckoSession) {
-                setpic.onSetPic()
+               // setpic.onSetPic()
                 notifyPropertyChanged(BR.bitmap)
             }
             override fun onFirstComposite(session: GeckoSession) {
@@ -153,6 +167,17 @@ class SessionDelegate() :BaseObservable(){
         }
 
         session.progressDelegate = object : ProgressDelegate {
+            override fun onSecurityChange(
+                session: GeckoSession,
+                securityInfo: ProgressDelegate.SecurityInformation
+            ) {
+                super.onSecurityChange(session, securityInfo)
+                isSecure = securityInfo.isSecure
+                secureHost = securityInfo.host+""
+                notifyPropertyChanged(BR.secure)
+                notifyPropertyChanged(BR.secureHost)
+
+            }
             override fun onSessionStateChange(
                 session: GeckoSession,
                 sessionState: GeckoSession.SessionState
@@ -187,24 +212,51 @@ class SessionDelegate() :BaseObservable(){
         }
 
 
+
         session.navigationDelegate = object : NavigationDelegate {
-            override fun onLoadRequest(
+            override fun onSubframeLoadRequest(
                 session: GeckoSession,
                 request: NavigationDelegate.LoadRequest
             ): GeckoResult<AllowOrDeny>? {
                 val uri = Uri.parse(request.uri)
+                var url = request.uri
+                var intent: Intent? =null;
                 if (uri.scheme != null) {
                     if (!uri.scheme!!.contains("https") && !uri.scheme!!.contains("http") && !uri.scheme!!.contains(
                             "about"
                         )
                     ) {
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        if (intent.resolveActivity(mContext.packageManager) != null) {
-                            intentPopup.show(intent)
-                            Log.d("scheme1", uri.scheme!!)
+                        if (url.startsWith("android-app://")){
+                            intent = Intent.parseUri(url,Intent.URI_ANDROID_APP_SCHEME);
+                        }else if (url.startsWith("intent://")){
+                            intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                        }
+                        if (intent != null) {
+                            if (intent.resolveActivity(mContext.packageManager) != null) {
+                                PopTip.build()
+                                    .setCustomView(object : OnBindView<PopTip?>(com.thallo.stage.R.layout.pop_mytip) {
+                                        override fun onBind(dialog: PopTip?, v: View) {
+                                            v.findViewById<TextView>(R.id.textView17).text = mContext.getText(R.string.intent_message)
+                                            v.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
+                                                mContext.startActivity(intent)
+                                            }
+                                        }
+                                    })
+                                    .show()
+                            }
                         }
                     }
+                    Log.d("scheme2", uri.scheme!!)
+
                 }
+
+                return GeckoResult.allow()
+            }
+            override fun onLoadRequest(
+                session: GeckoSession,
+                request: NavigationDelegate.LoadRequest
+            ): GeckoResult<AllowOrDeny>? {
+
                 return GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
             override fun onLoadError(
@@ -263,21 +315,41 @@ class SessionDelegate() :BaseObservable(){
         });*/
 
         session.promptDelegate = object : GeckoSession.PromptDelegate {
+            override fun onAddressSave(
+                session: GeckoSession,
+                request: AutocompleteRequest<Autocomplete.AddressSaveOption>
+            ): GeckoResult<PromptResponse>? {
+                Log.d("BeforeUnload","its me")
+                return null
+            }
+            override fun onSharePrompt(
+                session: GeckoSession,
+                prompt: SharePrompt
+            ): GeckoResult<PromptResponse>? {
+                Log.d("BeforeUnload","its me")
+
+                return null
+            }
 
             override fun onBeforeUnloadPrompt(
                 session: GeckoSession,
                 prompt: BeforeUnloadPrompt
             ): GeckoResult<PromptResponse>? {
                 Log.d("BeforeUnload","its me")
-                return super.onBeforeUnloadPrompt(session, prompt)
+                return null
             }
             override fun onButtonPrompt(
                 session: GeckoSession,
                 prompt: ButtonPrompt
             ): GeckoResult<PromptResponse>? {
+                val buttonDialog = ButtonDialog(
+                    mContext,
+                    prompt
+                )
+                buttonDialog.showDialog()
                 Log.d("ButtonPrompt","its me")
 
-                return super.onButtonPrompt(session, prompt)
+                return GeckoResult.fromValue(buttonDialog.dialogResult)
             }
             override fun onPopupPrompt(
                 session: GeckoSession,
@@ -285,7 +357,7 @@ class SessionDelegate() :BaseObservable(){
             ): GeckoResult<PromptResponse>? {
                 Log.d("Popup","its me")
 
-                return super.onPopupPrompt(session, prompt)
+                return null
             }
             override fun onAuthPrompt(
                 session: GeckoSession,
@@ -293,13 +365,14 @@ class SessionDelegate() :BaseObservable(){
             ): GeckoResult<PromptResponse>? {
                 Log.d("AuthPrompt","its me")
 
-                return super.onAuthPrompt(session, prompt)
+                return null
             }
             override fun onTextPrompt(
                 session: GeckoSession,
                 prompt: TextPrompt
             ): GeckoResult<PromptResponse>? {
-                val alertDialog = TextDialog(mContext, prompt)
+                val alertDialog =
+                    TextDialog(mContext, prompt)
                 alertDialog.showDialog()
                 Log.d("TextPrompt","its me")
 
@@ -310,7 +383,11 @@ class SessionDelegate() :BaseObservable(){
                 session: GeckoSession,
                 prompt: RepostConfirmPrompt
             ): GeckoResult<PromptResponse>? {
-                val confirmPrompt = ConfirmDialog(mContext, prompt)
+                val confirmPrompt =
+                    ConfirmDialog(
+                        mContext,
+                        prompt
+                    )
                 confirmPrompt.showDialog()
                 Log.d("RepostConfirm","its me")
 
@@ -323,6 +400,7 @@ class SessionDelegate() :BaseObservable(){
             ): GeckoResult<PromptResponse>? {
                 val getFile = GetFile(mContext,filePicker)
                 getFile.open(mContext, prompt.mimeTypes)
+                Log.d("onFilePrompt", getFile.uri.toString())
                 return GeckoResult.fromValue(prompt.confirm(mContext, getFile.uri))
             }
 
@@ -332,9 +410,13 @@ class SessionDelegate() :BaseObservable(){
                 prompt: ChoicePrompt
             ): GeckoResult<PromptResponse>? {
                 //prompt.
-                val jsChoiceDialog = JsChoiceDialog(mContext, prompt)
+                val jsChoiceDialog =
+                    JsChoiceDialog(
+                        mContext,
+                        prompt
+                    )
                 jsChoiceDialog.showDialog()
-                Log.d("ButtonPrompt","its me")
+                //Log.d("ButtonPrompt","its me")
 
                 return GeckoResult.fromValue(prompt.confirm(jsChoiceDialog.dialogResult.toString()))
             }
@@ -343,13 +425,18 @@ class SessionDelegate() :BaseObservable(){
                 session: GeckoSession,
                 prompt: AlertPrompt
             ): GeckoResult<PromptResponse>? {
-                val alertDialog = AlertDialog(mContext, prompt)
+                val alertDialog =
+                    AlertDialog(mContext, prompt)
                 alertDialog.showDialog()
-                Log.d("ButtonPrompt","its me")
+               // Log.d("ButtonPrompt","its me")
 
                 return GeckoResult.fromValue(alertDialog.dialogResult)
             }
         }
+
+
+
+
 
 
 

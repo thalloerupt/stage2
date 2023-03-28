@@ -9,10 +9,18 @@
         android:id="@+id/addonsPopupFragment"
         android:name="com.thallo.stage.menu.AddonsPopupFragment"
         android:label="fragment_addons"
-        tools:layout="@layout/fragment_addons" />
+        tools:layout="@layout/fragment_addons" >
+        <action
+            android:id="@+id/action_addonsPopupFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.thallo.stage.menu.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_addonsPopupFragment"
+            app:destination="@id/addonsPopupFragment" />
+    </fragment>
 </navigation>

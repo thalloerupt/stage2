@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="user"
+            type="com.thallo.stage.session.SessionDelegate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,203 +39,323 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/constraintLayout13"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_bottomsheet"
+            app:layoutDescription="@xml/popup_menu_xml_constraintlayout13_scene"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
+                android:id="@+id/constraintLayout11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView9">
 
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/starButton"
-                    app:layout_constraintEnd_toStartOf="@+id/starButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/starButton" />
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                    app:layout_constraintGuide_percent="0.25"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline5" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="232dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintGuide_percent="0.5"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                    app:layout_constraintGuide_percent="0.75"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/starButton"
+                    android:id="@+id/reloadBotton"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/reload"
+                    app:icon="@drawable/reload"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bookmarkButton"
                     style="@style/Widget.Material3.Button.IconButton"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="27dp"
-                    app:icon="@drawable/star"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/bookmark"
+                    app:icon="@drawable/bookmarks"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toTopOf="@+id/reloadBotton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/historyButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history"
+                    app:icon="@drawable/hourglass_split"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                    app:layout_constraintStart_toStartOf="@+id/guideline4"
+                    app:layout_constraintTop_toTopOf="@+id/bookmarkButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/modeBotton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/desktop"
+                    app:icon="@drawable/desktop"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/guideline5"
+                    app:layout_constraintTop_toTopOf="@+id/historyButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/settingButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/settins"
+                    app:icon="@drawable/gear_fill"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reloadBotton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/privacyButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/private_mode"
+                    app:icon="@drawable/emoji_wink_fill"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toTopOf="@+id/settingButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/downloadButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/download"
+                    app:icon="@drawable/download"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                    app:layout_constraintStart_toStartOf="@+id/guideline4"
+                    app:layout_constraintTop_toTopOf="@+id/settingButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/forwardButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forward"
+                    app:icon="@drawable/chevron_forward"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/dim4dp"
+                    app:iconSize="@dimen/dim2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline5"
+                    app:layout_constraintTop_toTopOf="@+id/settingButton" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.75" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reloadBotton"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/reload"
-                app:icon="@drawable/reload"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bookmarkButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bookmark"
-                app:icon="@drawable/bookmarks"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/reloadBotton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/historyButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/history"
-                app:icon="@drawable/hourglass_split"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="@+id/bookmarkButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/modeBotton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/desktop"
-                app:icon="@drawable/desktop"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/historyButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/settingButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:text="@string/settins"
-                app:icon="@drawable/gear_fill"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView10"
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reloadBotton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addonsButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/addons"
-                app:icon="@drawable/extension_puzzle"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/bookmarkButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/downloadButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/download"
-                app:icon="@drawable/download"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
-                app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/historyButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/forwardButton"
-                style="@style/Widget.Material3.Button.IconButton"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/forward"
-                app:icon="@drawable/chevron_forward"
-                app:iconGravity="textTop"
-                app:iconPadding="@dimen/dim4dp"
-                app:iconSize="@dimen/dim2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/modeBotton" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout11"
+                tools:showIn="@layout/popup_menu">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/materialButton14"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/clear_cookies_and_site_data"
+                        app:icon="@drawable/trash3_fill"
+                        app:iconGravity="start"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/materialButton15"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        secureIcon="@{user.secure}"
+                        secureText="@{user.secure}"
+                        app:icon="@drawable/shield_fill"
+                        app:iconGravity="start"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/materialDivider2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="@+id/materialButton14"
+                        app:layout_constraintStart_toStartOf="@+id/materialButton14"
+                        app:layout_constraintTop_toBottomOf="@+id/materialButton15" />
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        app:iconUri="@{user.u}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/globe" />
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="0dp"
+                        android:text="@{user.secureHost}"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView8"
+                        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView9"
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/materialButton16"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:secureIcon="@{user.secure}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:text="@{user.MTitle}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/starButton"
+                        app:layout_constraintEnd_toStartOf="@+id/starButton"
+                        app:layout_constraintStart_toEndOf="@+id/materialButton16"
+                        app:layout_constraintTop_toTopOf="@+id/starButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/starButton"
+                        style="@style/Widget.Material3.Button.IconButton"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/star"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

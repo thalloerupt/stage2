@@ -1,6 +1,8 @@
 package com.thallo.stage.componets.popup
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.databinding.PopupMenuBinding
 import com.thallo.stage.session.DelegateLivedata
+import com.thallo.stage.session.PrivacyLivedata
 import com.thallo.stage.session.SessionDelegate
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSessionSettings
@@ -30,6 +33,7 @@ class MenuPopup{
     private var bookmarkViewModel: BookmarkViewModel
     private  var sessionDelegate: SessionDelegate? =null
     var isHome:Boolean = true
+    var isPrivacy:Boolean = false
 
     constructor(
         context: MainActivity,
@@ -39,7 +43,18 @@ class MenuPopup{
         bookmarkViewModel = ViewModelProvider(context).get<BookmarkViewModel>(BookmarkViewModel::class.java)
         binding = PopupMenuBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(binding.root)
-        DelegateLivedata.getInstance().observe(context){sessionDelegate=it}
+        DelegateLivedata.getInstance().observe(context){
+            sessionDelegate=it
+            binding.user = sessionDelegate
+
+        }
+        PrivacyLivedata.getInstance().observe(context){
+            isPrivacy = it
+            if (it)
+                binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_sunglasses_fill)
+            else
+                binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_wink_fill)
+        }
         HomeLivedata.getInstance().observe(context){
             isHome=it
             if (it){
@@ -62,12 +77,12 @@ class MenuPopup{
             bottomSheetDialog.dismiss()
 
         }
-        binding.addonsButton.setOnClickListener {
-            var intent= Intent(context, HolderActivity::class.java)
-            intent.putExtra("Page","ADDONS")
-            context.startActivity(intent)
+        binding.privacyButton.setOnClickListener {
+            if (isPrivacy)
+                PrivacyLivedata.getInstance().Value(false)
+            else
+                PrivacyLivedata.getInstance().Value(true)
             bottomSheetDialog.dismiss()
-
         }
         binding.bookmarkButton.setOnClickListener {
             BookmarkPopup(context).show()
@@ -97,8 +112,6 @@ class MenuPopup{
 
         }
         binding.modeBotton.setOnClickListener {
-
-
             if (!isHome) {
                 if (sessionDelegate?.session?.settings?.userAgentMode == GeckoSessionSettings.USER_AGENT_MODE_DESKTOP) {
                     sessionDelegate!!.session.settings.userAgentMode =
@@ -138,8 +151,6 @@ class MenuPopup{
 
     }
     fun show(){
-        if (sessionDelegate!=null)
-            binding.textView5.text= sessionDelegate!!.mTitle
         bottomSheetDialog.show()
     }
 }

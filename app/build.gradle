@@ -28,13 +28,17 @@ android {
         applicationId "com.thallo.stage"
         minSdk 23
         targetSdk 33
-        versionCode 100
-        versionName "1.0"
+        versionCode 116
+        versionName "1.0.316"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
+        manifestPlaceholders = [
+                JPUSH_APPKEY : "96a21efff5305ac2184ba3f5", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     buildTypes {
@@ -119,7 +123,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     implementation "org.mozilla.geckoview:geckoview:109.0.20230112150232"
-    implementation 'androidx.core:core-ktx:+'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.databinding:databinding-runtime:7.1.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -137,9 +141,8 @@ dependencies {
     def dialogx_version = "0.0.46"
     implementation "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
     implementation "com.github.kongzue.DialogX:DialogXMaterialYou:${dialogx_version}"
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
 
-    implementation  'com.umeng.umsdk:common:9.4.7'// 必选
-    implementation  'com.umeng.umsdk:asms:1.4.0'// 必选
 
     def room_version = "2.5.0"
 

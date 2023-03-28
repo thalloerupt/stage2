@@ -1,25 +1,15 @@
 package com.thallo.stage.componets.popup
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
 import android.view.LayoutInflater
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.thallo.stage.HolderActivity
-import com.thallo.stage.MainActivity
 import com.thallo.stage.R
-import com.thallo.stage.broswer.AlertDialog
-import com.thallo.stage.broswer.JsChoiceDialog
+import com.thallo.stage.broswer.dialog.AlertDialog
+import com.thallo.stage.broswer.dialog.JsChoiceDialog
 import com.thallo.stage.databinding.PopupAddonsBinding
-import com.thallo.stage.databinding.PopupMenuBinding
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
@@ -49,7 +39,11 @@ class AddonsPopup {
                 prompt: GeckoSession.PromptDelegate.ChoicePrompt
             ): GeckoResult<GeckoSession.PromptDelegate.PromptResponse>? {
                 //prompt.
-                val jsChoiceDialog = JsChoiceDialog(context, prompt)
+                val jsChoiceDialog =
+                    JsChoiceDialog(
+                        context,
+                        prompt
+                    )
                 jsChoiceDialog.showDialog()
                 return GeckoResult.fromValue(prompt.confirm(jsChoiceDialog.dialogResult.toString()))
             }
@@ -58,7 +52,8 @@ class AddonsPopup {
                 session: GeckoSession,
                 prompt: GeckoSession.PromptDelegate.AlertPrompt
             ): GeckoResult<GeckoSession.PromptDelegate.PromptResponse>? {
-                val alertDialog = AlertDialog(context, prompt)
+                val alertDialog =
+                    AlertDialog(context, prompt)
                 alertDialog.showDialog()
                 return GeckoResult.fromValue(alertDialog.getDialogResult())
             }

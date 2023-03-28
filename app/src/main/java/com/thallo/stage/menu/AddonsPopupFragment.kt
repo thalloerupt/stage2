@@ -44,12 +44,18 @@ class AddonsPopupFragment : Fragment() {
         binding.recyclerView3.adapter=adapter
         context?.let { it ->
             GeckoRuntime.getDefault(it).webExtensionController.list().accept {
+                if(it.isNullOrEmpty())
+                    binding.tabAddonsView.visibility=View.GONE
+                else
+                    binding.tabAddonsView.visibility=View.VISIBLE
                 adapter.submitList(it)
             }
         }
         adapter.select= object : TabMenuAddonsAdapater.Select {
             override fun onSelect(session: GeckoSession) {
-                context?.let { GeckoRuntime.getDefault(it) }?.let { session.open(it)
+                context?.let {
+                    GeckoRuntime.getDefault(it) }?.let {
+                    session.open(it)
                     binding.tabAddonsView.setSession(session)
                 }
             }

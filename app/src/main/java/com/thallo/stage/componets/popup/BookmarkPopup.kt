@@ -7,8 +7,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.thallo.stage.*
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
-import com.thallo.stage.componets.bookmark.BookmarkFragment
-import com.thallo.stage.componets.bookmark.sync.SyncBookmarkFragment
+import com.thallo.stage.broswer.bookmark.BookmarkFragment
+import com.thallo.stage.broswer.bookmark.sync.SyncBookmarkFragment
 import com.thallo.stage.databinding.PopupBookmarkBinding
 
 class BookmarkPopup {

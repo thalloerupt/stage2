@@ -25,6 +25,15 @@
     <string name="history">历史</string>
     <string name="desktop">桌面模式</string>
     <string name="forward">前进</string>
+    <string name="Baidu">百度</string>
+    <string name="Google">谷歌</string>
+    <string name="Bing">必应</string>
+    <string name="Sougou">搜狗</string>
+    <string name="EngineTips">在%s上搜索</string>
+    <string name="connection_secure">连接安全</string>
+    <string name="connection_not_secure">连接不安全</string>
+    <string name="clear_cookies_and_site_data">清除Cookie和网站数据</string>
+
 
     <string name="result_qr">扫描结果</string>
 
@@ -117,5 +126,7 @@
     <string name="pair_instructions_message">识别二维码</string>
     <string name="intent_message">网页希望打开本地应用</string>
     <string name="details">详情</string>
+    <string name="no_addons">还没有附加组件，快去添加吧。</string>
+    <string name="private_mode">无痕模式</string>
 
 </resources>

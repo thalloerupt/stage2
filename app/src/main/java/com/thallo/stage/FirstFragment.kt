@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
-import com.thallo.stage.broswer.Qr
-import com.thallo.stage.componets.bookmark.shortcut.ShortcutAdapter
+import com.thallo.stage.broswer.qr.Qr
+import com.thallo.stage.broswer.bookmark.shortcut.ShortcutAdapter
 import com.thallo.stage.database.shortcut.Shortcut
 import com.thallo.stage.database.shortcut.ShortcutViewModel
 import com.thallo.stage.databinding.FragmentFirstBinding

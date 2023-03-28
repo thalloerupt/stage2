@@ -21,7 +21,7 @@ class SeRuSettings {
         this.activity = activity
         geckoRuntimeSettings=GeckoRuntime.getDefault(activity).settings
         if (getSizeName(activity)=="large"){
-            geckoSessionSettings.userAgentOverride="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
+            geckoSessionSettings.userAgentOverride="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
             geckoSessionSettings.viewportMode=GeckoSessionSettings.VIEWPORT_MODE_MOBILE
         }
         else {
@@ -29,7 +29,6 @@ class SeRuSettings {
 
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity /* Activity context */)
-
         geckoRuntimeSettings.forceUserScalableEnabled=sharedPreferences.getBoolean("switch_userscalable",false)
         geckoRuntimeSettings.automaticFontSizeAdjustment=sharedPreferences.getBoolean("switch_automatic_fontsize",false)
         geckoRuntimeSettings.aboutConfigEnabled=true

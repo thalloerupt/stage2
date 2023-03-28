@@ -11,29 +11,21 @@
         android:layout_height="match_parent"
         android:background="@color/surface">
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo72"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:autoText="false"
-            android:fontFamily="@font/alfa_slab_one"
 
+            android:fontFamily="@font/alfa_slab_one"
             android:freezesText="false"
             android:gravity="start"
             android:text="Stage\nBrowser"
             android:textSize="34sp"
             android:textStyle="bold"
             app:autoSizeTextType="uniform"
-            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -51,7 +43,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/sssurf_2_" />
+            app:srcCompat="@drawable/background" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
@@ -106,10 +98,9 @@
             android:textSize="20sp"
             app:icon="@drawable/qq"
             app:iconSize="@dimen/dim2"
-            app:layout_constraintBottom_toTopOf="@+id/guideline7"
+            app:layout_constraintBottom_toTopOf="@+id/materialButton5"
             app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toTopOf="@+id/guideline7" />
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton5"
@@ -120,8 +111,8 @@
             android:textSize="20sp"
             app:icon="@drawable/telegram"
             app:iconSize="@dimen/dim2"
+            app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/materialButton6" />
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

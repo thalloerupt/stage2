@@ -11,10 +11,6 @@ class GeckoViewModel:ViewModel() {
     fun changeSearch(session1: GeckoSession) {
         _data.value = session1
     }
-
-
-
-
 }
 
 

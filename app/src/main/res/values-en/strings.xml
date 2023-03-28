@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">stage</string>
+    <string name="app_name">Stage</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -27,6 +27,14 @@
     <string name="desktop">Desktop site</string>
     <string name="forward">Forward</string>
     <string name="result_qr">Result</string>
+    <string name="Baidu">Baidu</string>
+    <string name="Google">Google</string>
+    <string name="Bing">Bing</string>
+    <string name="Sougou">Sougou</string>
+    <string name="EngineTips">Search on %s</string>
+    <string name="connection_secure">Connection is secure</string>
+    <string name="connection_not_secure">Connection is not secure</string>
+    <string name="clear_cookies_and_site_data">Clear cookies and site data</string>
 
     <string name="dialog_shortcut_title">Sure to remove it from the home page?</string>
     <string name="dialog_bookmark_title">Sure to delete bookmarks?</string>
@@ -117,5 +125,7 @@
     <string name="pair_instructions_message">Recognize the QR code</string>
     <string name="intent_message">The website wants to open a native application</string>
     <string name="details">Details</string>
+    <string name="no_addons">No add-ons yet, so go ahead and add them.</string>
+    <string name="private_mode">PrivateMode</string>
 
 </resources>

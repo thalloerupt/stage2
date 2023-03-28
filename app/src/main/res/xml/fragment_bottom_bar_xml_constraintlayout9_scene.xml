@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/constraintLayout8"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim7"
+            motion:layout_constraintBottom_toTopOf="@+id/progress"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/materialButton8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/materialButton10"
+            motion:layout_constraintEnd_toStartOf="@+id/materialButton9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+        <Constraint
+            android:id="@+id/materialButton9"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+        <Constraint
+            android:id="@+id/materialButton11"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/editTextTextPersonName"
+            motion:layout_constraintEnd_toStartOf="@+id/materialButton10"
+            motion:layout_constraintStart_toEndOf="@+id/materialButton8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
+        <Constraint
+            android:id="@+id/progress"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/textView25"
+            motion:layout_constraintEnd_toEndOf="@+id/materialButton10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/materialButton10"
+            motion:layout_constraintTop_toTopOf="@+id/materialButton10"
+            motion:layout_constraintStart_toStartOf="@+id/materialButton10" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/constraintLayout8"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim7"
+            motion:layout_constraintBottom_toTopOf="@+id/progress"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/materialButton8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/materialButton10"
+            motion:layout_constraintEnd_toStartOf="@+id/materialButton9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/materialButton9"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/materialButton11"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+        <Constraint
+            android:id="@+id/editTextTextPersonName"
+            motion:layout_constraintStart_toEndOf="@+id/materialButton8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintEnd_toStartOf="@+id/materialButton11" />
+        <Constraint
+            android:id="@+id/progress"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/textView25"
+            motion:layout_constraintEnd_toEndOf="@+id/materialButton10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/materialButton10"
+            motion:layout_constraintTop_toTopOf="@+id/materialButton10"
+            motion:layout_constraintStart_toStartOf="@+id/materialButton10" />
+    </ConstraintSet>
+</MotionScene>

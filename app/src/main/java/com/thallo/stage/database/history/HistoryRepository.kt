@@ -40,7 +40,7 @@ internal class HistoryRepository(context: Context) {
     }
 
     fun findHistoriesWithMix(pattern: String?): LiveData<List<History?>?>? {
-        return historyDao!!.findHistoriesWithMix(pattern)
+        return historyDao!!.findHistoriesWithMix("%$pattern%")
     }
 
     internal class InsertAsyncTask(private val historyDao: HistoryDao?) :

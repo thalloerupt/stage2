@@ -1,6 +1,7 @@
 package com.thallo.stage.webextension
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -50,15 +51,7 @@ class WebextensionSession {
                 createDetails: WebExtension.CreateTabDetails
             ): GeckoResult<GeckoSession>? {
                 val session=GeckoSession()
-                session.webExtensionController.setTabDelegate(source,object :WebExtension.SessionTabDelegate{
-                    override fun onCloseTab(
-                        source: WebExtension?,
-                        session: GeckoSession
-                    ): GeckoResult<AllowOrDeny> {
-                        return super.onCloseTab(source, session)
-                    }
-                })
-
+                //Log.d("onNewTab",session.)
                 newSession(session,context)
                 return GeckoResult.fromValue(session)
             }
