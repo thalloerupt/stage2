@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton14"
+            android:id="@+id/dataClearingButton"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,8 +45,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialButton14"
-            app:layout_constraintStart_toStartOf="@+id/materialButton14"
+            app:layout_constraintEnd_toEndOf="@+id/dataClearingButton"
+            app:layout_constraintStart_toStartOf="@+id/dataClearingButton"
             app:layout_constraintTop_toBottomOf="@+id/materialButton15" />
 
         <ImageView

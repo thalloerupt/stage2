@@ -26,6 +26,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findNavController().navigate(R.id.action_settingsFragment_to_addonsManagerFragment)
             false
         }
+        findPreference<Preference>("privacyAndService")?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_privacyAndServiceFragment)
+            false
+        }
         preferenceScreen.onPreferenceClickListener = Preference.OnPreferenceClickListener { true }
 
 

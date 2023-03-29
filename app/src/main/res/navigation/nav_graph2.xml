@@ -23,6 +23,9 @@
             app:destination="@id/addonsManagerFragment"
             app:enterAnim="@anim/translate_to"
             app:exitAnim="@anim/translate_from" />
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyAndServiceFragment"
+            app:destination="@id/privacyAndServiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/downloadFragment"
@@ -42,4 +45,9 @@
         android:id="@+id/settingsSearching2"
         android:name="com.thallo.stage.settings.SettingsSearching"
         android:label="@string/searching" />
+    <fragment
+        android:id="@+id/privacyAndServiceFragment"
+        android:name="com.thallo.stage.PrivacyAndServiceFragment"
+        android:label="@string/privacy_and_service_agreement"
+        tools:layout="@layout/fragment_privacy_and_service" />
 </navigation>

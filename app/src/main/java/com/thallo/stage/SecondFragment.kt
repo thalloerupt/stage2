@@ -1,18 +1,13 @@
 package com.thallo.stage
 
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.NestedScrollView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +20,6 @@ import com.thallo.stage.tab.RemoveTabLiveData
 import com.thallo.stage.utils.filePicker.FilePicker
 import com.thallo.stage.utils.filePicker.PickUtils
 import kotlinx.coroutines.launch
-import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
 
@@ -39,6 +33,7 @@ class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     lateinit var session: GeckoSession
     lateinit var geckoViewModel: GeckoViewModel
+    lateinit var privacyFlow: PrivacyFlow
     lateinit var delegate: ArrayList<SessionDelegate>
     lateinit var uri: Uri
 
@@ -47,13 +42,15 @@ class SecondFragment : Fragment() {
     private val binding get() = _binding!!
     var active:Int=-1
     lateinit var filePicker: FilePicker
+    var isPrivacy : Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
-        geckoViewModel = activity?.let { ViewModelProvider(it)[GeckoViewModel::class.java] }!!
+        geckoViewModel = ViewModelProvider(requireActivity())[GeckoViewModel::class.java]
+        privacyFlow = ViewModelProvider(requireActivity())[PrivacyFlow::class.java]
         return binding.root
 
     }
@@ -73,18 +70,28 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         delegate = ArrayList<SessionDelegate>()
+
+        lifecycleScope.launch {
+            privacyFlow
+                .data
+                .collect(){
+                    v->isPrivacy=v
+                Log.d("privacyFlow",""+v)
+
+            }
+        }
         lifecycleScope.launch {
             geckoViewModel.data.collect { value: GeckoSession ->
                 openSession(value)
                 //Toast.makeText(context,"ok",Toast.LENGTH_SHORT).show()
             }
+
         }
 
         DelegateListLiveData.getInstance().observe(viewLifecycleOwner){
             delegate=it
         }
         RemoveTabLiveData.getInstance().observe(viewLifecycleOwner){
-            Log.d("RemoveTabLiveData",""+delegate.size)
             if (delegate.size!=0) {
                 delegate[it].close()
                 delegate.removeAt(it)
@@ -98,6 +105,9 @@ class SecondFragment : Fragment() {
                 DelegateListLiveData.getInstance().Value(delegate)
             }
         }
+
+
+
 
 
 
@@ -128,13 +138,16 @@ class SecondFragment : Fragment() {
 
     fun openSession(session: GeckoSession) {
         binding.geckoview.releaseSession()
-        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session,filePicker,false) }
+        val sessionDelegate: SessionDelegate? = activity?.let { SessionDelegate(it, session,filePicker,isPrivacy) }
         if (sessionDelegate != null) {
             sessionDelegate.setpic = object : SessionDelegate.Setpic {
                 override fun onSetPic() {
                     binding.geckoview.capturePixels().accept {
                         if (it != null) {
-                            sessionDelegate.bitmap=it
+                            if (sessionDelegate.privacy)
+                                sessionDelegate.bitmap= requireActivity().getDrawable(R.drawable.close_outline)?.toBitmap()!!
+                            else
+                                sessionDelegate.bitmap=it
                         }
                     }
 

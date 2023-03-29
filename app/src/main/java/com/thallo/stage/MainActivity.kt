@@ -46,6 +46,7 @@ import com.thallo.stage.componets.popup.MenuPopup
 import com.thallo.stage.componets.popup.TabPopup
 import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.databinding.ActivityMainBinding
+import com.thallo.stage.databinding.PrivacyAgreementLayoutBinding
 import com.thallo.stage.download.DownloadTaskLiveData
 import com.thallo.stage.session.*
 import com.thallo.stage.tab.AddTabLiveData
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var privacyAgreementLayoutBinding: PrivacyAgreementLayoutBinding
     var fragments = listOf<Fragment>(FirstFragment(),SecondFragment())
     private lateinit var geckoViewModel: GeckoViewModel
     var sessionDelegates=ArrayList<SessionDelegate>()
@@ -84,9 +86,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        privacyAgreementLayoutBinding = PrivacyAgreementLayoutBinding.inflate(layoutInflater)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        setContentView(binding.root)
+        privacyAgreementLayoutBinding.materialButton14.setOnClickListener {
+            setContentView(binding.root)
+            prefs.edit().putBoolean("privacy1",true).commit()
+        }
+        privacyAgreementLayoutBinding.materialButton17.setOnClickListener {
+            setContentView(binding.root)
+            prefs.edit().putBoolean("privacy1",true).commit()
+        }
+        if (prefs.getBoolean("privacy1",false))
+            setContentView(binding.root)
+        else
+            setContentView(privacyAgreementLayoutBinding.root)
+        privacyAgreementLayoutBinding.webView.loadUrl("file:///android_asset/privacy.txt")
+
         StatusUtils.init(this)
         WebextensionSession(this)
 

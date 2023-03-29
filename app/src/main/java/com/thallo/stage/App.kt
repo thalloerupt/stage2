@@ -19,6 +19,5 @@ class App: Application() {
         xcrash.XCrash.init(this)
 
 
-
     }
 }

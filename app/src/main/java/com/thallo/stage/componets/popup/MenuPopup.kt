@@ -1,12 +1,11 @@
 package com.thallo.stage.componets.popup
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -16,15 +15,15 @@ import com.thallo.stage.R
 import com.thallo.stage.componets.BookmarkDialog
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.MenuAddonsAdapater
-import com.thallo.stage.database.bookmark.Bookmark
 import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.databinding.PopupMenuBinding
 import com.thallo.stage.session.DelegateLivedata
-import com.thallo.stage.session.PrivacyLivedata
+import com.thallo.stage.session.PrivacyFlow
 import com.thallo.stage.session.SessionDelegate
+import kotlinx.coroutines.launch
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSessionSettings
-import org.mozilla.geckoview.WebExtension
+import org.mozilla.geckoview.StorageController.ClearFlags.ALL
 
 class MenuPopup{
     val context: MainActivity
@@ -43,18 +42,25 @@ class MenuPopup{
         bookmarkViewModel = ViewModelProvider(context).get<BookmarkViewModel>(BookmarkViewModel::class.java)
         binding = PopupMenuBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(binding.root)
+        var privacyRename = ViewModelProvider(context)[PrivacyFlow::class.java]
+
         DelegateLivedata.getInstance().observe(context){
             sessionDelegate=it
             binding.user = sessionDelegate
 
         }
-        PrivacyLivedata.getInstance().observe(context){
-            isPrivacy = it
-            if (it)
-                binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_sunglasses_fill)
-            else
-                binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_wink_fill)
+        context.lifecycleScope.launch {
+            privacyRename.data.collect(){
+                    value: Boolean ->isPrivacy = value
+                if (value)
+                    binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_sunglasses_fill)
+                else
+                    binding.privacyButton.icon = context.getDrawable(R.drawable.emoji_wink_fill)
+            }
         }
+
+
+
         HomeLivedata.getInstance().observe(context){
             isHome=it
             if (it){
@@ -79,9 +85,9 @@ class MenuPopup{
         }
         binding.privacyButton.setOnClickListener {
             if (isPrivacy)
-                PrivacyLivedata.getInstance().Value(false)
+                privacyRename.changeMode(false)
             else
-                PrivacyLivedata.getInstance().Value(true)
+                privacyRename.changeMode(true)
             bottomSheetDialog.dismiss()
         }
         binding.bookmarkButton.setOnClickListener {
@@ -110,6 +116,15 @@ class MenuPopup{
                 sessionDelegate?.session?.goForward()
             bottomSheetDialog.dismiss()
 
+        }
+        binding.dataClearingButton.setOnClickListener {
+            sessionDelegate?.let { it1 ->
+                GeckoRuntime.getDefault(context).storageController.clearDataFromHost(
+                    it1.secureHost,ALL)
+                it1.session.reload()
+
+            }
+            bottomSheetDialog.dismiss()
         }
         binding.modeBotton.setOnClickListener {
             if (!isHome) {

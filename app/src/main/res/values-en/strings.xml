@@ -35,7 +35,9 @@
     <string name="connection_secure">Connection is secure</string>
     <string name="connection_not_secure">Connection is not secure</string>
     <string name="clear_cookies_and_site_data">Clear cookies and site data</string>
-
+    <string name="privacy_and_service_agreement">Privacy and service agreement</string>
+    <string name="agree">Agree</string>
+    <string name="disagree">Disagree</string>
     <string name="dialog_shortcut_title">Sure to remove it from the home page?</string>
     <string name="dialog_bookmark_title">Sure to delete bookmarks?</string>
     <string name="dialog_history_title">Sure to delete history?</string>

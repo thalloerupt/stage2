@@ -28,8 +28,8 @@ android {
         applicationId "com.thallo.stage"
         minSdk 23
         targetSdk 33
-        versionCode 116
-        versionName "1.0.316"
+        versionCode 209
+        versionName "1.1.16"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

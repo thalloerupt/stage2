@@ -33,6 +33,9 @@
     <string name="connection_secure">连接安全</string>
     <string name="connection_not_secure">连接不安全</string>
     <string name="clear_cookies_and_site_data">清除Cookie和网站数据</string>
+    <string name="privacy_and_service_agreement">隐私与用户协议</string>
+    <string name="agree">同意</string>
+    <string name="disagree">不同意</string>
 
 
     <string name="result_qr">扫描结果</string>

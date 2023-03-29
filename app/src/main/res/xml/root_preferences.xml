@@ -39,6 +39,9 @@
         <Preference
             app:key="settingAbout"
             app:title="@string/about_stage" />
+        <Preference
+            app:key="privacyAndService"
+            app:title="@string/privacy_and_service_agreement" />
     </PreferenceCategory>
 
 </PreferenceScreen>

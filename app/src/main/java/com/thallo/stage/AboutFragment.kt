@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.thallo.stage.databinding.FragmentAboutBinding
 import com.thallo.stage.session.createSession
@@ -27,6 +28,7 @@ class AboutFragment : Fragment() {
     ): View? {
         fragmentAboutBinding.materialButton6.setOnClickListener { joinQQGroup("TbCzUUsxKdWQqmHqgqaTFJ110tq4FqCD") }
         fragmentAboutBinding.materialButton2.setOnClickListener { sendEmail() }
+        fragmentAboutBinding.textView11.setOnClickListener { Toast.makeText(requireContext(),"106",Toast.LENGTH_SHORT).show() }
         fragmentAboutBinding.materialButton5.setOnClickListener {
             val intent = Intent(requireContext(),MainActivity::class.java)
             intent.data = Uri.parse("https://t.me/stage_browser_channel")
