@@ -1,18 +1,20 @@
 package com.thallo.stage.broswer.bookmark.sync
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.thallo.stage.R
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.databinding.FragmentSyncBookmarkBinding
 import com.thallo.stage.session.GeckoViewModel
 import com.thallo.stage.session.SeRuSettings
-import com.thallo.stage.utils.getSizeName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,18 +52,23 @@ class SyncBookmarkFragment : Fragment()  {
         }
         GlobalSyncableStoreProvider.configureStore(SyncEngine.Bookmarks to bookmarksStorage)
         binding= FragmentSyncBookmarkBinding.inflate(LayoutInflater.from(context))
-        var bookmarkAdapter= SyncBookmarkAdapter()
+        var bookmarkAdapter= SyncBookmarkFolderAdapter()
         geckoViewModel = activity?.let { ViewModelProvider(it)[GeckoViewModel::class.java] }!!
 
         lifecycleScope.launch {
             binding.syncBookmarkRecyclerView.adapter=bookmarkAdapter
             binding.syncBookmarkRecyclerView.layoutManager = LinearLayoutManager(context)
-            bookmarkAdapter.select= object : SyncBookmarkAdapter.Select {
-                override fun onSelect(url: String) {
-                    createSession(url)
+            bookmarkAdapter.select= object : SyncBookmarkFolderAdapter.Select {
+                override fun onSelect(bean: BookmarkNode) {
+                    //createSession(url)
+                    val bundle = Bundle()
+                    bundle.putString("guid", bean.guid)
+                    findNavController().navigate(R.id.action_syncBookmarkFragment_to_syncBookmarkListFragment,bundle)
                 }
 
             }
+
+
 
             bookmarkAdapter.submitList(withContext(Dispatchers.IO) {
                 val bookmarksRoot =
@@ -71,7 +78,9 @@ class SyncBookmarkFragment : Fragment()  {
                 } else {
                     var bookmarksRootAndChildren = "BOOKMARKS\n"
                     fun addTreeNode(node: BookmarkNode, depth: Int) {
-                        bookmarkNodes.add(node)
+                        Log.d("BookmarkNode: ", node.type.name)
+                        if(node.type.name == "FOLDER")
+                            bookmarkNodes.add(node)
                         node.children?.forEach {
                             addTreeNode(it, depth + 1)
                         }

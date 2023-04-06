@@ -30,7 +30,7 @@ ShortcutListCallback
             val faviconUrl = uri.scheme + "://" + uri.host + "/favicon.ico"
             Glide.with(mContext)
                 .load(faviconUrl)
-                .placeholder(R.drawable.logo72)
+                .placeholder(R.drawable.globe)
                 .into(binding.imageView10)
             binding.materialCardView8.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }
             binding.materialCardView8.setOnLongClickListener {

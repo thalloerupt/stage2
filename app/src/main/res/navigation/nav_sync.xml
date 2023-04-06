@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_sync"
+    app:startDestination="@id/syncBookmarkFragment">
+
+    <fragment
+        android:id="@+id/syncBookmarkFragment"
+        android:name="com.thallo.stage.broswer.bookmark.sync.SyncBookmarkFragment"
+        android:label="fragment_sync_bookmark"
+        tools:layout="@layout/fragment_sync_bookmark" >
+        <action
+            android:id="@+id/action_syncBookmarkFragment_to_syncBookmarkListFragment"
+            app:destination="@id/syncBookmarkListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/syncBookmarkListFragment"
+        android:name="com.thallo.stage.broswer.bookmark.sync.SyncBookmarkListFragment"
+        android:label="fragment_sync_bookmark_list"
+        tools:layout="@layout/fragment_sync_bookmark_list" >
+        <action
+            android:id="@+id/action_syncBookmarkListFragment_to_syncBookmarkFragment"
+            app:destination="@id/syncBookmarkFragment" />
+    </fragment>
+</navigation>

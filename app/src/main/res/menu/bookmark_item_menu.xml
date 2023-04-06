@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_bookmark_item_delete"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/menu_bookmark_item_add_home"
+        android:title="@string/add_to_homepage" />
+</menu>

@@ -130,8 +130,11 @@ class SessionDelegate() :BaseObservable(){
                 if (title != null) {
                     mTitle=title
                 }
-                var history= title?.let { History(u, it,0) }
-                historyViewModel.insertHistories(history)
+                if(!privacy){
+                    var history= title?.let { History(u, it,0) }
+                    historyViewModel.insertHistories(history)
+                }
+
 
                 notifyPropertyChanged(BR.mTitle)
 

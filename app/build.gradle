@@ -28,17 +28,14 @@ android {
         applicationId "com.thallo.stage"
         minSdk 23
         targetSdk 33
-        versionCode 209
-        versionName "1.1.16"
+        versionCode 210
+        versionName "1.1.20"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
-        manifestPlaceholders = [
-                JPUSH_APPKEY : "96a21efff5305ac2184ba3f5", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-        ]
+
     }
 
     buildTypes {

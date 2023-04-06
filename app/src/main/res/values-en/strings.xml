@@ -41,7 +41,8 @@
     <string name="dialog_shortcut_title">Sure to remove it from the home page?</string>
     <string name="dialog_bookmark_title">Sure to delete bookmarks?</string>
     <string name="dialog_history_title">Sure to delete history?</string>
-
+    <string name="delete">Delete</string>
+    <string name="add_to_homepage">Add to homepage</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

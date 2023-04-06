@@ -20,7 +20,7 @@ interface BookmarkDao {
     @get:Query("SELECT * FROM Bookmark ORDER BY ID DESC")
     val allBookmarksLive: LiveData<List<Bookmark?>?>?
 
-    @Query("SELECT * FROM Bookmark WHERE url_info LIKE:pattern ORDER BY ID DESC")
+    @Query("SELECT * FROM Bookmark WHERE title_info LIKE:pattern ORDER BY ID DESC")
     fun findBookmarksWithPattern(pattern: String?): LiveData<List<Bookmark?>?>?
 
     @Query("SELECT * FROM Bookmark WHERE title_info LIKE:pattern ORDER BY ID DESC")

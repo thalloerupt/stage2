@@ -1,13 +1,16 @@
 package com.thallo.stage.componets.popup
 
 import android.view.LayoutInflater
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import com.thallo.stage.*
 import com.thallo.stage.componets.CollectionAdapter
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.broswer.bookmark.BookmarkFragment
+import com.thallo.stage.broswer.bookmark.sync.SyncBookmarkFolderFragment
 import com.thallo.stage.broswer.bookmark.sync.SyncBookmarkFragment
 import com.thallo.stage.databinding.PopupBookmarkBinding
 
@@ -16,7 +19,7 @@ class BookmarkPopup {
     lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var binding: PopupBookmarkBinding
 
-    private val fragments=listOf<Fragment>(BookmarkFragment(), SyncBookmarkFragment())
+    private val fragments=listOf<Fragment>(BookmarkFragment(), SyncBookmarkFolderFragment())
     constructor(
         context: MainActivity
     ) {

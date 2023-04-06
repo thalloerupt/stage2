@@ -36,6 +36,8 @@
     <string name="privacy_and_service_agreement">隐私与用户协议</string>
     <string name="agree">同意</string>
     <string name="disagree">不同意</string>
+    <string name="delete">删除</string>
+    <string name="add_to_homepage">添加到主页</string>
 
 
     <string name="result_qr">扫描结果</string>
