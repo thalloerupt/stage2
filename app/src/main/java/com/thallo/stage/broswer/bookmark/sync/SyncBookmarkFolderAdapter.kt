@@ -21,6 +21,7 @@ class SyncBookmarkFolderAdapter : ListAdapter<BookmarkNode, SyncBookmarkFolderAd
                     ?.replace("menu","菜单书签")
                     ?.replace("mobile","移动设备书签")
                     ?.replace("root","所有书签")
+                    //?.replace("unfiled","所有书签")
            // binding.textView10.text=bean.url
             binding.root.setOnClickListener { select.onSelect(bean)  }
         }

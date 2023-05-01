@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ступень</string>
+    <string name="action_settings">Настройки</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Первый фрагмент</string>
+    <string name="second_fragment_label">Второй фрагмент</string>
+    <string name="next">Далее</string>
+    <string name="hello_first_fragment">Привет первый фрагмент</string>
+    <string name="hello_second_fragment">Привет второй фрагмент. Аргумент: %1$s</string>
+    <string name="hint">Поиск или ввод местоположения</string>
+    <string name="add_tab">Открыть новую вкладку</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Привет пустой фрагмент</string>
+    <string name="title_activity_holder">HolderActivity</string>
+    <string name="dia_bookmark_radio">Добавить на главную</string>
+    <string name="dia_bookmark_url">Адрес:</string>
+    <string name="dia_bookmark_title">Название:</string>
+    <string name="dia_add_bookmark_title">Добавить закладку</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
+    <string name="copy">Копировать</string>
+    <string name="reload">Обновить</string>
+    <string name="bookmark">Закладка</string>
+    <string name="history">История</string>
+    <string name="desktop">Режим рабочего стола</string>
+    <string name="forward">Вперед</string>
+    <string name="Baidu">Baidu</string>
+    <string name="Google">Google</string>
+    <string name="Bing">Bing</string>
+    <string name="Sougou">Sougou</string>
+    <string name="EngineTips">Поиск на %s</string>
+    <string name="connection_secure">Безопасное соединение</string>
+    <string name="connection_not_secure">Небезопасное соединение</string>
+    <string name="clear_cookies_and_site_data">Очистить куки и данные сайта</string>
+    <string name="privacy_and_service_agreement">Политика конфиденциальности и пользовательское соглашение</string>
+    <string name="agree">Согласен</string>
+    <string name="disagree">Не согласен</string>
+    <string name="delete">Удалить</string>
+    <string name="add_to_homepage">Добавить на главную страницу</string>
+
+
+    <string name="result_qr">Результат сканирования QR-кода</string>
+
+    <string name="dialog_shortcut_title">Удалить с главной страницы?</string>
+    <string name="dialog_bookmark_title">Удалить закладку?</string>
+    <string name="dialog_history_title">Удалить историю?</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Сообщения</string>
+    <string name="sync_header">Sync</string>
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="searching">搜索</string>
+    <string name="common">常规</string>
+    <string name="extensions">附加组件</string>
+    <string name="advanced">高级</string>
+    <string name="AutomaticFontSize">自适应字体大小</string>
+    <string name="ForceUserScalable">强制手势缩放</string>
+    <string name="private_safety">隐私&amp;安全</string>
+    <string name="https_only">Https-Only</string>
+    <string name="Cookie">减少Cookie横幅</string>
+    <string name="tracking_protecting">增强型跟踪保护</string>
+    <string name="web_permission">网站权限</string>
+    <string name="about">关于</string>
+    <string name="about_stage">关于stage</string>
+    <!-- webextension permission-->
+    <string name="per_tabs">tabs</string>
+    <string name="per_bookmarks">bookmarks</string>
+    <string name="per_browserSettings">browserSettings</string>
+    <string name="per_browsingData">browsingData</string>
+    <string name="per_downloads">downloads</string>
+    <string name="per_downloadsopen">downloads.open</string>
+    <string name="per_find">find</string>
+    <string name="per_geolocation">geolocation</string>
+    <string name="per_history">history</string>
+    <string name="per_management">management</string>
+    <string name="per_nativeMessaging">nativeMessaging</string>
+    <string name="per_notifications">notifications</string>
+    <string name="per_pkcs11">pkcs11</string>
+    <string name="per_privacy">privacy</string>
+    <string name="per_proxy">proxy</string>
+    <string name="per_sessions">sessions</string>
+    <string name="per_topSites">topSites</string>
+    <string name="per_webNavigation">webNavigation</string>
+    <string name="per_clipboardWrite">clipboardWrite</string>
+    <string name="per_clipboardRead">clipboardRead</string>
+    <string name="per_bookmarks_cn">Чтение или изменение закладок</string>
+    <string name="per_browserSettings_cn">Чтение или изменение настроек браузера</string>
+    <string name="per_browsingData_cn">Очистка последних записей истории просмотров, куки и связанных данных</string>
+    <string name="per_downloads_cn">Загрузка файлов и чтение и изменение записей загрузок браузера</string>
+    <string name="per_downloadsopen_cn">Открытие файлов, загруженных на локальный диск</string>
+    <string name="per_find_cn">Чтение содержимого всех открытых вкладок</string>
+    <string name="per_geolocation_cn">Получение вашего местоположения</string>
+    <string name="per_history_cn">Получение истории просмотров</string>
+    <string name="per_management_cn">Отслеживание использования расширений и управление темами</string>
+    <string name="per_nativeMessaging_cn">Обмен сообщениями с программами вне Firefox</string>
+    <string name="per_notifications_cn">Отображение уведомлений</string>
+    <string name="per_pkcs11_cn">Предоставление сервиса аутентификации по паролю</string>
+    <string name="per_privacy_cn">Чтение и изменение настроек конфиденциальности</string>
+    <string name="per_proxy_cn">Управление настройками прокси-сервера браузера</string>
+    <string name="per_sessions_cn">Доступ к последним закрытым вкладкам</string>
+    <string name="per_tabs_cn">Доступ к вкладкам браузера</string>
+    <string name="per_topSites_cn">Доступ к истории просмотров</string>
+    <string name="per_webNavigation_cn">Доступ к активности браузера при использовании</string>
+    <string name="per_clipboardWrite_cn">Запись данных в буфер обмена</string>
+    <string name="per_clipboardRead_cn">Получение данных из буфера обмена</string>
+    <string name="settins">Настройки</string>
+    <string name="download">Загрузки</string>
+    <string name="addons">Дополнения</string>
+    <string name="baidu">https://www.baidu.com/s?wd=</string>
+    <string name="google">https://www.google.com/search?q=</string>
+    <string name="bing">https://www.bing.com/search?q=</string>
+    <string name="sogou">https://www.sogou.com/web?query=</string>
+    <string name="diySearching">Настройка поисковой системы</string>
+    <string name="diyAddress">Настройка адреса поиска</string>
+    <string name="edit_diy_warnning">Пожалуйста, введите правильно</string>
+    <string name="addons_menu_add">Получить дополнения из addons.mozilla.org</string>
+    <string name="author">Автор:</string>
+    <string name="version">Версия:</string>
+    <string name="description">Описание:</string>
+    <string name="pair_instructions_message">Сканирование QR-кода</string>
+
+
+    <string name="intent_message">Веб-страница надеется открыть локальное приложение</string>
+    <string name="details">Детали</string>
+    <string name="no_addons">У вас еще нет дополнительных компонентов, скорее добавьте их.</string>
+    <string name="private_mode">Режим инкогнито</string>0
+</resources>

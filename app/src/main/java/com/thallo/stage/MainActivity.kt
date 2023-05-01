@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sideSheetBehavior: SideSheetBehavior<ConstraintLayout>
     var isHome:Boolean = true
     lateinit var historyViewModel: HistoryViewModel
+    var searching = ""
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -208,9 +209,12 @@ class MainActivity : AppCompatActivity() {
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.SearchText!!.text.toString()
                 searching(value)
+                searching = value
             }
+
             false
         })
+        binding.materialButtonEdit?.setOnClickListener { binding.SearchText?.setText(searching)   }
         binding.urlText?.setOnKeyListener(View.OnKeyListener { _, i, keyEvent ->
             if (KeyEvent.KEYCODE_ENTER == i && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 var value= binding.urlText!!.text.toString()
