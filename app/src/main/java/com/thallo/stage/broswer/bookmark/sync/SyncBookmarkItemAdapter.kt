@@ -1,6 +1,7 @@
 package com.thallo.stage.broswer.bookmark.sync
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -27,9 +28,13 @@ class SyncBookmarkItemAdapter: ListAdapter<BookmarkNode, SyncBookmarkItemAdapter
         fun bind(bean: BookmarkNode, mContext: Context){
 
             binding.textView9.text=bean.title
+            bean.parentGuid?.let { Log.d("BookmarkNode1", it) }
+
             binding.textView10.text=bean.url
             binding.bookmarkItem.setOnClickListener { bean.url?.let { it1 -> select.onSelect(it1) } }
             binding.materialButton18.visibility = View.GONE
+
+
 
         }
 

@@ -16,31 +16,68 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/motionLayout"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_width="215dp"
+            android:layout_height="0dp"
             android:background="@color/surface"
+            android:visibility="@{user.isFull?View.GONE:View.VISIBLE}"
             app:layoutDescription="@xml/activity_main_xml_constraintlayout2_scene"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addonsButton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/star"
+                app:iconTint="@color/text"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toStartOf="@+id/menuButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menuButton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ellipsis_vertical_outline"
+                app:iconTint="@color/text"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout4"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dim3"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:showIn="@layout/activity_main">
+                app:layout_constraintTop_toBottomOf="@+id/forwardButtonL">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reloadButtonL"
+
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/reload"
+                    app:iconTint="@color/text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/urlText"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/bg_edittext2"
                     android:ems="10"
                     android:hint="@string/hint"
@@ -48,31 +85,10 @@
                     android:text="@{user.u}"
                     android:textColor="@color/textDayNight"
                     android:textColorHint="@color/text"
-                    app:layout_constraintBottom_toBottomOf="@+id/addonsButton"
-                    app:layout_constraintEnd_toStartOf="@+id/addonsButton"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/reloadButtonL"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/addonsButton" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menuButton"
-                    style="@style/Widget.Material3.Button.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/ellipsis_vertical_outline"
-                    app:iconTint="@color/text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/addonsButton"
-                    style="@style/Widget.Material3.Button.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/star"
-                    app:iconTint="@color/text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/menuButton"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,13 +100,13 @@
                 android:layout_height="wrap_content"
                 app:icon="@drawable/chevron_back"
                 app:iconTint="@color/text"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/forwardButtonL"
                 style="@style/Widget.Material3.Button.IconButton"
+
+                android:id="@+id/forwardButtonL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/chevron_forward"
@@ -100,53 +116,48 @@
                 app:layout_constraintTop_toTopOf="@+id/backButtonL" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/reloadButtonL"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/reload"
-                app:iconTint="@color/text"
-                app:layout_constraintBottom_toBottomOf="@+id/forwardButtonL"
-                app:layout_constraintStart_toEndOf="@+id/forwardButtonL"
-                app:layout_constraintTop_toTopOf="@+id/forwardButtonL" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/addButton"
                 style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:backgroundTint="@color/onSurface"
                 app:icon="@drawable/add"
                 app:iconTint="@color/text"
-                app:layout_constraintBottom_toBottomOf="@+id/recyclerView2"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recyclerView2" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/onSecondaryContainer"
-                app:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
-                app:layout_constraintStart_toEndOf="@+id/reloadButtonL"
-                app:layout_constraintTop_toTopOf="@+id/reloadButtonL" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView2"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dim4"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addButton" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/reloadButtonL"
-                app:layout_constraintEnd_toStartOf="@+id/addButton"
-                app:layout_constraintStart_toEndOf="@+id/divider"
-                app:layout_constraintTop_toTopOf="@+id/reloadButtonL" />
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/content"
@@ -155,8 +166,8 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/motionLayout" />
+            app:layout_constraintStart_toEndOf="@id/motionLayout"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,10 +1,12 @@
 package com.thallo.stage.session
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.drawable.toBitmap
@@ -23,11 +25,13 @@ import com.thallo.stage.broswer.dialog.ButtonDialog
 import com.thallo.stage.broswer.dialog.ConfirmDialog
 import com.thallo.stage.broswer.dialog.JsChoiceDialog
 import com.thallo.stage.broswer.dialog.TextDialog
+import com.thallo.stage.componets.ContextMenuDialog
 import com.thallo.stage.componets.popup.IntentPopup
 import com.thallo.stage.database.history.History
 import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.download.DownloadTask
 import com.thallo.stage.download.DownloadTaskLiveData
+import com.thallo.stage.fxa.sync.HistorySync
 import com.thallo.stage.utils.StatusUtils
 import com.thallo.stage.utils.UriUtils
 import com.thallo.stage.utils.filePicker.FilePicker
@@ -49,6 +53,7 @@ class SessionDelegate() :BaseObservable(){
     private lateinit var mContext: FragmentActivity
     lateinit var login: Login
     lateinit var setpic: Setpic
+    lateinit var pageError: PageError
     val CONFIG_URL = "https://accounts.firefox.com"
     @get:Bindable
     var u: String = ""
@@ -78,11 +83,18 @@ class SessionDelegate() :BaseObservable(){
     @get:Bindable
     var secureHost:String=""
 
+    var oldY:Int = 0
+    @get:Bindable
+    var y:Int = 0
+
     var downloadTasks=ArrayList<DownloadTask>()
     lateinit var historyViewModel:HistoryViewModel
     lateinit var intentPopup:IntentPopup
     var uri: Uri? =null
-    lateinit var filePicker: FilePicker
+    private lateinit var filePicker: FilePicker
+    lateinit var sessionState: GeckoSession.SessionState
+    private lateinit var historySync: HistorySync
+
     constructor(mContext: FragmentActivity, session:GeckoSession, filePicker: FilePicker ,privacy:Boolean) : this() {
         this.mContext = mContext
         this.session = session
@@ -90,31 +102,52 @@ class SessionDelegate() :BaseObservable(){
         this.privacy = privacy
         notifyPropertyChanged(BR.privacy)
 
+
         val  geckoViewModel: GeckoViewModel =ViewModelProvider(mContext).get(GeckoViewModel::class.java)
         historyViewModel=ViewModelProvider(mContext).get(HistoryViewModel::class.java)
         bitmap= mContext.getDrawable(R.drawable.logo72)?.toBitmap()!!
         intentPopup =IntentPopup(mContext)
+        historySync = HistorySync(mContext)
 
 
         DownloadTaskLiveData.getInstance().observe(mContext){
             downloadTasks=it
         }
         session.contentDelegate = object : GeckoSession.ContentDelegate {
+            override fun onContextMenu(
+                session: GeckoSession,
+                screenX: Int,
+                screenY: Int,
+                element: GeckoSession.ContentDelegate.ContextElement
+            ) {
+                super.onContextMenu(session, screenX, screenY, element)
+                ContextMenuDialog(mContext,element).open()
+            }
             override fun onExternalResponse(session: GeckoSession, response: WebResponse) {
                 var uri=response.uri
                 if (uri.endsWith("xpi")){
                     WebextensionSession(mContext).install(uri)
                 }
                 else{
-                mContext.lifecycleScope.launch {
-                    var downloadTask = DownloadTask(mContext,uri,withContext(Dispatchers.IO){
-                            UriUtils.getFileName(uri)
+                    PopTip.build()
+                        .setCustomView(object : OnBindView<PopTip?>(com.thallo.stage.R.layout.pop_mytip) {
+                            override fun onBind(dialog: PopTip?, v: View) {
+                                v.findViewById<TextView>(R.id.textView17).text = "网页希望下载文件"
+                                v.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
+                                    mContext.lifecycleScope.launch {
+                                        var downloadTask = DownloadTask(mContext,uri,withContext(Dispatchers.IO){
+                                            UriUtils.getFileName(uri)
+                                        })
+                                        downloadTask.open()
+                                        downloadTasks.add(downloadTask)
+                                        DownloadTaskLiveData.getInstance().Value(downloadTasks) }
+                                }
+                            }
                         })
-                    downloadTask.open()
-                    downloadTasks.add(downloadTask)
-                    DownloadTaskLiveData.getInstance().Value(downloadTasks) }
+                        .show()
+
                 }
-                Log.d("ExternalResponse","OK")
+                Log.d("ExternalResponse",uri)
 
 
             }
@@ -133,6 +166,8 @@ class SessionDelegate() :BaseObservable(){
                 if(!privacy){
                     var history= title?.let { History(u, it,0) }
                     historyViewModel.insertHistories(history)
+                    historySync.sync(u)
+
                 }
 
 
@@ -140,8 +175,6 @@ class SessionDelegate() :BaseObservable(){
 
             }
         }
-
-
         session.mediaSessionDelegate = object : MediaSession.Delegate {
             var orientation: Boolean? = null
             override fun onFullscreen(
@@ -186,6 +219,7 @@ class SessionDelegate() :BaseObservable(){
                 sessionState: GeckoSession.SessionState
             ) {
                 super.onSessionStateChange(session, sessionState)
+                this@SessionDelegate.sessionState = sessionState
             }
             override fun onProgressChange(session: GeckoSession, progress: Int) {
                 super.onProgressChange(session, progress)
@@ -208,6 +242,8 @@ class SessionDelegate() :BaseObservable(){
                             login.onLogin(code,state,action)
                     }
                 }
+                y = 0
+                notifyPropertyChanged(BR.y)
 
             }
             override fun onPageStop(session: GeckoSession, success: Boolean) {
@@ -234,6 +270,9 @@ class SessionDelegate() :BaseObservable(){
                         }else if (url.startsWith("intent://")){
                             intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
                         }
+                        else{
+                            intent = Intent.parseUri(url,Intent.URI_INTENT_SCHEME)
+                        }
                         if (intent != null) {
                             if (intent.resolveActivity(mContext.packageManager) != null) {
                                 PopTip.build()
@@ -259,7 +298,31 @@ class SessionDelegate() :BaseObservable(){
                 session: GeckoSession,
                 request: NavigationDelegate.LoadRequest
             ): GeckoResult<AllowOrDeny>? {
+                val uri = Uri.parse(request.uri)
+                var url = request.uri
+                if (uri.scheme != null) {
+                    if (!uri.scheme!!.contains("https") && !uri.scheme!!.contains("http") && !uri.scheme!!.contains(
+                            "about"
+                        )
+                    ) {
 
+                           var intent = Intent.parseUri(url,Intent.URI_INTENT_SCHEME)
+                            if (intent.resolveActivity(mContext.packageManager) != null) {
+                                PopTip.build()
+                                    .setCustomView(object : OnBindView<PopTip?>(com.thallo.stage.R.layout.pop_mytip) {
+                                        override fun onBind(dialog: PopTip?, v: View) {
+                                            v.findViewById<TextView>(R.id.textView17).text = mContext.getText(R.string.intent_message)
+                                            v.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
+                                                mContext.startActivity(intent)
+                                            }
+                                        }
+                                    })
+                                    .show()
+                            }
+
+                    }
+
+                }
                 return GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
             override fun onLoadError(
@@ -267,6 +330,7 @@ class SessionDelegate() :BaseObservable(){
                 uri: String?,
                 error: WebRequestError
             ): GeckoResult<String>? {
+                pageError.onPageError(session, uri, error)
                 return super.onLoadError(session, uri, error)
             }
             override fun onCanGoForward(session: GeckoSession, canGoForward: Boolean) {
@@ -292,6 +356,7 @@ class SessionDelegate() :BaseObservable(){
                 if (url != null) {
                     u=url
                 }
+                pageError.onPageChange()
 
                 notifyPropertyChanged(com.thallo.stage.BR.u)
             }
@@ -419,7 +484,7 @@ class SessionDelegate() :BaseObservable(){
                         prompt
                     )
                 jsChoiceDialog.showDialog()
-                //Log.d("ButtonPrompt","its me")
+                Log.d("ButtonPrompt","its me")
 
                 return GeckoResult.fromValue(prompt.confirm(jsChoiceDialog.dialogResult.toString()))
             }
@@ -431,10 +496,41 @@ class SessionDelegate() :BaseObservable(){
                 val alertDialog =
                     AlertDialog(mContext, prompt)
                 alertDialog.showDialog()
-               // Log.d("ButtonPrompt","its me")
+                Log.d("ButtonPrompt","its me")
 
                 return GeckoResult.fromValue(alertDialog.dialogResult)
             }
+        }
+
+
+        session.scrollDelegate = object : GeckoSession.ScrollDelegate {
+            override fun onScrollChanged(session: GeckoSession, scrollX: Int, scrollY: Int) {
+                super.onScrollChanged(session, scrollX, scrollY)
+                val spToInt = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_SP,
+                    64f,
+                    mContext.resources.displayMetrics
+                ).toInt()
+
+                if (oldY < scrollY){
+                    if(y != spToInt)
+                        y += 16
+                    oldY = scrollY
+                    Log.d("onScrollChanged", "up:$y")
+
+                }
+                else {
+                    if(y != 0)
+                        y -= 16
+                    oldY = scrollY
+                    Log.d("onScrollChanged", "down:$y")
+
+                }
+
+                notifyPropertyChanged(BR.y)
+
+            }
+
         }
 
 
@@ -456,11 +552,25 @@ class SessionDelegate() :BaseObservable(){
             session.open(GeckoRuntime.getDefault(mContext))
     }
 
+    @SuppressLint("SuspiciousIndentation")
+    fun resume(){
+        if(!session.isOpen)
+            session.open(GeckoRuntime.getDefault(mContext))
+            session.restoreState(sessionState!!)
+    }
+
     interface Login{
         fun onLogin(code:String,state:String,action:String)
     }
     interface Setpic{
         fun onSetPic()
+    }
+
+    interface PageError{
+        fun onPageError(session: GeckoSession,
+                    uri: String?,
+                    error: WebRequestError)
+        fun onPageChange()
     }
 
 

@@ -5,57 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <cn.bingoogolapple.qrcode.zbar.ZBarView
-            android:id="@+id/zxingview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:qrcv_scanLineColor="#00000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:qrcv_animTime="1000"
-            app:qrcv_borderColor="#00000000"
-            app:qrcv_borderSize="1dp"
-            app:qrcv_cornerLength="0dp"
-            app:qrcv_cornerSize="0dp"
-            app:qrcv_maskColor="#00000000"
-            app:qrcv_rectWidth="200dp"
-            app:qrcv_scanLineSize="1dp"
-            app:qrcv_topOffset="90dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/qrFlash"
-                    android:layout_width="@dimen/dim1"
-                    android:layout_height="@dimen/dim1"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="256dp"
-                    android:layout_height="256dp"
-                    android:layout_marginTop="90dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_scan_view" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </cn.bingoogolapple.qrcode.zbar.ZBarView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="0dp"
+        android:layout_height="512dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.thallo.stage
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
@@ -32,6 +33,11 @@ class HolderActivity : AppCompatActivity() {
             "DOWNLOAD" -> navGraph.setStartDestination(R.id.downloadFragment)
             "ADDONS" -> navGraph.setStartDestination(R.id.addonsManagerFragment)
             "SETTINGS" -> navGraph.setStartDestination(R.id.settingsFragment)
+            "QRSCANNING" -> {
+                navGraph.setStartDestination(R.id.qrScanningFragment)
+                binding.toolbar.visibility = View.GONE
+            }
+
         }
         navController.graph=navGraph
         appBarConfiguration = AppBarConfiguration(navController.graph)

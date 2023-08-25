@@ -1,7 +1,7 @@
 package com.thallo.stage
 
 
-import android.annotation.SuppressLint
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -17,7 +17,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -31,11 +30,8 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.sidesheet.SideSheetBehavior
-import com.kongzue.dialogx.dialogs.PopTip
-import com.kongzue.dialogx.interfaces.OnBindView
 import com.thallo.stage.broswer.SearchEngine
 import com.thallo.stage.broswer.dialog.SearchDialog
 import com.thallo.stage.broswer.home.TipsAdapter
@@ -47,7 +43,6 @@ import com.thallo.stage.componets.popup.TabPopup
 import com.thallo.stage.database.history.HistoryViewModel
 import com.thallo.stage.databinding.ActivityMainBinding
 import com.thallo.stage.databinding.PrivacyAgreementLayoutBinding
-import com.thallo.stage.download.DownloadTaskLiveData
 import com.thallo.stage.session.*
 import com.thallo.stage.tab.AddTabLiveData
 import com.thallo.stage.tab.DelegateListLiveData
@@ -73,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var privacyAgreementLayoutBinding: PrivacyAgreementLayoutBinding
-    var fragments = listOf<Fragment>(FirstFragment(),SecondFragment())
+    var fragments = listOf<Fragment>(HomeFragment(),WebFragment())
     private lateinit var geckoViewModel: GeckoViewModel
     var sessionDelegates=ArrayList<SessionDelegate>()
     private val adapter= TabListAdapter()
@@ -89,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         privacyAgreementLayoutBinding = PrivacyAgreementLayoutBinding.inflate(layoutInflater)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
 
         privacyAgreementLayoutBinding.materialButton14.setOnClickListener {
             setContentView(binding.root)
@@ -224,7 +220,7 @@ class MainActivity : AppCompatActivity() {
             false
         })
         binding.recyclerView2?.adapter =adapter
-        binding.recyclerView2?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        binding.recyclerView2?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         binding.content.viewPager.adapter= CollectionAdapter(this,fragments)
         binding.content.viewPager.isUserInputEnabled=false
         binding.materialButtonMenu?.setOnClickListener { MenuPopup(this).show() }
@@ -291,20 +287,7 @@ class MainActivity : AppCompatActivity() {
         AddTabLiveData.getInstance().observe(this){
             binding.recyclerView2?.smoothScrollToPosition(it)
         }
-        DownloadTaskLiveData.getInstance().observe(this){
-            PopTip.build()
-                .setCustomView(object : OnBindView<PopTip?>(com.thallo.stage.R.layout.pop_mytip) {
-                    override fun onBind(dialog: PopTip?, v: View) {
-                        v.findViewById<TextView>(R.id.textView17).text = "正在下载"
-                        v.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
-                            var intent=Intent(this@MainActivity, HolderActivity::class.java)
-                            intent.putExtra("Page","DOWNLOAD")
-                            startActivity(intent)
-                        }
-                    }
-                })
-                .show()
-        }
+
 
         if (getSizeName(this)=="large")
             FullScreen(this)
@@ -314,11 +297,18 @@ class MainActivity : AppCompatActivity() {
             createSession(uri.toString(),this)
         }
 
+        if (!prefs.getBoolean("2.0",false)){
+            createSession("https://mp.weixin.qq.com/s/464cBZFycg-weKFrO9vLVQ\n",this)
+            prefs.edit().putBoolean("2.0",true).commit()
+
+        }
+
 
 
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+
 
         return super.onCreateView(name, context, attrs)
     }
@@ -381,6 +371,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        //binding.user?.resume()
+
         SoftKeyBoardListener.setListener(this, object : OnSoftKeyBoardChangeListener {
             override fun keyBoardShow(height: Int) {
             }
@@ -408,6 +400,8 @@ class MainActivity : AppCompatActivity() {
                 createSession("${SearchEngine(this)}$value",this)
         }
     }
+
+
 
 
 

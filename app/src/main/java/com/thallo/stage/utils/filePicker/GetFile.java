@@ -18,6 +18,7 @@ public class GetFile {
     FilePicker filePicker;
     public GetFile(FragmentActivity activity,FilePicker filePicker){
         this.filePicker=filePicker;
+
         filePicker.putUriListener(new FilePicker.UriListener() {
             @Override
             public void UriGet(Uri uri) {

@@ -1,4 +1,17 @@
+import org.gradle.internal.logging.text.StyledTextOutputFactory
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext{
+        hilt_version = '2.38.1'
+
+    }
+
+    dependencies {
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
 
 
 
@@ -6,4 +19,26 @@ plugins {
     id 'com.android.application' version '7.4.1' apply false
     id 'com.android.library' version '7.4.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+}
+
+subprojects{
+    project.configurations.all {
+        // Dependencies can't depend on a different major version of Glean than A-C itself.
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'org.mozilla.telemetry'
+                    && details.requested.name.contains('glean') ) {
+                    // Enforce that all (transitive) dependencies are using the defined Glean version
+                    details.useVersion '52.7.0'
+
+            }
+        }
+
+        resolutionStrategy.capabilitiesResolution.withCapability("org.mozilla.telemetry:glean-native") {
+            def toBeSelected = candidates.find { it.id instanceof ModuleComponentIdentifier && it.id.module.contains('geckoview') }
+            if (toBeSelected != null) {
+                select(toBeSelected)
+            }
+            because 'use GeckoView Glean instead of standalone Glean'
+        }
+    }
 }

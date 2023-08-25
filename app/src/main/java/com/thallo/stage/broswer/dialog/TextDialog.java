@@ -32,6 +32,7 @@ public class TextDialog  extends androidx.appcompat.app.AlertDialog {
         });
 
 
+
     }
     public void endDialog(GeckoSession.PromptDelegate.PromptResponse result)
     {

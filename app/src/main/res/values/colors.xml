@@ -15,4 +15,6 @@
     <color name="textDayNight">@color/black</color>
     <color name="components">@color/purple_500</color>
     <color name="alpha">#00000000</color>
+    <color name="checked">#00000000</color>
+
 </resources>

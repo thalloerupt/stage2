@@ -127,7 +127,8 @@
     <string name="version">Версия:</string>
     <string name="description">Описание:</string>
     <string name="pair_instructions_message">Сканирование QR-кода</string>
-
+    <string name="other_opening_methods">Другие способы</string>
+    <string name="donating">Donate</string>
 
     <string name="intent_message">Веб-страница надеется открыть локальное приложение</string>
     <string name="details">Детали</string>

@@ -1,6 +1,7 @@
 package com.thallo.stage.componets
 
 import android.annotation.SuppressLint
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.recyclerview.widget.DiffUtil
 import mozilla.components.concept.storage.BookmarkNode
 import org.mozilla.geckoview.WebExtension

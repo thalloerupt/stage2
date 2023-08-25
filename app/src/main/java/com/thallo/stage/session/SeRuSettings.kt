@@ -22,7 +22,8 @@ class SeRuSettings {
         geckoRuntimeSettings=GeckoRuntime.getDefault(activity).settings
         if (getSizeName(activity)=="large"){
             geckoSessionSettings.userAgentOverride="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
-            geckoSessionSettings.viewportMode=GeckoSessionSettings.VIEWPORT_MODE_MOBILE
+            geckoSessionSettings.viewportMode=GeckoSessionSettings.VIEWPORT_MODE_DESKTOP
+            geckoSessionSettings.displayMode = GeckoSessionSettings.DISPLAY_MODE_BROWSER
         }
         else {
             geckoSessionSettings.userAgentMode = GeckoSessionSettings.USER_AGENT_MODE_MOBILE

@@ -1,34 +1,46 @@
 package com.thallo.stage
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.material.icons.materialIcon
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.databinding.FragmentSecondBinding
-import com.thallo.stage.session.*
+import com.thallo.stage.session.DelegateLivedata
+import com.thallo.stage.session.GeckoViewModel
+import com.thallo.stage.session.PrivacyFlow
+import com.thallo.stage.session.SessionDelegate
 import com.thallo.stage.tab.AddTabLiveData
 import com.thallo.stage.tab.DelegateListLiveData
 import com.thallo.stage.tab.RemoveTabLiveData
 import com.thallo.stage.utils.filePicker.FilePicker
-import com.thallo.stage.utils.filePicker.PickUtils
+import com.thallo.stage.utils.filePicker.PickUtils.getPath
+import com.thallo.stage.utils.filePicker.ResultContract
 import kotlinx.coroutines.launch
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
+import org.mozilla.geckoview.WebRequestError
+import kotlin.math.abs
+
 
 /**
  * 2023.1.4创建，1.21除夕
  * 2023.2.11 19:10 正月廿一 记录
  * thallo
  **/
-class SecondFragment : Fragment() {
+class WebFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     lateinit var session: GeckoSession
@@ -36,6 +48,11 @@ class SecondFragment : Fragment() {
     lateinit var privacyFlow: PrivacyFlow
     lateinit var delegate: ArrayList<SessionDelegate>
     lateinit var uri: Uri
+    lateinit var sessiondelegate: SessionDelegate
+    var mPosX:Float = 0f
+    var mPosY:Float = 0f
+    var mCurPosX:Float = 0f
+    var mCurPosY:Float = 0f
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -57,16 +74,26 @@ class SecondFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var getContent = registerForActivityResult(ActivityResultContracts.OpenDocument()
-        ) {
-            filePicker.putUri(Uri.parse("file://" + it?.let { it1 ->
-                PickUtils.getPath(requireContext(), it1)
-            }))
-        }
 
-        filePicker=FilePicker(getContent,requireActivity())
+        val launcher: ActivityResultLauncher<Boolean> =
+            registerForActivityResult(ResultContract(), object : ActivityResultCallback<Intent?> {
+                override fun onActivityResult(result: Intent?) {
+                    if (result == null) {
+                        return
+                    }
+                    val uri = result.data
+                    //文件路径
+                    val mFilePath = getPath(context!!, uri!!)
+                    Log.d("ActivityResultLauncher",mFilePath)
+                    filePicker.putUri(Uri.parse("file://$mFilePath"))
+                }
+            })
+
+
+        filePicker=FilePicker(launcher,requireActivity())
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         delegate = ArrayList<SessionDelegate>()
@@ -114,6 +141,8 @@ class SecondFragment : Fragment() {
 
 
 
+
+
         DelegateLivedata.getInstance().observe(viewLifecycleOwner){
             for (i in delegate){
                 if (it != i)
@@ -126,6 +155,7 @@ class SecondFragment : Fragment() {
             binding.geckoview.releaseSession()
             GeckoRuntime.getDefault(requireContext()).webExtensionController.setTabActive(it.session, true)
             binding.geckoview.setSession(it.session)
+            sessiondelegate = it
         }
 
 
@@ -156,6 +186,25 @@ class SecondFragment : Fragment() {
 
             }
 
+
+
+            sessionDelegate.pageError = object : SessionDelegate.PageError {
+                override fun onPageChange() {
+                    binding.errorpage.visibility = View.GONE
+                }
+                override fun onPageError(
+                    session: GeckoSession,
+                    uri: String?,
+                    error: WebRequestError
+                ) {
+                    binding.errorpage.visibility = View.VISIBLE
+                    binding.errorCodeText.text = "Error:${error.code}"
+                    binding.errorRetryButton.setOnClickListener { session.reload() }
+
+                }
+
+            }
+
         }
         if (delegate.size==0)
             sessionDelegate?.let { delegate.add(it) }
@@ -164,6 +213,11 @@ class SecondFragment : Fragment() {
         sessionDelegate?.let {DelegateLivedata.getInstance().Value(it) }
         DelegateListLiveData.getInstance().Value(delegate)
         binding.geckoview.setSession(session)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
 

@@ -17,17 +17,17 @@ import org.jetbrains.annotations.Nullable
 
 class FilePicker {
     private var uriListener: UriListener? = null
-    lateinit var getContent: ActivityResultLauncher<Array<String>>
+    private lateinit var getContent: ActivityResultLauncher<Boolean>
     var activity: FragmentActivity
 
-    constructor(getContent: ActivityResultLauncher<Array<String>>,activity: FragmentActivity) {
+    constructor(getContent: ActivityResultLauncher<Boolean>,activity: FragmentActivity) {
         this.getContent=getContent
         this.activity=activity
 
     }
 
     fun open(activity: FragmentActivity, mimeTypes: Array<String> ) {
-        getContent.launch(mimeTypes)
+        getContent.launch(true)
         requestPermission()
 
     }

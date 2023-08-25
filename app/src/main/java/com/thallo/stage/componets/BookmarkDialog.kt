@@ -12,10 +12,11 @@ import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.database.shortcut.Shortcut
 import com.thallo.stage.database.shortcut.ShortcutViewModel
 import com.thallo.stage.databinding.DiaBookmarkBinding
+import com.thallo.stage.fxa.sync.BookmarkSync
 
 
 class BookmarkDialog(
-    var context1: Activity,
+    private var context1: Activity,
     title: String?,
     url: String?
 ) :
@@ -45,6 +46,7 @@ class BookmarkDialog(
                 if (diaBookmarkBinding.radioButton.isChecked)
                     shortcutViewModel.insertShortcuts(shortcut)
                 bookmarkViewModel.insertBookmarks(bookmark)
+                BookmarkSync(context1).sync(diaBookmarkBinding.diaBookmarkUrl.getText().toString(),diaBookmarkBinding.diaBookmarkTitle.getText().toString())
             })
         setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel),
             DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })

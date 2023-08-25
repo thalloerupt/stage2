@@ -15,6 +15,7 @@ import com.thallo.stage.R
 import com.thallo.stage.componets.BookmarkDialog
 import com.thallo.stage.componets.HomeLivedata
 import com.thallo.stage.componets.MenuAddonsAdapater
+import com.thallo.stage.componets.TabBottomSheetDialog.Companion.TAG
 import com.thallo.stage.database.bookmark.BookmarkViewModel
 import com.thallo.stage.databinding.PopupMenuBinding
 import com.thallo.stage.session.DelegateLivedata
@@ -105,6 +106,12 @@ class MenuPopup{
                 BookmarkDialog(context, sessionDelegate!!.mTitle, sessionDelegate!!.u).show()
             }
         }
+
+        binding.shareButton.setOnClickListener {
+            ComposeMenuPopup().show(context.supportFragmentManager,TAG)
+            bottomSheetDialog.dismiss()
+        }
+
         binding.reloadBotton.setOnClickListener {
             if (!isHome)
                 sessionDelegate?.session?.reload()

@@ -1,6 +1,7 @@
 package com.thallo.stage.download
 
 import android.content.ClipData
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -59,11 +60,11 @@ class DownloadListAdapter : ListAdapter<DownloadTask, DownloadListAdapter.ItemTe
     }
 
     fun open(context: Context, uri: Uri) {
+        val resolver: ContentResolver = context.contentResolver
         val intent = Intent(Intent.ACTION_VIEW)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.clipData = ClipData.newRawUri("", uri);
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION
-        intent.setDataAndType(uri,"*/*");
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        intent.setDataAndType(uri,resolver.getType(uri));
         context.startActivity(intent)
 
     }

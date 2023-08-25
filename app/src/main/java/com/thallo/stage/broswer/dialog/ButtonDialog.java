@@ -27,7 +27,20 @@ public class ButtonDialog extends androidx.appcompat.app.AlertDialog {
         setButton(BUTTON_POSITIVE, "确认", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                endDialog(alertPrompt.dismiss());
+                endDialog(alertPrompt.confirm(GeckoSession.PromptDelegate.ButtonPrompt.Type.POSITIVE));
+            }
+        });
+        setButton(BUTTON_NEGATIVE, "取消", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                endDialog(alertPrompt.confirm(GeckoSession.PromptDelegate.ButtonPrompt.Type.NEGATIVE));
+            }
+        });
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                endDialog(alertPrompt.confirm(GeckoSession.PromptDelegate.ButtonPrompt.Type.NEGATIVE));
+
             }
         });
 

@@ -6,113 +6,162 @@
     android:layout_height="match_parent"
     tools:context=".AboutFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/surface">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:autoText="false"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/surface">
 
-            android:fontFamily="@font/alfa_slab_one"
-            android:freezesText="false"
-            android:gravity="start"
-            android:text="Stage\nBrowser"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:autoText="false"
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+                android:fontFamily="@font/alfa_slab_one"
+                android:freezesText="false"
+                android:gravity="start"
+                android:text="Stage\nBrowser"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/background" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/background" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Design by\nThallo&amp;Erupt"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Base on\nGeckoView"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView15"
-            app:layout_constraintStart_toStartOf="@+id/textView15" />
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/alfa_slab_one"
+                android:text="Design by\nThallo&amp;Erupt"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton2"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="email"
-            android:textSize="20sp"
-            app:icon="@drawable/envelope_fill"
-            app:iconSize="@dimen/dim2"
-            app:layout_constraintBottom_toTopOf="@+id/materialButton6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one"
+                android:text="Base on\nGeckoView"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView15"
+                app:layout_constraintStart_toStartOf="@+id/textView15" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton6"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="QQ群"
-            android:textSize="20sp"
-            app:icon="@drawable/qq"
-            app:iconSize="@dimen/dim2"
-            app:layout_constraintBottom_toTopOf="@+id/materialButton5"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton1"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="微信公众号"
+                android:textSize="20sp"
+                app:icon="@drawable/wechat"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toTopOf="@+id/materialButton2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton5"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Telegram"
-            android:textSize="20sp"
-            app:icon="@drawable/telegram"
-            app:iconSize="@dimen/dim2"
-            app:layout_constraintBottom_toTopOf="@+id/guideline7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton2"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="email"
+                android:textSize="20sp"
+                app:icon="@drawable/envelope_fill"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toTopOf="@+id/materialButton6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton6"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="QQ群"
+                android:textSize="20sp"
+                app:icon="@drawable/qq"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toTopOf="@+id/materialButton5"
+                app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton5"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Telegram"
+                android:textSize="20sp"
+                app:icon="@drawable/telegram"
+                app:iconSize="@dimen/dim2"
+                app:layout_constraintBottom_toTopOf="@+id/guideline7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/aboutDrawer"
+            style="@style/Widget.Material3.BottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="@dimen/dim5"
+                android:layout_height="@dimen/dim5"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wechat_qr"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="关注Stage Talk获取更新资讯、有趣 内容"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </FrameLayout>

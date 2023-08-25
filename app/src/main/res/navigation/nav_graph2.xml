@@ -50,4 +50,8 @@
         android:name="com.thallo.stage.PrivacyAndServiceFragment"
         android:label="@string/privacy_and_service_agreement"
         tools:layout="@layout/fragment_privacy_and_service" />
+    <fragment
+        android:id="@+id/qrScanningFragment"
+        android:name="com.thallo.stage.broswer.qr.QrScanningFragment"
+        android:label="QrScanningFragment" />
 </navigation>

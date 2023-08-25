@@ -1,19 +1,27 @@
 package com.thallo.stage
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.thallo.stage.databinding.FragmentAboutBinding
 import com.thallo.stage.session.createSession
 
 
 class AboutFragment : Fragment() {
     lateinit var fragmentAboutBinding: FragmentAboutBinding
+    private lateinit var SheetBehavior:BottomSheetBehavior<ConstraintLayout>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +34,30 @@ class AboutFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (fragmentAboutBinding.aboutDrawer!=null) {
+            SheetBehavior = BottomSheetBehavior.from(fragmentAboutBinding.aboutDrawer as ConstraintLayout)
+            SheetBehavior.peekHeight=0
+        }
         fragmentAboutBinding.materialButton6.setOnClickListener { joinQQGroup("TbCzUUsxKdWQqmHqgqaTFJ110tq4FqCD") }
         fragmentAboutBinding.materialButton2.setOnClickListener { sendEmail() }
-        fragmentAboutBinding.textView11.setOnClickListener { Toast.makeText(requireContext(),"106",Toast.LENGTH_SHORT).show() }
+        fragmentAboutBinding.materialButton1.setOnClickListener {SheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+        }
+        fragmentAboutBinding.textView2.setOnClickListener { Toast.makeText(requireContext(),getAppVersionName(requireContext()),Toast.LENGTH_SHORT).show() }
+        fragmentAboutBinding.textView11.setOnClickListener { Toast.makeText(requireContext(),"113",Toast.LENGTH_SHORT).show() }
         fragmentAboutBinding.materialButton5.setOnClickListener {
             val intent = Intent(requireContext(),MainActivity::class.java)
-            intent.data = Uri.parse("https://t.me/stage_browser_channel")
-            intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
+
+            if ((getResources().getConfiguration().screenLayout and
+                        Configuration.SCREENLAYOUT_SIZE_MASK) ===
+                Configuration.SCREENLAYOUT_SIZE_LARGE)
+            {
+                createSession("https://t.me/stage_browser_channel",requireActivity())
+            }else {
+                intent.data = Uri.parse("https://t.me/stage_browser_channel")
+                intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+
         }
 
         // Inflate the layout for this fragment
@@ -61,7 +85,22 @@ class AboutFragment : Fragment() {
             false
         }
     }
-    fun sendEmail(){
+    fun getAppVersionName(context: Context): String? {
+        var versionName = ""
+        try {
+            val pm: PackageManager = context.getPackageManager()
+            val pi: PackageInfo = pm.getPackageInfo(context.getPackageName(), 0)
+            versionName = pi.versionName
+            if (versionName == null || versionName.length <= 0) {
+                return ""
+            }
+        } catch (e: java.lang.Exception) {
+            Log.e("VersionInfo", "Exception", e)
+        }
+        return versionName
+    }
+
+    private fun sendEmail(){
         val i = Intent(Intent.ACTION_SEND)
         i.type = "message/rfc822"
         i.putExtra(Intent.EXTRA_EMAIL, arrayOf("l694630313@Gmail.com"))

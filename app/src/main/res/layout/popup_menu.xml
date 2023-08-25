@@ -322,24 +322,35 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:secureIcon="@{user.secure}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:secureIcon="@{user.secure}" />
 
                     <TextView
                         android:id="@+id/textView5"
-                        android:text="@{user.MTitle}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{user.MTitle}"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/starButton"
-                        app:layout_constraintEnd_toStartOf="@+id/starButton"
+                        app:layout_constraintEnd_toStartOf="@+id/shareButton"
                         app:layout_constraintStart_toEndOf="@+id/materialButton16"
                         app:layout_constraintTop_toTopOf="@+id/starButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareButton"
+                        style="@style/Widget.Material3.Button.IconButton"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/share_fill"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/starButton"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/starButton"
@@ -350,7 +361,6 @@
                         app:icon="@drawable/star"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>

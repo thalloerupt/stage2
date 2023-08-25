@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.compose.ui.unit.dp
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -15,6 +16,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.thallo.stage.R
 import com.thallo.stage.utils.RoundedCornersTransform
+import com.thallo.stage.utils.Utils.dip2px
+import org.mozilla.geckoview.GeckoView
 import java.net.URI
 
 @BindingAdapter(value = ["imageBitmap"], requireAll = false)
@@ -83,3 +86,9 @@ fun secureButtonText(view: MaterialButton, isSecure: Boolean?) {
     if (isSecure) view.text=view.context.getString(R.string.connection_secure)
     else view.text=view.context.getText(R.string.connection_not_secure)
 }
+
+@BindingAdapter(value = ["dynamicToolbar"], requireAll = false)
+fun dynamicToolbar(view: GeckoView,int:Int) {
+    view.setDynamicToolbarMaxHeight(int+dip2px(view.context,64))
+}
+

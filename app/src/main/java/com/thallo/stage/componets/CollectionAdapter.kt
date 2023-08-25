@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.thallo.stage.MainActivity
 
-class CollectionAdapter(activity: MainActivity, val fragmentlist:List<Fragment>) : FragmentStateAdapter(activity) {//fragment 也可以换为 activity
+class CollectionAdapter(activity: MainActivity, private val fragmentlist:List<Fragment>) : FragmentStateAdapter(activity) {//fragment 也可以换为 activity
 private val fid2 = 222L
     private val fid3 = 333L
     private val ids = arrayListOf(fid2,fid3)
