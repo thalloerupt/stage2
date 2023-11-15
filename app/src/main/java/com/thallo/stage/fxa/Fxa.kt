@@ -40,7 +40,6 @@ class Fxa {
         this.context = context
         val mContext = context as LifecycleOwner
 
-        RustLog.enable()
         RustHttpConfig.setClient(lazy { HttpURLConnectionClient() })
 
         fxaViewModel = ViewModelProvider(context as ViewModelStoreOwner)[AccountProfileViewModel::class.java]

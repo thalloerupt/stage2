@@ -156,6 +156,7 @@ class WebFragment : Fragment() {
             GeckoRuntime.getDefault(requireContext()).webExtensionController.setTabActive(it.session, true)
             binding.geckoview.setSession(it.session)
             sessiondelegate = it
+            binding.use = it
         }
 
 

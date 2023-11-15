@@ -20,7 +20,9 @@ import android.webkit.URLUtil
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -82,6 +84,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+
         privacyAgreementLayoutBinding = PrivacyAgreementLayoutBinding.inflate(layoutInflater)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -273,12 +277,15 @@ class MainActivity : AppCompatActivity() {
             binding.SizeText?.setText(it.size.toString())
             adapter.submitList(it.toList())
             sessionDelegates=it
+            binding.bottomMotionLayout?.translationY  = 0f
+
         }
         HomeLivedata.getInstance().observe(this){
             isHome=it
             if (it){
                 binding.content.viewPager.currentItem=0
                 binding.urlText?.setText("")
+                binding.bottomMotionLayout?.translationY  = 0f
             }else {
                 binding.content.viewPager.currentItem=1
                 bottomSheetBehavior?.state  =BottomSheetBehavior.STATE_COLLAPSED

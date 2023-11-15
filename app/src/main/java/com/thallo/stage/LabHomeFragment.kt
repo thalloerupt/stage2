@@ -5,29 +5,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.fragment.app.FragmentActivity
-import org.mozilla.geckoview.GeckoRuntime
-import org.mozilla.geckoview.GeckoSession
-import org.mozilla.geckoview.GeckoView
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.ImageShader
+import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -42,35 +42,49 @@ class LabHomeFragment : Fragment() {
             WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
 
             setContent {
+
+
+
+                var inputtext by rememberSaveable { mutableStateOf("") }
+
                 TransparentSystemBars()
                 MaterialTheme() {
-                    ConstraintLayout {
-                        val (button,geckoView) = createRefs()
-                        GeckoView(modifier = Modifier.constrainAs(geckoView) {
-                            width = Dimension.fillToConstraints
-                            height = Dimension.fillToConstraints
-                            top.linkTo(parent.top,0.dp)
-                            bottom.linkTo(parent.bottom, 0.dp)
-                            start.linkTo(parent.start,0.dp)
-                            end.linkTo(parent.end, 0.dp)
-                        })
 
-                        /**Button(onClick = { /*TODO*/ }, modifier = Modifier
-                            .width(64.dp)
-                            .height(64.dp)
-                            .alpha(0.5f)
-                            .blur(
-                                radiusX = 2.dp,
-                                radiusY = 2.dp,
-                                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(0.dp))
-                            )
-                            .constrainAs(button) {
-                                bottom.linkTo(parent.bottom, 0.dp)
-                                end.linkTo(parent.end, 0.dp)
-                            }, colors = ButtonDefaults.buttonColors(Color.White)
-                        ) {
+                    ConstraintLayout (modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            brush =
+                            ShaderBrush(ImageShader(ImageBitmap.imageResource(id = R.drawable.jpg)))
+                        )){
+                        val (button,inputView) = createRefs()
+                        //OutlinedTextField(value = , onValueChange = )
 
-                        }**/
+                        OutlinedTextField(
+                            colors = TextFieldDefaults.colors(
+                                disabledIndicatorColor = Color.White,
+                                unfocusedIndicatorColor = Color.White,
+                                focusedIndicatorColor = Color.White,
+                                unfocusedContainerColor = Color.Transparent,
+                                disabledContainerColor = Color.Transparent,
+                                focusedContainerColor = Color.Transparent,
+                                cursorColor= Color.White,
+
+                            ),
+                            shape = RoundedCornerShape(64.dp),
+                            value = inputtext,
+                            onValueChange = { inputtext = it },
+                            modifier = Modifier
+                                .constrainAs(inputView) {
+                                    height = Dimension.value(56.dp)
+                                    width = Dimension.fillToConstraints
+                                    start.linkTo(parent.start,32.dp)
+                                    end.linkTo(parent.end,32.dp)
+                                    top.linkTo(parent.top)
+                                    bottom.linkTo(parent.bottom)
+                                }
+
+                        )
+
 
                     }
 
@@ -79,33 +93,8 @@ class LabHomeFragment : Fragment() {
             }
         }
     }
-    @Composable
-    fun GeckoView(modifier: Modifier){
-        AndroidView(
-            modifier = modifier, // Occupy the max size in the Compose UI tree
-            factory = { context ->
-                // Creates custom view
-                GeckoView(context).apply {
-                    // Sets up listeners for View -> Compose communication
-                    this.releaseSession()
-                    val session=GeckoSession()
-                    session.open(GeckoRuntime.getDefault(this@LabHomeFragment.requireContext()))
-                    session.loadUri("https://inftab.com/")
-                    this.setSession(session)
 
-                }
-            },
-            update = { view ->
-                // View's been inflated or state read in this block has been updated
-                // Add logic here if necessary
-                // As selectedItem is read here, AndroidView will recompose
-                // whenever the state changes
-                // Example of Compose -> View communication
-                // view.coordinator.selectedItem = selectedItem.value
 
-            }
-        )
-    }
     @Composable
     fun TransparentSystemBars() {
         val systemUiController = rememberSystemUiController()

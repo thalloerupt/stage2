@@ -40,6 +40,7 @@
     <string name="add_to_homepage">添加到主页</string>
     <string name="other_opening_methods">其他打开方式</string>
     <string name="donating">捐助</string>
+    <string name="fetch_third_party_CA">获取已添加的第三方根证书</string>
 
 
     <string name="result_qr">扫描结果</string>

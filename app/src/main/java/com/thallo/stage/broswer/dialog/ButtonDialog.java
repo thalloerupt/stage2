@@ -36,14 +36,6 @@ public class ButtonDialog extends androidx.appcompat.app.AlertDialog {
                 endDialog(alertPrompt.confirm(GeckoSession.PromptDelegate.ButtonPrompt.Type.NEGATIVE));
             }
         });
-        setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                endDialog(alertPrompt.confirm(GeckoSession.PromptDelegate.ButtonPrompt.Type.NEGATIVE));
-
-            }
-        });
-
 
     }
     public void endDialog(GeckoSession.PromptDelegate.PromptResponse result)

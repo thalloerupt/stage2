@@ -32,11 +32,15 @@ class SeRuSettings {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity /* Activity context */)
         geckoRuntimeSettings.forceUserScalableEnabled=sharedPreferences.getBoolean("switch_userscalable",false)
         geckoRuntimeSettings.automaticFontSizeAdjustment=sharedPreferences.getBoolean("switch_automatic_fontsize",false)
+        geckoRuntimeSettings.enterpriseRootsEnabled = sharedPreferences.getBoolean("fetch_third_party_CA",false)
+        geckoRuntimeSettings.preferredColorScheme = GeckoRuntimeSettings.COLOR_SCHEME_SYSTEM
         geckoRuntimeSettings.aboutConfigEnabled=true
         geckoRuntimeSettings.webFontsEnabled=true
         sharedPreferences.registerOnSharedPreferenceChangeListener{ sharedPreferences, key -> when(key){
             "switch_userscalable"->geckoRuntimeSettings.forceUserScalableEnabled=sharedPreferences.getBoolean("switch_userscalable",false)
             "switch_automatic_fontsize"->geckoRuntimeSettings.automaticFontSizeAdjustment=sharedPreferences.getBoolean("switch_automatic_fontsize",false)
+            "fetch_third_party_CA"->geckoRuntimeSettings.enterpriseRootsEnabled = sharedPreferences.getBoolean("fetch_third_party_CA",false)
+
         }
         }
     }

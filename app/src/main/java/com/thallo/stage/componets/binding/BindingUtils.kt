@@ -2,6 +2,7 @@ package com.thallo.stage.componets.binding
 
 import android.graphics.Bitmap
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -88,7 +89,8 @@ fun secureButtonText(view: MaterialButton, isSecure: Boolean?) {
 }
 
 @BindingAdapter(value = ["dynamicToolbar"], requireAll = false)
-fun dynamicToolbar(view: GeckoView,int:Int) {
-    view.setDynamicToolbarMaxHeight(int+dip2px(view.context,64))
+fun dynamicToolbar(view: GeckoView,int:Int?) {
+    view.setDynamicToolbarMaxHeight(dip2px(view.context,64) - int!!)
+    Log.d("dynamicToolbar", int.toString())
 }
 

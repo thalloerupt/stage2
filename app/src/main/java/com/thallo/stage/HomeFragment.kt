@@ -58,6 +58,8 @@ class HomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        fxa = Fxa()
+        fxaAccountManager = fxa.init(requireContext())
         return binding.root
 
     }
@@ -68,8 +70,6 @@ class HomeFragment : Fragment() {
         shortcutViewModel=ViewModelProvider(requireActivity())[ShortcutViewModel::class.java]
         fxaViewModel = ViewModelProvider(requireActivity())[AccountProfileViewModel::class.java]
         accountManagerCollection = ViewModelProvider(requireActivity())[AccountManagerCollection::class.java]
-        fxa = Fxa()
-        fxaAccountManager = fxa.init(requireContext())
 
 
         lifecycleScope.launch {
@@ -207,7 +207,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        fxaAccountManager.close()
+        //fxaAccountManager.close()
     }
     fun showDialog() {
         val fragmentManager = parentFragmentManager

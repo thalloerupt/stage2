@@ -101,7 +101,11 @@ class SessionDelegate() :BaseObservable(){
         this.filePicker=filePicker
         this.privacy = privacy
         notifyPropertyChanged(BR.privacy)
-
+        val spToInt = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            64f,
+            mContext.resources.displayMetrics
+        ).toInt()
 
         val  geckoViewModel: GeckoViewModel =ViewModelProvider(mContext).get(GeckoViewModel::class.java)
         historyViewModel=ViewModelProvider(mContext).get(HistoryViewModel::class.java)
@@ -190,11 +194,13 @@ class SessionDelegate() :BaseObservable(){
                         } else mContext.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                     }
                     StatusUtils.hideStatusBar(mContext)
-
+                    y = spToInt
+                    notifyPropertyChanged(BR.y)
                 } else {
                     mContext.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                     StatusUtils.init(mContext)
-
+                    y = 0
+                    notifyPropertyChanged(BR.y)
                 }
                 isFull=enabled
                 notifyPropertyChanged(BR.full)
@@ -371,16 +377,25 @@ class SessionDelegate() :BaseObservable(){
         }
 
 
-        /*
-        session.setAutofillDelegate(new Autofill.Delegate() {
-            @Override
-            public void onAutofill(@NonNull GeckoSession session, int notification, @Nullable Autofill.Node node) {
-                AutofillManager afm = context.getSystemService(AutofillManager.class);
-                if(afm!=null){
+        session.permissionDelegate = object : GeckoSession.PermissionDelegate {
+            override fun onAndroidPermissionsRequest(
+                session: GeckoSession,
+                permissions: Array<out String>?,
+                callback: GeckoSession.PermissionDelegate.Callback
+            ) {
+                super.onAndroidPermissionsRequest(session, permissions, callback)
 
-                }
             }
-        });*/
+
+            override fun onContentPermissionRequest(
+                session: GeckoSession,
+                perm: GeckoSession.PermissionDelegate.ContentPermission
+            ): GeckoResult<Int>? {
+
+                return super.onContentPermissionRequest(session, perm)
+            }
+
+        }
 
         session.promptDelegate = object : GeckoSession.PromptDelegate {
             override fun onAddressSave(
@@ -506,22 +521,18 @@ class SessionDelegate() :BaseObservable(){
         session.scrollDelegate = object : GeckoSession.ScrollDelegate {
             override fun onScrollChanged(session: GeckoSession, scrollX: Int, scrollY: Int) {
                 super.onScrollChanged(session, scrollX, scrollY)
-                val spToInt = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_SP,
-                    64f,
-                    mContext.resources.displayMetrics
-                ).toInt()
+
 
                 if (oldY < scrollY){
                     if(y != spToInt)
-                        y += 16
+                        y += 24
                     oldY = scrollY
                     Log.d("onScrollChanged", "up:$y")
 
                 }
                 else {
                     if(y != 0)
-                        y -= 16
+                        y -= 24
                     oldY = scrollY
                     Log.d("onScrollChanged", "down:$y")
 

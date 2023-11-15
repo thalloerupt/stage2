@@ -129,6 +129,7 @@
     <string name="pair_instructions_message">Сканирование QR-кода</string>
     <string name="other_opening_methods">Другие способы</string>
     <string name="donating">Donate</string>
+    <string name="fetch_third_party_CA">Fetch the third-party root certificates</string>
 
     <string name="intent_message">Веб-страница надеется открыть локальное приложение</string>
     <string name="details">Детали</string>

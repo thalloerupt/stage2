@@ -28,8 +28,8 @@ android {
         applicationId "com.thallo.stage"
         minSdk 24
         targetSdk 34
-        versionCode 825
-        versionName "2.0.5"
+        versionCode 924//10.24
+        versionName "2.0.24"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -177,6 +177,8 @@ dependencies {
     implementation "androidx.room:room-paging:$room_version"
 
 
+//SplashScreen
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     implementation 'com.airbnb.android:lottie:6.0.1'
 }
